@@ -227,15 +227,6 @@
 
     
     
-      
-      
-        
-        
-        
-      
-
-      
-    
 
     
       
@@ -259,7 +250,180 @@
             
               
                 
-                <a class="post-title-link" href="/2015/11/15/新的开始/" itemprop="url">
+                <a class="post-title-link" href="/2015/11/20/Alfred+iterm2+hexo/" itemprop="url">
+                  效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-11-20T14:44:12-05:00" content="2015-11-20">
+              2015-11-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/20/Alfred+iterm2+hexo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/20/Alfred+iterm2+hexo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="关于Alfred">关于Alfred</h2><p>Alfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一大把资料能入门-&gt;<a href="http://www.baidu.com/s?wd=Alfred&amp;rsv_spt=1&amp;rsv_iqid=0xa36cff7400007296&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;inputT=3345&amp;rsv_t=1aedNNcD9t6rrODXPauSl1RUTu99ApZG6qSEAvtSyJEZkwNVP3HM9JzbCQDN4UK4XmOP&amp;oq=%E9%97%AD%E5%8C%85&amp;rsv_pq=815794f100080c6c&amp;rsv_sug3=33&amp;rsv_sug1=14&amp;rsv_sug2=0&amp;rsv_sug4=3671" target="_blank" rel="external">百度Alfred</a>。</p>
+<h2 id="关于iterm2">关于iterm2</h2><p>iterm2是mac上一款能够代替自带terminal的软件，虽然自带的终端功能也比较丰富，但是iterm2用上手了以后会发现有很多能帮助提高效率的地方。同样，本文不对此做过多介绍，<a href="http://www.baidu.com/s?wd=iterm2&amp;rsv_spt=1&amp;rsv_iqid=0xa36cff7400007296&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;inputT=3771&amp;rsv_t=8bb8tRSqKOdnwmKM3ogb7f%2BIHXfTMs5sZNag1Q4uwoRQ2m63Bc%2BRIPCrZJiFliM6c3sR&amp;oq=Alfred&amp;rsv_pq=9733378c00030521&amp;rsv_sug3=45&amp;rsv_sug1=21&amp;rsv_sug2=0&amp;rsv_sug4=4071" target="_blank" rel="external">百度iterm2</a>。<br>另外，配合iterm2的shell建议使用zsh，Github上一个开源项目能帮助你理解和使用-&gt;<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>。</p>
+<h3 id="PS：设置Alfred默认打开终端为iterm2">PS：设置Alfred默认打开终端为iterm2</h3><p>Alfred中默认的终端是系统自带的，因此要手动设置将默认的终端变为iterm2。首先打开Alfred的偏好设置（command+,），然后点选Features-&gt;Terminal/Shell，将Application选项改为Custom，<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/2160143.jpg" alt=""><br>接着将下面代码粘贴至上图中的文本域</p>
+<pre><code><span class="function_start"><span class="keyword">on</span></span> is_running(app_name)
+<span class="keyword">tell</span> <span class="type">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> (<span class="property">name</span> <span class="keyword">of</span> processes) <span class="keyword">contains</span> app_name
+<span class="keyword">end</span> is_running
+
+<span class="comment">-- Please note, if you store the iTerm binary in any other location than the Applications Folder</span>
+<span class="comment">-- please ensure you update the two locations below (in the format of : rather than / for folder dividers)</span>
+<span class="comment">-- this gets around issues with AppleScript not handling things well if you have two iTerm binaries on your system... which can happen :D</span>
+
+<span class="function_start"><span class="keyword">on</span></span> alfred_script(q)
+    <span class="keyword">if</span> is_running(<span class="string">"iTerm"</span>) <span class="keyword">then</span>
+        <span class="command">run script</span> <span class="string">"
+            on run {q}
+                tell application \":Applications:iTerm.app\"
+                    activate
+                    set myterm to (make new terminal)
+                    tell myterm
+                        set mysession to (launch session \"Default Session\")
+                        tell mysession to write text q
+                    end tell
+                end tell
+            end run
+        "</span> <span class="keyword">with</span> parameters {q}
+    <span class="keyword">else</span>
+        <span class="command">run script</span> <span class="string">"
+            on run {q}
+                tell application \":Applications:iTerm.app\"
+                    activate
+                    tell the first terminal
+                        tell the last session to write text q
+                    end tell
+                end tell
+            end run
+        "</span> <span class="keyword">with</span> parameters {q}
+    <span class="keyword">end</span> <span class="keyword">if</span>
+<span class="keyword">end</span> alfred_script
+</code></pre><p>代码出处：<a href="https://github.com/stuartcryan/custom-iterm-applescripts-for-alfred/blob/master/custom_iterm_script_iterm_2.1.1.applescript" target="_blank" rel="external">custom_iterm_script_iterm_2.1.1</a></p>
+<h2 id="回到hexo">回到hexo</h2><h4 id="新建hexo日志">新建hexo日志</h4><p>用hexo搭博客的同学们都知道，如果想新建一个日志，步骤是：</p>
+<ol>
+<li>打开终端</li>
+<li>cd到hexo所在的目录</li>
+<li>hexo new (日志名)</li>
+<li>用自己的markdown编辑器（我用的sublime text3）打开新建的.mk文件开始编辑<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""></li>
+</ol>
+<p>那么这时候Alfred workflow就派上用场了，下面介绍怎么用Alfred创建一个快速新建hexo日志的懒人workflow</p>
+<p>首先打开Alfred的偏好设置（command+,），然后点击workflow这一栏（收费版本才能使用的功能），你就会看到下面这样的<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/4211599.jpg" alt=""><br>接着点击左下角那个加号（＋），选择Templates-&gt;Essentials-&gt;Keyword to Terminal Command，然后填写workflow名字、作者名字等<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/37792074.jpg" alt=""><br>点击Create以后，在左边workflow列表里就会出现你刚创建的workfolw，点击你刚创建的workflow<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/59938509.jpg" alt=""><br>上面的图片中，左边是设定在Alfred中启动你的workflow所要输入的关键字，右边是执行workflow的终端命令。我们先来设置关键字：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/41572225.jpg" alt=""><br>keyword中填入关键字，因为创建新日志需要给文章取名字，因此还要输入参数，所以勾选了右边的选项。设置好关键字之后我们来设置终端命令：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/16564290.jpg" alt=""><br>这里我用到了如下代码：</p>
+<pre><code>j nodejs-hexo
+hexo <span class="keyword">n</span> {<span class="keyword">query</span>}
+<span class="keyword">cd</span> source/_posts
+<span class="keyword">st</span> {<span class="keyword">query</span>}.md
+</code></pre><p>第一行的j命令是oh-my-zsh中的一个插件叫做autojump，他会根据你输入的参数来跳到最匹配的目录而不用输入路径。进入hexo目录之后调用hexo new (日志名)来创建新日志，后面的{query}就是我们在Alfred中输入的参数，新建完之后cd到hexo的源文件目录，然后调用编辑器进行编辑，这里st就是oh-my-zsh对于快捷使用sublime text3的插件。因此，经过这样的设置，如果你想创建一篇名字叫“我好帅”的日志，你只用在任意地方用快捷键呼出Alfred，然后输入</p>
+<pre><code><span class="title">hexo</span> n 我好帅
+</code></pre><p>剩下的事情Alfred就帮你做了，你就只用等着编辑器自动打开然后输入你有多帅了。下面来看看效果：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/34810900.jpg" alt=""><br>是不是很方便，是不是很high？</p>
+<h4 id="更新修改">更新修改</h4><p>有时候你在修改你的某个日志的时候，你并不想每次修改完就提交给Github，而是先在本地服务器测试，这也是正确的做法。那么想要手动更新，步骤是：</p>
+<ol>
+<li>在编辑器中保存markdown文件</li>
+<li>打开终端，cd到hexo所在目录</li>
+<li>hexo clear</li>
+<li>hexo generate<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""></li>
+</ol>
+<p>好吧虽然也不是太麻烦，但是为什么不用Alfred和iterm2来简化操作呢。<br>跟新建hexo日志步骤一样，只有终端命令代码不同：</p>
+<pre><code><span class="built_in">j</span> nodejs-hexo
+hexo clean
+hexo generate
+</code></pre><p>比新建hexo日志简单了，但原理是相同的，因此当你保存了markdown文件之后，呼出Alfred输入你设置的关键字，他就会帮你更新，你就只用回到浏览器在你的本地服务器的地址上刷新一下，新内容就呈现在你眼前了。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/1054052.jpg" alt=""></p>
+<h4 id="上传博客">上传博客</h4><p>最后一步就是发布博客了，跟前面也没什么不同，只用在终端命令中加一条</p>
+<pre><code><span class="title">hexo</span> deploy
+</code></pre><p>hexo就回将你的本地静态文件上传给你指定的Github repo了</p>
+<h2 id="总结">总结</h2><p>用Alfred对平时的工作效率提升真不是一星半点，本文只介绍了操作hexo博客的方面，这只是能用Alfred做的事情的冰山一角。更多workflow请参考-&gt;<a href="https://github.com/zenorocha/alfred-workflows" target="_blank" rel="external">Alfred workflows</a>。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/11/15/javascript闭包/" itemprop="url">
                   从原理来看javascript闭包－作用域链
                 </a>
               
@@ -296,8 +460,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/15/新的开始/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/15/新的开始/" itemprop="commentsCount"></span>
+                <a href="/2015/11/15/javascript闭包/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/15/javascript闭包/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -436,7 +600,7 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
