@@ -188,7 +188,7 @@ body {
   font-family: Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 14px;
   line-height: 2;
-  color: #35adec;
+  color: #555;
   background: #fff;
 }
 @media (max-width: 767px) {
@@ -270,7 +270,7 @@ p {
   margin: 0 0 25px 0;
 }
 a {
-  color: #35adec;
+  color: #555;
   text-decoration: none;
   border-bottom: 1px solid #0cb1e0;
 }
@@ -373,14 +373,14 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  border: 1px solid #fda1e8;
+  border: 1px solid #ddd;
   font-size: 14px;
 }
 table>tbody>tr:nth-of-type(odd) {
   background-color: #f9f9f9;
 }
 table>tbody>tr:hover {
-  background-color: #fda1e8;
+  background-color: #f5f5f5;
 }
 caption,
 th,
@@ -392,8 +392,8 @@ td {
 }
 th,
 td {
-  border-bottom: 3px solid #fda1e8;
-  border-right: 1px solid #fda1e8;
+  border-bottom: 3px solid #ddd;
+  border-right: 1px solid #eee;
 }
 th {
   padding-bottom: 10px;
@@ -525,7 +525,7 @@ pre code {
 .gist {
   margin: 20px 0;
   border-style: solid;
-  border-color: #fda1e8;
+  border-color: #ccc;
   border-width: 1px 0;
   background: #f7f7f7;
   padding: 15px 40px 15px 15px;
@@ -725,7 +725,7 @@ body {
 .site-subtitle {
   margin-top: 10px;
   font-size: 13px;
-  color: #febbef;
+  color: #999;
 }
 .use-motion .brand {
   opacity: 0;
@@ -891,12 +891,12 @@ body {
 }
 .site-author-name {
   margin: 5px 0 0;
-  color: #fda1e8;
+  color: #f5f5f5;
 }
 .site-description {
   margin-top: 5px;
   font-size: 14px;
-  color: #35adec;
+  color: #555;
 }
 .site-state {
   overflow: hidden;
@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffcc47;
+  background: #aa5d04;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1181,7 +1181,7 @@ body {
   display: block;
   width: 22px;
   height: 2px;
-  background: #35adec;
+  background: #555;
   border-radius: 1px;
 }
 .btn-bar+.btn-bar {
@@ -1465,7 +1465,7 @@ body {
 .pagination {
   margin: 120px 0 40px;
   text-align: center;
-  border-top: 1px solid #fda1e8;
+  border-top: 1px solid #eee;
 }
 .page-number-basic,
 .pagination .prev,
@@ -1492,7 +1492,7 @@ body {
 .pagination .next,
 .pagination .page-number {
   border-bottom: 0;
-  border-top: 1px solid #fda1e8;
+  border-top: 1px solid #eee;
   transition-property: border-color;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
@@ -1515,8 +1515,8 @@ body {
 }
 .pagination .page-number.current {
   color: #fff;
-  background: #fda1e8;
-  border-top-color: #fda1e8;
+  background: #ccc;
+  border-top-color: #ccc;
 }
 @media (max-width: 767px) {
   .pagination {
@@ -1527,7 +1527,7 @@ body {
   .pagination .page-number {
     margin-bottom: 10px;
     border-top: 0;
-    border-bottom: 1px solid #fda1e8;
+    border-bottom: 1px solid #eee;
   }
   .pagination .prev:hover,
   .pagination .next:hover,
