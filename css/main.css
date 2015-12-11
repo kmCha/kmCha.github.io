@@ -272,7 +272,7 @@ p {
 a {
   color: #555;
   text-decoration: none;
-  border-bottom: 1px solid #0cb1e0;
+  border-bottom: 1px solid #999;
 }
 a:hover {
   color: #222;
@@ -313,7 +313,7 @@ hr {
 }
 blockquote {
   padding: 0 15px;
-  color: #0cb1e0;
+  color: #666;
   border-left: 4px solid #ddd;
 }
 blockquote cite::before {
@@ -807,7 +807,7 @@ body {
 .translation {
   margin-top: -20px;
   font-size: 14px;
-  color: #0cb1e0;
+  color: #999;
 }
 .post:last-child .post-eof.post-eof.post-eof {
   display: none;
@@ -859,7 +859,7 @@ body {
   -webkit-transform: translateZ(0);
 }
 .sidebar a {
-  color: #0cb1e0;
+  color: #999;
   border-bottom-color: #555;
 }
 .sidebar a:hover {
@@ -878,7 +878,7 @@ body {
 .sidebar-inner {
   position: relative;
   padding: 20px 10px;
-  color: #0cb1e0;
+  color: #999;
   text-align: center;
 }
 .site-author-image {
@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #aa5d04;
+  background: #ff008f;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1001,7 +1001,7 @@ body {
 }
 .post-toc-empty {
   font-size: 14px;
-  color: #0cb1e0;
+  color: #666;
 }
 .post-toc ol {
   overflow: auto;
@@ -1012,10 +1012,10 @@ body {
   font-size: 14px;
 }
 .post-toc ol a {
-  color: #0cb1e0;
+  color: #999;
 }
 .post-toc ol a:hover {
-  color: #0cb1e0;
+  color: #ccc;
 }
 .post-toc .nav .nav-child {
   display: none;
@@ -1030,7 +1030,7 @@ body {
   display: block;
 }
 .post-toc .nav .active > a {
-  color: #0cb1e0;
+  color: #ccc;
 }
 .post-toc .nav .active-current > a {
   color: #87daff;
@@ -1054,7 +1054,7 @@ body {
 }
 .footer {
   font-size: 14px;
-  color: #0cb1e0;
+  color: #999;
 }
 .footer img {
   border: none;
@@ -1141,14 +1141,14 @@ body {
 .page-post-detail .post-type-quote blockquote::before {
   top: -20px;
   background-image: url("../images/quote-l.svg");
-  border-top: 1px solid #0cb1e0;
+  border-top: 1px solid #ccc;
 }
 .blockquote-center::after,
 .page-home .post-type-quote blockquote::after,
 .page-post-detail .post-type-quote blockquote::after {
   bottom: -20px;
   background-image: url("../images/quote-r.svg");
-  border-bottom: 1px solid #0cb1e0;
+  border-bottom: 1px solid #ccc;
   background-position: 100% 8px;
 }
 .blockquote-center p,
@@ -1199,7 +1199,7 @@ body {
   margin: 10px auto 15px;
   text-align: center;
   font-size: 14px;
-  color: #0cb1e0;
+  color: #999;
   font-weight: bold;
   line-height: 1;
 }
@@ -1267,7 +1267,7 @@ body {
 }
 .posts-expand .post-meta {
   margin: 3px 0 60px 0;
-  color: #0cb1e0;
+  color: #999;
   font-size: 12px;
   text-align: center;
 }
@@ -1277,7 +1277,7 @@ body {
   padding: 3px;
 }
 .posts-expand .post-meta .post-category-list-link {
-  color: #0cb1e0;
+  color: #999;
 }
 @media (max-width: 767px) {
   .posts-expand .post-comments-count {
@@ -1349,7 +1349,7 @@ body {
   margin: 160px auto 120px;
   width: 8%;
   height: 1px;
-  background: #0cb1e0;
+  background: #ccc;
   text-align: center;
 }
 .post-more-link {
@@ -1385,7 +1385,7 @@ body {
   margin-left: 20px;
 }
 .posts-collapse .collection-title small {
-  color: #0cb1e0;
+  color: #bbb;
 }
 .posts-collapse .collection-title::before {
   content: " ";
@@ -1396,7 +1396,7 @@ body {
   margin-top: -4px;
   width: 8px;
   height: 8px;
-  background: #0cb1e0;
+  background: #bbb;
   border-radius: 50%;
 }
 .posts-collapse .post {
@@ -1408,7 +1408,7 @@ body {
   transition-timing-function: ease-in-out;
   transition-delay: 0s;
   transition-property: border;
-  border-bottom: 1px dashed #0cb1e0;
+  border-bottom: 1px dashed #ccc;
 }
 .posts-collapse .post-header::before {
   content: " ";
@@ -1418,7 +1418,7 @@ body {
   width: 6px;
   height: 6px;
   margin-left: -4px;
-  background: #0cb1e0;
+  background: #bbb;
   border-radius: 50%;
   border: 1px solid #fff;
   transition-duration: 0.2s;
@@ -1427,7 +1427,7 @@ body {
   transition-property: background;
 }
 .posts-collapse .post-header:hover {
-  border-bottom-color: #0cb1e0;
+  border-bottom-color: #666;
 }
 .posts-collapse .post-header:hover::before {
   background: #222;
@@ -1453,7 +1453,7 @@ body {
   opacity: 0.6;
 }
 .posts-collapse .post-title a {
-  color: #0cb1e0;
+  color: #666;
   border-bottom: none;
 }
 .page-home .post-type-quote .post-header,
@@ -1887,7 +1887,7 @@ body {
   margin: 10px;
 }
 .category-all-page .category-list-count {
-  color: #0cb1e0;
+  color: #bbb;
 }
 .category-all-page .category-list-count:before {
   display: inline;
@@ -1975,7 +1975,7 @@ body {
 }
 .site-search form input {
   border: none;
-  color: #0cb1e0;
+  color: #ccc;
   background: transparent url("/images/searchicon.png") no-repeat 10px 40%;
   background-size: 15px 15px;
 }
