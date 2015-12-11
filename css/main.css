@@ -819,7 +819,7 @@ body {
   width: 15px;
   height: 15px;
   padding: 5px;
-  background: #222;
+  background: #444;
   line-height: 0;
   z-index: 1050;
   cursor: pointer;
@@ -855,7 +855,7 @@ body {
   bottom: 0;
   z-index: 1040;
   box-shadow: inset 0 2px 6px #000;
-  background: #222;
+  background: #444;
   -webkit-transform: translateZ(0);
 }
 .sidebar a {
@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff008f;
+  background: #ff24d0;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1332,7 +1332,7 @@ body {
   border-bottom: none;
 }
 .post-nav-item a:hover {
-  color: #222;
+  color: #444;
   border-bottom: none;
 }
 .post-nav-item a:active {
@@ -1430,7 +1430,7 @@ body {
   border-bottom-color: #666;
 }
 .posts-collapse .post-header:hover::before {
-  background: #222;
+  background: #444;
 }
 .posts-collapse .post-meta {
   position: absolute;
@@ -1613,7 +1613,7 @@ body {
   width: 15px;
   height: 13px;
   padding: 5px;
-  background: #222;
+  background: #444;
   color: #fff;
   cursor: pointer;
   -webkit-transform: translateZ(0);
@@ -1906,7 +1906,7 @@ body {
 .custom-logo .site-title {
   margin: 10px auto 0;
   font-size: 24px;
-  color: #222;
+  color: #444;
 }
 .custom-logo .site-title a {
   border: none;
@@ -1964,7 +1964,7 @@ body {
 .site-search form {
   position: relative;
   vertical-align: top;
-  background: #222;
+  background: #444;
   height: 30px;
   z-index: 10;
 }
@@ -1981,7 +1981,7 @@ body {
 }
 @media (max-width: 767px) {
   .site-search form input {
-    color: #222;
+    color: #444;
   }
 }
 .use-motion .site-search form {
