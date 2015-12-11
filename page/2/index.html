@@ -250,8 +250,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/12/07/javascript继承/" itemprop="url">
-                  javascript继承
+                <a class="post-title-link" href="/2015/11/20/Alfred+iterm2+hexo/" itemprop="url">
+                  效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传
                 </a>
               
             
@@ -261,8 +261,181 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-07T23:06:25-05:00" content="2015-12-07">
-              2015-12-07
+            <time itemprop="dateCreated" datetime="2015-11-20T14:44:12-05:00" content="2015-11-20">
+              2015-11-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/20/Alfred+iterm2+hexo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/20/Alfred+iterm2+hexo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="关于Alfred">关于Alfred</h2><p>Alfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一大把资料能入门-&gt;<a href="http://www.baidu.com/s?wd=Alfred&amp;rsv_spt=1&amp;rsv_iqid=0xa36cff7400007296&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;inputT=3345&amp;rsv_t=1aedNNcD9t6rrODXPauSl1RUTu99ApZG6qSEAvtSyJEZkwNVP3HM9JzbCQDN4UK4XmOP&amp;oq=%E9%97%AD%E5%8C%85&amp;rsv_pq=815794f100080c6c&amp;rsv_sug3=33&amp;rsv_sug1=14&amp;rsv_sug2=0&amp;rsv_sug4=3671" target="_blank" rel="external">百度Alfred</a>。</p>
+<h2 id="关于iterm2">关于iterm2</h2><p>iterm2是mac上一款能够代替自带terminal的软件，虽然自带的终端功能也比较丰富，但是iterm2用上手了以后会发现有很多能帮助提高效率的地方。同样，本文不对此做过多介绍，<a href="http://www.baidu.com/s?wd=iterm2&amp;rsv_spt=1&amp;rsv_iqid=0xa36cff7400007296&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;inputT=3771&amp;rsv_t=8bb8tRSqKOdnwmKM3ogb7f%2BIHXfTMs5sZNag1Q4uwoRQ2m63Bc%2BRIPCrZJiFliM6c3sR&amp;oq=Alfred&amp;rsv_pq=9733378c00030521&amp;rsv_sug3=45&amp;rsv_sug1=21&amp;rsv_sug2=0&amp;rsv_sug4=4071" target="_blank" rel="external">百度iterm2</a>。<br>另外，配合iterm2的shell建议使用zsh，Github上一个开源项目能帮助你理解和使用-&gt;<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>。</p>
+<h3 id="PS：设置Alfred默认打开终端为iterm2">PS：设置Alfred默认打开终端为iterm2</h3><p>Alfred中默认的终端是系统自带的，因此要手动设置将默认的终端变为iterm2。首先打开Alfred的偏好设置（command+,），然后点选Features-&gt;Terminal/Shell，将Application选项改为Custom，<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/2160143.jpg" alt=""><br>接着将下面代码粘贴至上图中的文本域</p>
+<pre><code><span class="function_start"><span class="keyword">on</span></span> is_running(app_name)
+<span class="keyword">tell</span> <span class="type">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> (<span class="property">name</span> <span class="keyword">of</span> processes) <span class="keyword">contains</span> app_name
+<span class="keyword">end</span> is_running
+
+<span class="comment">-- Please note, if you store the iTerm binary in any other location than the Applications Folder</span>
+<span class="comment">-- please ensure you update the two locations below (in the format of : rather than / for folder dividers)</span>
+<span class="comment">-- this gets around issues with AppleScript not handling things well if you have two iTerm binaries on your system... which can happen :D</span>
+
+<span class="function_start"><span class="keyword">on</span></span> alfred_script(q)
+    <span class="keyword">if</span> is_running(<span class="string">"iTerm"</span>) <span class="keyword">then</span>
+        <span class="command">run script</span> <span class="string">"
+            on run {q}
+                tell application \":Applications:iTerm.app\"
+                    activate
+                    set myterm to (make new terminal)
+                    tell myterm
+                        set mysession to (launch session \"Default Session\")
+                        tell mysession to write text q
+                    end tell
+                end tell
+            end run
+        "</span> <span class="keyword">with</span> parameters {q}
+    <span class="keyword">else</span>
+        <span class="command">run script</span> <span class="string">"
+            on run {q}
+                tell application \":Applications:iTerm.app\"
+                    activate
+                    tell the first terminal
+                        tell the last session to write text q
+                    end tell
+                end tell
+            end run
+        "</span> <span class="keyword">with</span> parameters {q}
+    <span class="keyword">end</span> <span class="keyword">if</span>
+<span class="keyword">end</span> alfred_script
+</code></pre><p>代码出处：<a href="https://github.com/stuartcryan/custom-iterm-applescripts-for-alfred/blob/master/custom_iterm_script_iterm_2.1.1.applescript" target="_blank" rel="external">custom_iterm_script_iterm_2.1.1</a></p>
+<h2 id="回到hexo">回到hexo</h2><h4 id="新建hexo日志">新建hexo日志</h4><p>用hexo搭博客的同学们都知道，如果想新建一个日志，步骤是：</p>
+<ol>
+<li>打开终端</li>
+<li>cd到hexo所在的目录</li>
+<li>hexo new (日志名)</li>
+<li>用自己的markdown编辑器（我用的sublime text3）打开新建的.mk文件开始编辑<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""></li>
+</ol>
+<p>那么这时候Alfred workflow就派上用场了，下面介绍怎么用Alfred创建一个快速新建hexo日志的懒人workflow</p>
+<p>首先打开Alfred的偏好设置（command+,），然后点击workflow这一栏（收费版本才能使用的功能），你就会看到下面这样的<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/4211599.jpg" alt=""><br>接着点击左下角那个加号（＋），选择Templates-&gt;Essentials-&gt;Keyword to Terminal Command，然后填写workflow名字、作者名字等<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/37792074.jpg" alt=""><br>点击Create以后，在左边workflow列表里就会出现你刚创建的workfolw，点击你刚创建的workflow<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/59938509.jpg" alt=""><br>上面的图片中，左边是设定在Alfred中启动你的workflow所要输入的关键字，右边是执行workflow的终端命令。我们先来设置关键字：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/41572225.jpg" alt=""><br>keyword中填入关键字，因为创建新日志需要给文章取名字，因此还要输入参数，所以勾选了右边的选项。设置好关键字之后我们来设置终端命令：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/16564290.jpg" alt=""><br>这里我用到了如下代码：</p>
+<pre><code>j nodejs-hexo
+hexo <span class="keyword">n</span> {<span class="keyword">query</span>}
+<span class="keyword">cd</span> source/_posts
+<span class="keyword">st</span> {<span class="keyword">query</span>}.md
+</code></pre><p>第一行的j命令是oh-my-zsh中的一个插件叫做autojump，他会根据你输入的参数来跳到最匹配的目录而不用输入路径。进入hexo目录之后调用hexo new (日志名)来创建新日志，后面的{query}就是我们在Alfred中输入的参数，新建完之后cd到hexo的源文件目录，然后调用编辑器进行编辑，这里st就是oh-my-zsh对于快捷使用sublime text3的插件。因此，经过这样的设置，如果你想创建一篇名字叫“我好帅”的日志，你只用在任意地方用快捷键呼出Alfred，然后输入</p>
+<pre><code><span class="title">hexo</span> n 我好帅
+</code></pre><p>剩下的事情Alfred就帮你做了，你就只用等着编辑器自动打开然后输入你有多帅了。下面来看看效果：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/34810900.jpg" alt=""><br>是不是很方便，是不是很high？</p>
+<h4 id="更新修改">更新修改</h4><p>有时候你在修改你的某个日志的时候，你并不想每次修改完就提交给Github，而是先在本地服务器测试，这也是正确的做法。那么想要手动更新，步骤是：</p>
+<ol>
+<li>在编辑器中保存markdown文件</li>
+<li>打开终端，cd到hexo所在目录</li>
+<li>hexo clear</li>
+<li>hexo generate<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""></li>
+</ol>
+<p>好吧虽然也不是太麻烦，但是为什么不用Alfred和iterm2来简化操作呢。<br>跟新建hexo日志步骤一样，只有终端命令代码不同：</p>
+<pre><code><span class="built_in">j</span> nodejs-hexo
+hexo clean
+hexo generate
+</code></pre><p>比新建hexo日志简单了，但原理是相同的，因此当你保存了markdown文件之后，呼出Alfred输入你设置的关键字，他就会帮你更新，你就只用回到浏览器在你的本地服务器的地址上刷新一下，新内容就呈现在你眼前了。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/1054052.jpg" alt=""></p>
+<h4 id="上传博客">上传博客</h4><p>最后一步就是发布博客了，跟前面也没什么不同，只用在终端命令中加一条</p>
+<pre><code><span class="title">hexo</span> deploy
+</code></pre><p>hexo就回将你的本地静态文件上传给你指定的Github repo了</p>
+<h2 id="总结">总结</h2><p>用Alfred对平时的工作效率提升真不是一星半点，本文只介绍了操作hexo博客的方面，这只是能用Alfred做的事情的冰山一角。更多workflow请参考-&gt;<a href="https://github.com/zenorocha/alfred-workflows" target="_blank" rel="external">Alfred workflows</a>。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/11/15/javascript闭包/" itemprop="url">
+                  从原理来看javascript闭包－作用域链
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-11-15T18:44:12-05:00" content="2015-11-15">
+              2015-11-15
             </time>
           </span>
 
@@ -287,8 +460,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/07/javascript继承/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/07/javascript继承/" itemprop="commentsCount"></span>
+                <a href="/2015/11/15/javascript闭包/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/15/javascript闭包/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -310,99 +483,46 @@
         
           <span itemprop="articleBody">
             
-              <p>今天来谈谈这个OOP中重要的话题——继承，读了Nicholas C Zakas所著的《JavaScript高级程序设计（第三版）》之后有感，在这里总结一下，大神们轻点喷。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-8/60513414.jpg" alt=""><br>在javascript中，继承能够通过很多方法来实现，在这里将主要介绍4种继承的方法。</p>
-<h2 id="原型链继承(prototype_chain)">原型链继承(prototype chain)</h2><p>javascript继承中，原型链占据了很大的一部分比重。要知道原型链继承的原理首先得知道原型链是啥东西。</p>
-<h3 id="原型链">原型链</h3><p>在javascript中，每个构造函数在创建时都会生成一个prototype对象（构造函数的内部属性[[prototype]]指向他的原型对象），而所有自动生成的原型对象中都有一个constructor属性，他的值指向构造函数本身。所以构造函数和他的原型对象之间的关系就像一个环。由构造函数生成的实例中，也会有一个和构造函数一样的内部属性[[prototype]]，指向构造函数的原型对象。因此，这样看来类的实例和构造函数之间啥关系也没有。说了半天那原型链是啥？<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-8/24257355.jpg" alt=""><br>如果我们让一个类（A）的构造函数的原型对象成为另一个类（B）的构造函数的实例，那么这个A的原型对象中就会有个内部属性[[prototype]]指向B的原型对象，并且A的原型对象中包涵了b的所有属性和方法。然而事情并没有完，我们再让B的原型对象成为类C的实例，那么b的原型对象中就会有个内部属性[[prototype]]指向C的原型对象，并且包涵所有C中的属性和方法。这样我们就构成了一个像这样的链条：</p>
-<pre><code><span class="constant">A的</span>实例-&gt;<span class="constant">A的</span>原型对象（<span class="constant">B的</span>实例）-&gt;<span class="constant">B的</span>原型对象（<span class="constant">C的</span>实例）-&gt;<span class="constant">C的</span>原型对象
-</code></pre><p>这根实例和原型对象的链条就是原型链。由于原型对象是对象，所以一定是原生Object类的一个实例，因此上面的原型链实际上应该是：</p>
-<pre><code><span class="constant">A的</span>实例-&gt;<span class="constant">A的</span>原型对象（<span class="constant">B的</span>实例）-&gt;<span class="constant">B的</span>原型对象（<span class="constant">C的</span>实例）-&gt;<span class="constant">C的</span>原型对象（<span class="constant">Object的</span>实例）-&gt;<span class="constant">Object的</span>原型对象
-</code></pre><p>有了这样粗黑大硬长的原型链之后，A类生成的实例中就能同时包涵B类、C类和Object类中的所有属性和方法了。<br><strong>但是！</strong>光使用原型链继承的话会带来和光使用原型模式创建对象差不多的问题，如果在超类的原型对象中有引用类型值的属性（比如说数组），那么所有子类的所有实例都会指向同一个引用类型值（比如就那个数组）。举个栗子：</p>
-<pre><code><span class="keyword">var</span> Me = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-    <span class="keyword">this</span>.charac = [<span class="string">"tall"</span>, <span class="string">"rich"</span>, <span class="string">"handsome"</span>];
-};
-<span class="keyword">var</span> You = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{};
-You.prototype = <span class="keyword">new</span> Me();
-
-<span class="keyword">var</span> you1 = <span class="keyword">new</span> You();
-you1.charac.push(<span class="string">"ugly"</span>);
-
-<span class="keyword">var</span> you2 = <span class="keyword">new</span> You();
-<span class="built_in">console</span>.log(you1.charac);            <span class="comment">// ["tall", "rich", "handsome", "ugly"]</span>
-<span class="built_in">console</span>.log(you2.charac);            <span class="comment">// ["tall", "rich", "handsome", "ugly"]</span>
-</code></pre><p>所以原型链继承的问题就在子类的原型对象中包涵了父类的所有属性和方法，包括实例属性。那么当父类的一个实例属性是引用类型值（比如数组）的话，那子类的原型对象中的那个引用类型值就会被所有子类的实例引用，因此改变一个实例中的数组就回改变所有子类的实例中的那个数组。为了让每个实例都有自己的个性，必须让引用类型值放在实例属性中，也就是要放在构造函数中。所以又有人想出了下面的方法。</p>
-<h2 id="借用构造函数继承(constructor_stealing)">借用构造函数继承(constructor stealing)</h2><p>借用构造函数（constructor stealing）实际上很简单，中心思想就是函数的call（或者apply）方法。原理是在子类的构造函数中调用父类的构造函数的call方法，指定作用域为子类构造函数作用域（把this传进去即可），这样调用子类构造函数就相当于用父类的构造函数创建了包涵父类实例属性和方法的子类实例。同时你还可以在子类的构造函数中加上自定义的实例属性和方法。废话到这看例子：</p>
-<pre><code><span class="keyword">var</span> Me = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>{
-    <span class="keyword">this</span>.name = name;
-};
-
-<span class="keyword">var</span> You = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>{
-    Me.call(<span class="keyword">this</span>, name);
-    <span class="keyword">this</span>.charac = [<span class="string">"tall"</span>, <span class="string">"rich"</span>, <span class="string">"handsome"</span>];
-};
-
-<span class="keyword">var</span> you1 = <span class="keyword">new</span> You(<span class="string">"Ao Bama"</span>);
-you1.charac.push(<span class="string">"ugly"</span>);
-
-<span class="keyword">var</span> you2 = <span class="keyword">new</span> You(<span class="string">"Jin Zhengen"</span>);
-
-<span class="built_in">console</span>.log(you1.name);    <span class="comment">//"Ao Bama"</span>
-<span class="built_in">console</span>.log(you1.charac);  <span class="comment">//["tall", "rich", "handsome", "ugly"]</span>
-<span class="built_in">console</span>.log(you2.name);    <span class="comment">//"Jin Zhengen"</span>
-<span class="built_in">console</span>.log(you2.charac);  <span class="comment">//["tall", "rich", "handsome"]</span>
-</code></pre><p>这样就解决了原型链继承中的引用类型值的问题。<strong>但是！</strong>新的问题总是会冒出来。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""><br>那么借用构造函数的问题又在哪？问题在于函数的复用性。这样光靠构造函数来创建实例，确实能确保实例的个性化，但是同一个类的实例之所以要归入一个类中那不是因为他们肯定在某方面有相同点吗？比如猫都会叫，耗子都会打洞，如果光使用借用构造函数的话，那必须给每个猫实例都生成一个叫的方法，为何不想一种方法让所有猫都能自动继承叫这个方法而不用给每个猫都生成呢？不用我说当然有人提出来改进的方法。</p>
-<h2 id="组合继承(combination_inheritance)">组合继承(combination inheritance)</h2><p>其实想要解决单独使用上述两种方法的问题也很简单，把他们拼一起不就完了。于是就有个叫组合继承的方法，在子类构造函数中借用了父类的构造函数来继承实例属性，然后将原型对象设置为父类的实例来继承静态方法，想要添加可以复用的静态方法可以在原型对象中设置，增强了函数的复用性，同时也解决了属性值为引用类型值的问题。组合继承是这么用的：</p>
-<pre><code><span class="keyword">var</span> Me = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>{
-    <span class="keyword">this</span>.name = name;
-};
-Me.prototype.papapa = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-    <span class="comment">//啪啪啪</span>
-};
-
-<span class="keyword">var</span> You = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>{
-    Me.call(<span class="keyword">this</span>, name);
-    <span class="keyword">this</span>.charac = [<span class="string">"tall"</span>, <span class="string">"rich"</span>, <span class="string">"handsome"</span>];
-};
-You.prototype = <span class="keyword">new</span> Me();  <span class="comment">// You.prototype.name === undefined</span>
-
-<span class="keyword">var</span> you1 = <span class="keyword">new</span> You(<span class="string">"Ao Bama"</span>);
-<span class="keyword">var</span> you2 = <span class="keyword">new</span> You(<span class="string">"Jin Zhengen"</span>);
-
-<span class="built_in">console</span>.log(you1.name);      <span class="comment">//"Ao Bama"</span>
-<span class="built_in">console</span>.log(you1.papapa());  <span class="comment">//...</span>
-<span class="built_in">console</span>.log(you2.name);      <span class="comment">//"Jin Zhengen"</span>
-<span class="built_in">console</span>.log(you2.papapa());  <span class="comment">//...</span>
-</code></pre><p>这样在You类的所有实例中都能继承Me中的实例属性和静态方法，既增强了函数复用性，又解决了实例引用同一个引用类型值的问题。好了那么有个俗话就是人无完人，方法也是一个道理，组合继承的问题就是会调用两次父类的构造函数。那问题来了，调用两次又咋的？<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-8/9109857.jpg" alt=""><br>第一次调用发生在子类的原型对象作为父类的实例被创建的时候，生成的子类构造函数的原型对象中会存在父类的未定义的实例属性（如果没传入参数的话就是undefined，见上方You.prototype.name）。第二次在用借用构造函数方法来创建子类实例的时候调用，这时候子类的实例中就会存在和子类构造函数的原型对象中的属性一样的实例属性，也就是说每个子类实例在生成的时候就会带有覆盖了继承他原型对象中属性的实例属性。<br>好嘛那你就说有没有解决上述所有问题的方法嘛。有的有的，下面就来介绍第四种方法，他集上述三个方法的优点于一身，又克服了他们的缺点，可谓是……（不晓得说啥了）</p>
-<h2 id="寄生组合继承(parasitic_combination_inheritance)">寄生组合继承(parasitic combination inheritance)</h2><p>这个寄生组合继承相比之前的组合继承多了俩字，寄生。这个词或者说这个方法是由大神Douglas Crockford提出来的，有关寄生式继承这里不说细节，大致思想是通过写一个函数在函数内部用某种方式来返回一个对象。这样就不用像组合继承中一样调用父类的构造函数来生成子类的原型对象了，这样做也就避免了第一次父类构造函数的调用，同时了解决了子类原型对象中会有父类实例属性的问题。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/88476076.jpg" alt=""><br>要实现这个思路，我们先来定义两个函数，第一个函数是：</p>
-<pre><code><span class="keyword">var</span> object = <span class="function"><span class="keyword">function</span><span class="params">(dad)</span> </span>{  <span class="comment">//dad为父类原型对象</span>
-    <span class="keyword">var</span> Son = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{};
-    Son.prototype = dad;
-    <span class="keyword">return</span> <span class="keyword">new</span> Son();
-};
-</code></pre><p>这个函数传入一个父类的原型对象，然后在函数内部创建了一个空的构造函数，并且让构造函数的原型对象等于父类的原型对象，这样就相当于创建了一个没有实例属性的父类，用于解决组合继承中子类原型对象带有父类实例属性的问题。最后返回了这个新构造函数的实例，可以预测这个新实例会被用来当作子类的原型对象。<br>第二个函数是：</p>
-<pre><code><span class="keyword">var</span> inheritPrototype = <span class="function"><span class="keyword">function</span><span class="params">(Son, Dad)</span></span>{    <span class="comment">//Son是子类构造函数，Dad是父类构造函数</span>
-    <span class="keyword">var</span> prototype = object(Dad.prototype);
-    prototype.constructor = Son;                               <span class="comment">//指定自定义原型对象的constructor属性为子类构造函数</span>
-    Son.prototype = prototype;                                    <span class="comment">//将子类默认原型对象改为自定义原型对象</span>
-};
-</code></pre><p>有了这两个函数之后，就可以进行寄生组合继承了：</p>
-<pre><code><span class="keyword">var</span> Me = <span class="function"><span class="keyword">function</span><span class="params">(name)</span> </span>{                                <span class="comment">//父类实例属性</span>
-    <span class="keyword">this</span>.name = name;
-    <span class="keyword">this</span>.charac = [<span class="string">"tall"</span>, <span class="string">"rich"</span>, <span class="string">"handsome"</span>];
-};
-Me.prototype.papapa = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{            <span class="comment">//父类静态方法</span>
-    <span class="comment">//啪啪啪</span>
-};
-
-<span class="keyword">var</span> You = <span class="function"><span class="keyword">function</span><span class="params">(name, age)</span> </span>{
-    Me.call(<span class="keyword">this</span>, name);                                    <span class="comment">//继承实例属性</span>
-    <span class="keyword">this</span>.age = age;                                                <span class="comment">//新增实例属性</span>
-};
-
-inheritPrototype(You, Me);                        <span class="comment">//继承静态方法</span>
-You.prototype.sayName = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{    <span class="comment">//新增静态方法</span>
-    alert(<span class="keyword">this</span>.name);
+              <p><em>本文针对刚接触闭包的新手，也欢迎大家指出任何错误</em><br>相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性缺失能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常被称为特权方法，是定义在对象内部的可以访问内部属性和方法的方法。而要想内部属性对外不可见，只能通过特权方法来访问或修改内部属性的话，就需要将特权方法放进闭包中，他就能访问包围他的对象构造函数中的私有属性了。<br>说了半天，估计像我一样的新手看见一篇这样的介绍闭包的文章的开篇要开始晕头转向了。因为当时我在搜索闭包是什么东西的时候的心情就是这样的<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/89735866.jpg" alt=""><br>所以废话先不多说，下面我就来一步一步谈谈我的理解</p>
+<hr>
+<h1 id="要理解作用域链就要先知道我之_——_变量对象">要理解作用域链就要先知道我之 —— 变量对象</h1><p>变量对象保存了一个作用域中的所有变量和函数，比如全局作用域的全局变量函数中就保存了在全局作用域中申明的变量和函数。而在一个函数执行的时候，有一个叫做活动对象的充当了变量对象的角色，当中保存了在函数体中申明的变量和函数，通常当函数返回之后就会自动销毁（注意是通常不是总是，因为闭包就用到了他的例外）。</p>
+<h1 id="要理解闭包就要先知道我之_——_作用域链">要理解闭包就要先知道我之 —— 作用域链</h1><p>作用域链本质上是一个指向各个不同执行环境（上下文）的变量对象的指针列表。调用函数或者返回一个函数时，该函数会从他的内部属性[[scope]]中创建出一个作用域链，作用域链的最前端指向该函数的活动对象（作为变量对象使用），最后端则指向全局作用域的变量对象，在中间的指向包含该函数的函数（如果有的话）的作用域中的活动对象。</p>
+<h1 id="回到闭包">回到闭包</h1><p>知道了作用域链的原理，可以帮助理解闭包是怎么回事。当一个函数被调用的时候或者内部匿名函数被外部函数返回的时候，就会产生一个作用域链。拿内部匿名函数被返回的例子来说，假设内部匿名函数返回后被传递给了一个变量，他的作用域链包涵了他自己的活动对象、包围函数（外部函数）的活动对象和全局变量对象。一般情况下当函数执行完毕的时候他的执行环境中的作用域链和活动对象都会被销毁，前提是在没有其他的作用域链引用他的活动对象的情况下。而闭包就不是在这个前提下的，内部匿名函数的作用域链引用了外部包围函数的活动对象，因此当外部包围函数返回后，他的作用域链会被销毁，但是他的活动对象因为内部函数的作用域链的引用而依旧坚挺，所以才会产生闭包这种神奇的现象。只要那个指向返回的匿名函数的变量不被设置为null（手动让垃圾回收装置回收），那么那个返回他的外部函数的活动对象就一直存在于他的作用域链中，因此内部函数也就一直能访问外部函数中的变量了。<br>这正是闭包的强大之处，也是容易犯错的地方。利用这个特性，可以在外部函数返回之后继续访问或修改外部函数的变量，这就是在开篇介绍的用特权方法访问私有属性的本质原理。利用闭包强大的特性还能够实现很多有趣而且强大的功能，很多javascript高级用法都用到了闭包的特性<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/30952458.jpg" alt=""></p>
+<h2 id="新手容易踩的坑">新手容易踩的坑</h2><p>为了更好的理解，我这里就举一个网上一抓一大把的例子然后按照上面讲的原理来分析一下</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">woShiShuaiGe</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
+        arr[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="keyword">return</span> i;
+        };
+    }
+    <span class="keyword">return</span> arr;
 }
-</code></pre><p>这样前三种方法的缺点都消失了，可以说是最万能的继承方法。他能去除子类原型对象中多余的父类实例属性，还能保持原型链不变，因此也能用instanceof操作符来判断子类实例所属的类，还能用子类的原型对象的isPrototypeOf()方法来判断子类实例的原型对象，所以<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/35413482.jpg" alt=""></p>
+<span class="keyword">var</span> globalArr = woShiShuaiGe();
+</code></pre><p>上面的函数中，woShiShuaiGe函数调用后会反悔一个由函数组成的数组，数组中每个函数调用之后会返回一个索引值。刚接触闭包这个概念同学（比如说我当时）就觉得那这每个函数肯定都会返回自己的索引值啊，像下面那样</p>
+<pre><code>globalArr[<span class="link_label">0</span>](<span class="link_url"></span>);      //10
+globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);      //10
+</code></pre><p>实际上数组中的所有函数调用后都返回10，也就是woShiShuaiGe执行完毕后的i变量的值。再回头看看woShiShuaiGe函数，for中定义了i变量并且赋值为0。在javascript中只有函数作用域一说，因此i变量实际上是存在于woShiShuaiGe函数的活动对象中的。这时候，作为闭包的arr[i]函数当然就能访问他的包围函数（也就是woShiShuaiGe函数）中的变量，而这个例子中他就返回了i。<br>下面我根据前面讲的原理来分析一下上面的过程。首先woShiShuaiGe函数申明之后被调用，然后返回的数组被赋值给了一个变量，而且返回的数组中保存着有woShiShuaiGe的闭包，所以本应该在woShiShuaiGe函数执行完毕后自动销毁的活动对象不会被销毁（因为globalArr变量中的函数还保存有对woShiShuaiGe函数中变量的引用）。既然woShiShuaiGe的活动对象没有被销毁，那么现在闭包要访问其中的变量那当然就是函数执行后的变量值了。因为woShiShuaiGe函数调用后i＝10，所以globalArr中的函数调用后都返回10。<br>那么造成以上问题的原因，相信大家如果看过相关闭包的文章的话，应该看到过类似下面这句话</p>
+<blockquote>
+<p>闭包中引用的值是外部函数中的最终值，而不是闭包函数被创建的时候的值</p>
+</blockquote>
+<p>那既然话是这么说的，那我们是不是让闭包引用创建他的时候的值就行了？ exactly！<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/99274798.jpg" alt=""><br>话不多说先看例子:</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">woShiShuaiGe</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
+        arr[i] = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>{
+            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                <span class="keyword">return</span> num;
+            };
+        }(i);
+    }
+    <span class="keyword">return</span> arr;
+}
+<span class="keyword">var</span> globalArr = woShiShuaiGe();
+</code></pre><p>上面的改进方法中，我们将一个立即执行的匿名函数的返回的函数赋值给了arr[i]（注意最后的(i)）。我们将此时woShiShuaiGe函数的活动对象中的i变量传递给了那个立即执行的匿名函数，因为那个函数悲催地连世界都没好好的看一眼就被立即执行了，因此传给他的i的值正是他创建（刚创建就被执行了）的时候的i的值。这时候i的值进入了外部匿名函数并且被赋值给了外部匿名函数活动对象中的num变量，而返回的内部匿名函数因为是闭包所以能够访问外部匿名函数中的变量值，因此他返回了num。最终woShiShuaiGe函数返回的数组中的每个函数都有自己的num值，而自己那个num值都是自己在被创建的时候的i值，所以这样就能正确返回索引值了。</p>
+<pre><code>globalArr[<span class="link_label">0</span>](<span class="link_url"></span>);      //0
+globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);      //5
+</code></pre><h1 id="总结">总结</h1><p>以上就是我对闭包的理解和分析，希望能对刚接触这个概念的新手们有点帮助，因为我觉得真正搞懂了原理才能更好的应用。本文举的一个例子仅仅是为了解释闭包的原理，除此之外闭包还有很多的用法。在很多高级概念中闭包都是最基础的内容，因此搞懂闭包还是很有必要的。</p>
 
             
           </span>
@@ -429,7 +549,7 @@ You.prototype.sayName = <span class="function"><span class="keyword">function</s
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 
