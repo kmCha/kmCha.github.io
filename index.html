@@ -26,9 +26,7 @@
 
 
 
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 
 
@@ -149,16 +147,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -184,7 +172,7 @@
         <li class="menu-item menu-item-search">
           <a href="#" class="st-search-show-outputs">
             
-              <i class="menu-item-icon fa fa-search icon-next-search"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -318,15 +306,203 @@
         
           <span itemprop="articleBody">
             
-            水课在手，天下我有。水课不仅能帮爱玩的同学们腾出大量时间去玩儿，也能帮学霸同学们节约大量时间来学习自己想学的东西。想必每个人都问学长学姐推荐过本专业的水课，没问题他们会告诉你，但是你上rabaska一看：是的，没位置了！
-这逗比东西是啥？水课哪里跑，是我被uo的选课系统弄抓狂以后写的一个脚本，他可以
-            ...
+              <p>水课在手，天下我有。水课不仅能帮爱玩的同学们腾出大量时间去玩儿，也能帮学霸同学们节约大量时间来学习自己想学的东西。想必每个人都问学长学姐推荐过本专业的水课，没问题他们会告诉你，但是你上rabaska一看：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/4967862.jpg" alt=""><br>是的，没位置了！</p>
+<h1 id="这逗比东西是啥？">这逗比东西是啥？</h1><p>水课哪里跑，是我被uo的选课系统弄抓狂以后写的一个脚本，他可以在选课页面运行然后在后台自动每3s刷新一次，页面下方会记录尝试的次数，如果位置刷出来了，会弹出一个对话框，点击确定之后他会自动帮你把课加入cart，你就只用完成接下来的操作就行了。相比以往的手动刷课方式，你现在只用进入选课页面点一下脚本，然后就可以去做其他事情直到他提示你你才需要去处理，我反正不想一边复习final一边隔几分钟去按一下刷新（ps：<strong>水课哪里跑</strong>是在final复习期间完成的）。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/72474289.jpg" alt=""></p>
+<h1 id="这东西咋用？">这东西咋用？</h1><p>首先，你需要做的是在你的浏览器中新建一个书签，也就是收藏网址，你可以新建或者随便收藏一个页面，然后修改他的书签页的网址栏为下面的代码：</p>
+<p>有提示音版（课的位置刷出来之后会弹窗提示并且会伴有振奋人心普天同庆般的新闻联播片头曲）：</p>
+<pre><code>javascript:!<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{<span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params">e</span>)</span>{<span class="keyword">var</span> t,n,r,a,o,c,l=[],s=<span class="literal">null</span>;<span class="keyword">for</span>(t=<span class="number">0</span>,n=e.elements.length;n&gt;t;t++)<span class="keyword">switch</span>(s=e.elements[t],s.type){<span class="keyword">case</span><span class="string">"select-one"</span>:<span class="keyword">case</span><span class="string">"select-multiple"</span>:<span class="keyword">if</span>(s.name.length)<span class="keyword">for</span>(r=<span class="number">0</span>,a=s.options.length;a&gt;r;r++)o=s.options[r],o.selected&amp;&amp;(c=<span class="string">""</span>,c=o.hasAttribute?o.hasAttribute(<span class="string">"value"</span>)?o.value:o.text:o.attributes.value.specified?o.value:o.text,l.push(<span class="built_in">encodeURIComponent</span>(s.name)+<span class="string">"="</span>+<span class="built_in">encodeURIComponent</span>(c)));<span class="keyword">break</span>;<span class="keyword">case</span> <span class="keyword">void</span> <span class="number">0</span>:<span class="keyword">case</span><span class="string">"file"</span>:<span class="keyword">case</span><span class="string">"submit"</span>:<span class="keyword">case</span><span class="string">"reset"</span>:<span class="keyword">case</span><span class="string">"button"</span>:<span class="keyword">break</span>;<span class="keyword">case</span><span class="string">"radio"</span>:<span class="keyword">case</span><span class="string">"checkbox"</span>:<span class="keyword">if</span>(!s.checked)<span class="keyword">break</span>;<span class="keyword">default</span>:s.name.length&amp;&amp;l.push(<span class="built_in">encodeURIComponent</span>(s.name)+<span class="string">"="</span>+<span class="built_in">encodeURIComponent</span>(s.value))}<span class="keyword">return</span> l.join(<span class="string">"&amp;"</span>)}<span class="function"><span class="keyword">function</span> <span class="title">t</span>(<span class="params"></span>)</span>{<span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> XMLHttpRequest)<span class="keyword">return</span> <span class="keyword">new</span> XMLHttpRequest;<span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> ActiveXObject){<span class="keyword">if</span>(<span class="string">"string"</span>!=<span class="keyword">typeof</span> <span class="built_in">arguments</span>.callee.activeXString){<span class="keyword">var</span> e,t,n=[<span class="string">"MSXML2.XMLHttp.6.0"</span>,<span class="string">"MSXML2.XMLHttp.3.0"</span>,<span class="string">"MSXML2.XMLHttp"</span>];<span class="keyword">for</span>(e=<span class="number">0</span>,t=n.length;t&gt;e;e++)<span class="keyword">try</span>{<span class="keyword">var</span> r=<span class="keyword">new</span> ActiveXObject(n[e]);<span class="keyword">return</span> <span class="built_in">arguments</span>.callee.activeXString=n[e],r}<span class="keyword">catch</span>(a){}}<span class="keyword">return</span> <span class="keyword">new</span> ActiveXObject(<span class="built_in">arguments</span>.callee.activeXString)}<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"No XHR object available."</span>)}<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>{r?(a.open(<span class="string">"post"</span>,c.action,!<span class="number">0</span>),a.setRequestHeader(<span class="string">"Content-Type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>),a.send(e(c))):l.innerHTML=<span class="string">"自动刷课还没开始哦，先选择学期再按一下保存的书签"</span>}<span class="keyword">if</span>(!<span class="built_in">document</span>.querySelector(<span class="string">"#courseInfo"</span>)){<span class="keyword">var</span> r=<span class="built_in">document</span>.querySelector(<span class="string">"#_ctl0__Template_btnCourseGo"</span>),a=t(),o=<span class="number">0</span>,c=<span class="built_in">document</span>.querySelector(<span class="string">"form"</span>),l=<span class="built_in">document</span>.createElement(<span class="string">"p"</span>);l.style.padding=<span class="string">"10px 20px"</span>,l.style.border=<span class="string">"2px dotted #7e7e7e"</span>,l.style.textAlign=<span class="string">"center"</span>,l.style.color=<span class="string">"red"</span>,l.style.fontSize=<span class="string">"2em"</span>,l.id=<span class="string">"courseInfo"</span>,<span class="built_in">document</span>.querySelector(<span class="string">"body"</span>).appendChild(l);<span class="keyword">var</span> s=<span class="built_in">document</span>.createElement(<span class="string">"audio"</span>);s.src=<span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/successSound.mp3"</span>,s.preload=<span class="string">"auto"</span>;<span class="keyword">var</span> i=<span class="built_in">document</span>.createElement(<span class="string">"audio"</span>);i.src=<span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/failSound.mp3"</span>,i.preload=<span class="string">"auto"</span>,a.onreadystatechange=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>{<span class="keyword">if</span>(<span class="number">4</span>==a.readyState){<span class="keyword">if</span>(a.status&gt;=<span class="number">200</span>&amp;&amp;a.status&lt;<span class="number">300</span>||<span class="number">304</span>==a.status){<span class="keyword">if</span>(-<span class="number">1</span>===a.responseText.indexOf(<span class="string">"disabled"</span>))<span class="keyword">if</span>(-<span class="number">1</span>===a.responseText.indexOf(<span class="string">"Your session has expired"</span>)){s.play();<span class="keyword">var</span> t=setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{<span class="keyword">if</span>(s.currentTime&gt;<span class="number">0</span>){<span class="keyword">var</span> e=confirm(<span class="string">"这个课有位置了，赶紧的！要自动选就按确定"</span>);e===!<span class="number">0</span>?(r.click(),clearInterval(t),clearInterval(u)):(clearInterval(u),clearInterval(t))}},<span class="number">100</span>)}<span class="keyword">else</span>{i.play();<span class="keyword">var</span> n=setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{i.currentTime&gt;<span class="number">0</span>&amp;&amp;(alert(<span class="string">"登陆时间到了，重新登录再来吧"</span>),clearInterval(u),clearInterval(n),l.innerHTML=<span class="string">"水课哪里跑：尝试"</span>+ ++o+<span class="string">"次后，还是没有位置，rabaska让你重新登录了"</span>)},<span class="number">100</span>)}}<span class="keyword">else</span> alert(<span class="string">"服务器错误，刷新试试"</span>),clearInterval(u);l.innerHTML=<span class="string">"水课哪里跑：尝试"</span>+ ++o+<span class="string">"次"</span>}},n();<span class="keyword">var</span> u=setInterval(n,<span class="number">3e3</span>)}}();
+</code></pre><p>无提示音版（只有弹窗没有提示音，喜欢清静的同学可以用这个）：</p>
+<pre><code>javascript:!<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{<span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params">e</span>)</span>{<span class="keyword">var</span> t,n,r,a,o,c,s=[],i=<span class="literal">null</span>;<span class="keyword">for</span>(t=<span class="number">0</span>,n=e.elements.length;n&gt;t;t++)<span class="keyword">switch</span>(i=e.elements[t],i.type){<span class="keyword">case</span><span class="string">"select-one"</span>:<span class="keyword">case</span><span class="string">"select-multiple"</span>:<span class="keyword">if</span>(i.name.length)<span class="keyword">for</span>(r=<span class="number">0</span>,a=i.options.length;a&gt;r;r++)o=i.options[r],o.selected&amp;&amp;(c=<span class="string">""</span>,c=o.hasAttribute?o.hasAttribute(<span class="string">"value"</span>)?o.value:o.text:o.attributes.value.specified?o.value:o.text,s.push(<span class="built_in">encodeURIComponent</span>(i.name)+<span class="string">"="</span>+<span class="built_in">encodeURIComponent</span>(c)));<span class="keyword">break</span>;<span class="keyword">case</span> <span class="keyword">void</span> <span class="number">0</span>:<span class="keyword">case</span><span class="string">"file"</span>:<span class="keyword">case</span><span class="string">"submit"</span>:<span class="keyword">case</span><span class="string">"reset"</span>:<span class="keyword">case</span><span class="string">"button"</span>:<span class="keyword">break</span>;<span class="keyword">case</span><span class="string">"radio"</span>:<span class="keyword">case</span><span class="string">"checkbox"</span>:<span class="keyword">if</span>(!i.checked)<span class="keyword">break</span>;<span class="keyword">default</span>:i.name.length&amp;&amp;s.push(<span class="built_in">encodeURIComponent</span>(i.name)+<span class="string">"="</span>+<span class="built_in">encodeURIComponent</span>(i.value))}<span class="keyword">return</span> s.join(<span class="string">"&amp;"</span>)}<span class="function"><span class="keyword">function</span> <span class="title">t</span>(<span class="params"></span>)</span>{<span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> XMLHttpRequest)<span class="keyword">return</span> <span class="keyword">new</span> XMLHttpRequest;<span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> ActiveXObject){<span class="keyword">if</span>(<span class="string">"string"</span>!=<span class="keyword">typeof</span> <span class="built_in">arguments</span>.callee.activeXString){<span class="keyword">var</span> e,t,n=[<span class="string">"MSXML2.XMLHttp.6.0"</span>,<span class="string">"MSXML2.XMLHttp.3.0"</span>,<span class="string">"MSXML2.XMLHttp"</span>];<span class="keyword">for</span>(e=<span class="number">0</span>,t=n.length;t&gt;e;e++)<span class="keyword">try</span>{<span class="keyword">var</span> r=<span class="keyword">new</span> ActiveXObject(n[e]);<span class="keyword">return</span> <span class="built_in">arguments</span>.callee.activeXString=n[e],r}<span class="keyword">catch</span>(a){}}<span class="keyword">return</span> <span class="keyword">new</span> ActiveXObject(<span class="built_in">arguments</span>.callee.activeXString)}<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"No XHR object available."</span>)}<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>{r?(a.open(<span class="string">"post"</span>,c.action,!<span class="number">0</span>),a.setRequestHeader(<span class="string">"Content-Type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>),a.send(e(c))):s.innerHTML=<span class="string">"自动刷课还没开始哦，先选择学期再按一下保存的书签"</span>}<span class="keyword">if</span>(!<span class="built_in">document</span>.querySelector(<span class="string">"#courseInfo"</span>)){<span class="keyword">var</span> r=<span class="built_in">document</span>.querySelector(<span class="string">"#_ctl0__Template_btnCourseGo"</span>),a=t(),o=<span class="number">0</span>,c=<span class="built_in">document</span>.querySelector(<span class="string">"form"</span>),s=<span class="built_in">document</span>.createElement(<span class="string">"p"</span>);s.style.padding=<span class="string">"10px 20px"</span>,s.style.border=<span class="string">"2px dotted #7e7e7e"</span>,s.style.textAlign=<span class="string">"center"</span>,s.style.color=<span class="string">"red"</span>,s.style.fontSize=<span class="string">"2em"</span>,s.id=<span class="string">"courseInfo"</span>,<span class="built_in">document</span>.querySelector(<span class="string">"body"</span>).appendChild(s),a.onreadystatechange=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>{<span class="keyword">if</span>(<span class="number">4</span>==a.readyState){<span class="keyword">if</span>(a.status&gt;=<span class="number">200</span>&amp;&amp;a.status&lt;<span class="number">300</span>||<span class="number">304</span>==a.status){<span class="keyword">if</span>(-<span class="number">1</span>===a.responseText.indexOf(<span class="string">"disabled"</span>))<span class="keyword">if</span>(-<span class="number">1</span>===a.responseText.indexOf(<span class="string">"Your session has expired"</span>)){<span class="keyword">var</span> t=confirm(<span class="string">"这个课有位置了，赶紧的！要自动选就按确定"</span>);t===!<span class="number">0</span>?r.click():clearInterval(i)}<span class="keyword">else</span> alert(<span class="string">"登陆时间到了，重新登录再来吧"</span>),clearInterval(i),s.innerHTML=<span class="string">"水课哪里跑：尝试"</span>+ ++o+<span class="string">"次后，还是没有位置，rabaska让你重新登录了"</span>}<span class="keyword">else</span> alert(<span class="string">"服务器错误，刷新试试"</span>),clearInterval(i);s.innerHTML=<span class="string">"水课哪里跑：尝试"</span>+ ++o+<span class="string">"次"</span>}},n();<span class="keyword">var</span> i=setInterval(n,<span class="number">3e3</span>)}}();
+</code></pre><p>就像这样：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/88312649.jpg" alt=""><br>上面是chrome浏览器中的例子，不同浏览器都差不多。添加好以后应该有个叫做<strong>水课哪里跑</strong>书签页在你的书签栏里了，就像这样：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/88868553.jpg" alt=""><br>接下来你就可以登陆uoZone进入rabaska然后选择你要选的课了。通常，你需要进入选课界面，也就是下面这个界面<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/67701937.jpg" alt=""></p>
+<h2 id="书签栏问题">书签栏问题</h2><p>那么细心的盆友肯定已经发现了，说好的书签栏呢。对头，坑爹的uo把这个页面的书签栏隐藏了，但是机智的我找出了方法。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/8143797.jpg" alt=""></p>
+<ol>
+<li>如果你用的是mac，而且浏览器是safari或者chrome（这两个能确定，其他浏览器太懒没测试，没准也能这样），那么你只需要在进入这个页面之前让浏览器全屏，然后再点开这个页面以后就有书签栏了。</li>
+<li>如果你用的是windows，而且浏览器是chrome或者chrome内核的浏览器（比如说360极速浏览器），那么你在进入这个页面之后，在他在标题栏点右键，然后点击“显示为标签页”选项，然后书签栏就出来了。</li>
+</ol>
+<h2 id="下一步">下一步</h2><p>下一步当然就是选学期了，点选下拉列表里的学期选项之后，对于2016 winter，你要想水课的下面seats available不是0的话是不可能的，99.9%你想选的水课在你选择session之后，你会看到下面这个页面：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/87673858.jpg" alt=""><br>是的肯定没位置了，那么这时候，在用这个脚本之前，我们是这样做的：</p>
+<ol>
+<li>Ctrl+R(mac)/F5(windows)</li>
+<li>弹窗问你“确认重新提交表单吗？”</li>
+<li>点击确认，然后又看到那个没位置的页面，当然你运气好的话，在你刷了几百次之后可能有位置了</li>
+<li>重复1-3步骤</li>
+</ol>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""><br>那么现在有了这个脚本之后，你只用点一下鼠标（我是指用你的鼠标点击一下<strong>水课哪里跑</strong>书签），然后下面就会提示你相关信息</p>
+<ol>
+<li>当你没选择session就按了<strong>水课哪里跑</strong>之后，页面是这样的：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/49828007.jpg" alt=""></li>
+<li>如果你选了session之后按<strong>水课哪里跑</strong>，那你就进入正轨了：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/11365653.jpg" alt=""></li>
+</ol>
+<p>下面的文字会3秒更新一次，告诉你脚本尝试了多少次提交表单。页面看上去没有刷新，但是实际上已经提交了表单并且已经接收到服务器返回来的数据，在这里你只需要知道it works，具体实现方法我会在之后的技术实现部分解释。</p>
+<p>那么课刷出来了之后是什么效果？这里我重新打开一个任何人都不想选的还剩了一堆位置的课来展示一下刷出来位置之后的情况：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/13581140.jpg" alt=""><br>如上图所示，浏览器会弹出来一个优先级最高的对话框告诉你这个课有位置了，然后你就可以愉快的点击确定了。之后这个脚本会帮你做以下事情：</p>
+<ol>
+<li>勾选这个课</li>
+<li>点击Add to cart</li>
+</ol>
+<p>然后这个页面就自动关闭了，也就是说当你回过神来的时候，点开这个页面之前那个搜索课的页面就被自动定位到你的cart页面了，如下图：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/85262461.jpg" alt=""><br>我能帮你们的就这么多，剩下的几个点鼠标的操作就只有靠你们自己了。<br>还有一种情况就是，登录时间到rabaska规定的时间了，也就是要重新登录才能继续刷课：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-10/5130046.jpg" alt=""><br>点击好之后，页面下方会总结本次水课哪里跑脚本尝试帮你刷了多少次课：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-10/41957075.jpg" alt=""><br>之后就重新登录然后重复之前的步骤直到刷出来就行了。<br><strong>注意:</strong>前面给了两个代码，一种是有提示音的，一种是没有的，可以各取所需。有提示音的在位置刷出来之后和你的登录时间到了需要重新登录的时候都会有提示音。两种方法都会有弹窗。</p>
+<h1 id="这东西咋实现的？">这东西咋实现的？</h1><p>前方高能，普通群众可以去愉快的刷课了，对技术感兴趣的盆友可以继续往下看。</p>
+<h2 id="背景">背景</h2><p>简单说来，rabaska的选课系统在我们点击session（学期）之后，会发送一个同步请求将表单中的信息（你的加密后的账号信息和你要选的课的信息）传送到服务器端，然后服务器处理之后没问题的话会返回一个html页面，如果该课没位置的话那返回的页面就和发送请求之前的页面是一样的，因此你刷新之后看到的页面是没变化的。但是如果有位置的话，服务器返回的页面中会有非常细微的不同，一个是0 seats available前面的禁止符号会变成一个选择框，另一个是Add to cart可以按了（没位置的时候disabled属性是true）。但是经过我研究，要实现add to cart跟选择框根本没有关系，因为我在没位置时候的页面修改add to cart按钮的disabled属性为false以后，用他触发click()方法之后是能够将它加入cart的，但是因为服务器上确实没位置，因此后续步骤你也不能完成。所以能有个方法在选课页面自动刷新并且能通过服务器返回的数据判断是否有位置了的话是极好的。仔细思考之后发现其实是不难的，不过就是用javascript来操作DOM而已。思路把我引向了<a href="http://tampermonkey.net/" target="_blank" rel="external">油猴脚本</a>，这个实际上就是在各个浏览器中的一个插件，他可以把你写的一个javascript脚本绑定在指定的URL上，这对个人使用当然是极其方便的，但是我是来造福人类的<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/42249496.jpg" alt=""><br>所以不可能让每个人都去下个浏览器扩展才能使用我的脚本吧。因为浏览器是支持javascript:协议的，所以把脚本放在书签页的地址中也可以运行脚本。但是这样做又有个问题，那就是这样做是在页面上运行脚本，不是把脚本绑定在URL上，什么意思呢？如果我用油猴把我的脚本绑定到URL上，不管你咋刷新，只要URL不变，那脚本是会自动执行的。如果我用书签栏，那刷新一次就得重新点击书签重新运行脚本。而恰好rabaska的表单是同步提交的，服务器返回html后页面会立即渲染新的页面，也就相当于刷新了，所以脚本就自动停止了，达不到自动刷新的目的。</p>
+<h2 id="实现原理">实现原理</h2><p>为了解决上面的问题，我能想到的办法就是把同步请求换成异步请求，将服务器返回的页面放在回调函数中判断是否有位置用，而不让浏览器渲染新页面，这就是页面为啥看起来没有刷新的原因。<br>具体实现方法就是生成一个XMLHttpRequest对象，用他来将表单的数据每隔3秒提交给服务器一次。如果返回的页面中能找到disabled关键字的话，说明add to cart按钮被禁用了（页面中只有他有这个属性），那么就肯定是没有位置的。当没有disabled关键字的时候，有两种可能，一种是有位置了，一种是session到期了，同样可以简单的通过关键字来判断这两种情况。当最后确定有位置了之后，就调用add to cart对象的click()方法来将课放入你的cart中，剩下的工作就简单了。讲原理不能没有代码，上面给的书签栏中的代码是用gulp压缩之后的js文件，下面给出源代码：</p>
+<pre><code><span class="list">(<span class="keyword">function</span><span class="list">()</span> <span class="collection">{
+    function serialize<span class="list">(<span class="keyword">form</span>)</span> <span class="collection">{ //序列化表单
+        var parts = <span class="collection">[]</span>,
+            field = null,
+            i,
+            len,
+            j,
+            optLen,
+            option,
+            optValue;
+
+        for <span class="list">(<span class="keyword">i</span> = <span class="number">0</span>, len = form.elements.length; i &lt; len; i++)</span> <span class="collection">{
+            field = form.elements<span class="collection">[i]</span><span class="comment">;</span>
+
+            switch <span class="list">(<span class="keyword">field.type</span>)</span> <span class="collection">{
+                case <span class="string">"select-one"</span>:
+                case <span class="string">"select-multiple"</span>:
+
+                    if <span class="list">(<span class="keyword">field.name.length</span>)</span> <span class="collection">{
+                        for <span class="list">(<span class="keyword">j</span> = <span class="number">0</span>, optLen = field.options.length; j &lt; optLen; j++)</span> <span class="collection">{
+                            option = field.options<span class="collection">[j]</span><span class="comment">;</span>
+                            if <span class="list">(<span class="keyword">option.selected</span>)</span> <span class="collection">{
+                                optValue = <span class="string">""</span><span class="comment">;</span>
+                                if <span class="list">(<span class="keyword">option.hasAttribute</span>)</span> <span class="collection">{
+                                    optValue = <span class="list">(<span class="keyword">option.hasAttribute</span><span class="list">(<span class="string">"value"</span>)</span> ? option.value : option.text)</span><span class="comment">;</span>
+                                }</span> else <span class="collection">{
+                                    optValue = <span class="list">(<span class="keyword">option.attributes</span><span class="collection">[<span class="string">"value"</span>]</span>.specified ? option.value : option.text)</span><span class="comment">;</span>
+                                }</span>
+                                parts.push<span class="list">(<span class="keyword">encodeURIComponent</span><span class="list">(<span class="keyword">field.name</span>)</span> + <span class="string">"="</span> + encodeURIComponent<span class="list">(<span class="keyword">optValue</span>)</span>)</span><span class="comment">;</span>
+                            }</span>
+                        }</span>
+                    }</span>
+                    break;
+
+                case undefined: //fieldset
+                case <span class="string">"file"</span>: //file input
+                case <span class="string">"submit"</span>: //submit button
+                case <span class="string">"reset"</span>: //reset button
+                case <span class="string">"button"</span>: //custom button
+                    break;
+
+                case <span class="string">"radio"</span>: //radio button
+                case <span class="string">"checkbox"</span>: //checkbox
+                    if <span class="list">(<span class="keyword">!field.checked</span>)</span> <span class="collection">{
+                        break;
+                    }</span>
+                    /* falls through */
+
+                default:
+                    //don't include form fields without names
+                    if <span class="list">(<span class="keyword">field.name.length</span>)</span> <span class="collection">{
+                        parts.push<span class="list">(<span class="keyword">encodeURIComponent</span><span class="list">(<span class="keyword">field.name</span>)</span> + <span class="string">"="</span> + encodeURIComponent<span class="list">(<span class="keyword">field.value</span>)</span>)</span><span class="comment">;</span>
+                    }</span>
+            }</span>
+        }</span>
+        return parts.join<span class="list">(<span class="string">"&amp;"</span>)</span><span class="comment">;</span>
+    }</span>
+
+    function createXHR<span class="list">()</span> <span class="collection">{ //生成XMLHttpRequest对象
+        if <span class="list">(<span class="keyword">typeof</span> XMLHttpRequest != <span class="string">"undefined"</span>)</span> <span class="collection">{
+            return new XMLHttpRequest<span class="list">()</span><span class="comment">;</span>
+        }</span> else if <span class="list">(<span class="keyword">typeof</span> ActiveXObject != <span class="string">"undefined"</span>)</span> <span class="collection">{
+            if <span class="list">(<span class="keyword">typeof</span> arguments.callee.activeXString != <span class="string">"string"</span>)</span> <span class="collection">{
+                var versions = <span class="collection">[<span class="string">"MSXML2.XMLHttp.6.0"</span>, <span class="string">"MSXML2.XMLHttp.3.0"</span>,
+                        <span class="string">"MSXML2.XMLHttp"</span>
+                    ]</span>,
+                    i, len;
+
+                for <span class="list">(<span class="keyword">i</span> = <span class="number">0</span>, len = versions.length; i &lt; len; i++)</span> <span class="collection">{
+                    try <span class="collection">{
+                        var xhr = new ActiveXObject<span class="list">(<span class="keyword">versions</span><span class="collection">[i]</span>)</span><span class="comment">;</span>
+                        arguments.callee.activeXString = versions<span class="collection">[i]</span><span class="comment">;</span>
+                        return xhr;
+                    }</span> catch <span class="list">(<span class="keyword">ex</span>)</span> <span class="collection">{
+                        //skip
+                    }</span>
+                }</span>
+            }</span>
+
+            return new ActiveXObject<span class="list">(<span class="keyword">arguments.callee.activeXString</span>)</span><span class="comment">;</span>
+        }</span> else <span class="collection">{
+            throw new Error<span class="list">(<span class="string">"No XHR object available."</span>)</span><span class="comment">;</span>
+        }</span>
+    }</span>
+
+    function submitData<span class="list">()</span> <span class="collection">{ //异步提交表单数据
+        if <span class="list">(<span class="keyword">addToCart</span>)</span> <span class="collection">{ //选择了学期信息add to cart按钮才会出来，才发送请求
+            xhr.open<span class="list">(<span class="string">"post"</span>, form.action, <span class="literal">true</span>)</span><span class="comment">;</span>
+            xhr.setRequestHeader<span class="list">(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>)</span><span class="comment">;</span>
+            xhr.send<span class="list">(<span class="keyword">serialize</span><span class="list">(<span class="keyword">form</span>)</span>)</span><span class="comment">;</span>
+        }</span> else <span class="collection">{
+            p.innerHTML = <span class="string">"自动刷课还没开始哦，先选择学期再按一下保存的书签"</span><span class="comment">;</span>
+        }</span>
+    }</span>
+
+    if<span class="list">(<span class="keyword">!document.querySelector</span><span class="list">(<span class="string">"#courseInfo"</span>)</span>)</span><span class="collection">{     //检查是否已经点过脚本，不允许重复运行
+        var addToCart = document.querySelector<span class="list">(<span class="string">"#_ctl0__Template_btnCourseGo"</span>)</span><span class="comment">;</span>
+        var xhr = createXHR<span class="list">()</span><span class="comment">;</span>
+        var count = <span class="number">0</span><span class="comment">;</span>
+        var form = document.querySelector<span class="list">(<span class="string">"form"</span>)</span><span class="comment">;</span>
+        var p = document.createElement<span class="list">(<span class="string">"p"</span>)</span><span class="comment">;</span>
+        p.style.padding = <span class="string">"10px 20px"</span><span class="comment">;</span>
+        p.style.border = <span class="string">"2px dotted #7e7e7e"</span><span class="comment">;</span>
+        p.style.textAlign = <span class="string">"center"</span><span class="comment">;</span>
+        p.style.color = <span class="string">"red"</span><span class="comment">;</span>
+        p.style.fontSize = <span class="string">"2em"</span><span class="comment">;</span>
+        p.id = <span class="string">"courseInfo"</span><span class="comment">;</span>
+        document.querySelector<span class="list">(<span class="string">"body"</span>)</span>.appendChild<span class="list">(<span class="keyword">p</span>)</span><span class="comment">;</span>
+        var successSound = document.createElement<span class="list">(<span class="string">"audio"</span>)</span><span class="comment">;</span>
+        successSound.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/successSound.mp3"</span><span class="comment">; //新闻联播(成功提示音)</span>
+        successSound.preload = <span class="string">"auto"</span><span class="comment">;</span>
+        var failSound = document.createElement<span class="list">(<span class="string">"audio"</span>)</span><span class="comment">;</span>
+        failSound.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/failSound.mp3"</span><span class="comment">;  //失败提示音</span>
+        failSound.preload = <span class="string">"auto"</span><span class="comment">;</span>
+        xhr.onreadystatechange = function<span class="list">(<span class="keyword">event</span>)</span> <span class="collection">{
+            if <span class="list">(<span class="keyword">xhr.readyState</span> == <span class="number">4</span>)</span> <span class="collection">{
+                if <span class="list">(<span class="list">(<span class="keyword">xhr.status</span> &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span>)</span> || xhr.status == <span class="number">304</span>)</span> <span class="collection">{
+                    if <span class="list">(<span class="keyword">xhr.responseText.indexOf</span><span class="list">(<span class="string">"disabled"</span>)</span> === <span class="number">-1</span>)</span> <span class="collection">{ //响应中没有了disabled字符串，即课有位置了或者session过期了
+                        if <span class="list">(<span class="keyword">xhr.responseText.indexOf</span><span class="list">(<span class="string">"Your session has expired"</span>)</span> === <span class="number">-1</span>)</span> <span class="collection">{ //有位置了
+                            successSound.play<span class="list">()</span><span class="comment">;</span>
+                            var fuckSafari = setInterval<span class="list">(<span class="keyword">function</span><span class="list">()</span><span class="collection">{   //safari中存在先弹窗再播放的bug，这样写能避免
+                                if<span class="list">(<span class="keyword">successSound.currentTime</span> &gt; <span class="number">0</span>)</span><span class="collection">{
+                                    var conf = confirm<span class="list">(<span class="string">"这个课有位置了，赶紧的！要自动选就按确定"</span>)</span><span class="comment">;</span>
+                                    if <span class="list">(<span class="keyword">conf</span> === <span class="literal">true</span>)</span> <span class="collection">{
+                                        addToCart.click<span class="list">()</span><span class="comment">; //自动点击add to cart进入cart页面</span>
+                                        clearInterval<span class="list">(<span class="keyword">fuckSafari</span>)</span><span class="comment">;</span>
+                                        clearInterval<span class="list">(<span class="keyword"><span class="built_in">repeat</span></span>)</span><span class="comment">;</span>
+                                    }</span> else <span class="collection">{
+                                        clearInterval<span class="list">(<span class="keyword"><span class="built_in">repeat</span></span>)</span><span class="comment">;</span>
+                                        clearInterval<span class="list">(<span class="keyword">fuckSafari</span>)</span><span class="comment">;</span>
+                                    }</span>
+                                }</span>
+                            }</span>, <span class="number">100</span>)</span><span class="comment">;</span>
+                        }</span> else <span class="collection">{ //session到期
+                            failSound.play<span class="list">()</span><span class="comment">;</span>
+                            var fuckSafari2 = setInterval<span class="list">(<span class="keyword">function</span><span class="list">()</span><span class="collection">{   //safari中存在先弹窗再播放的bug，这样写能避免
+                                if<span class="list">(<span class="keyword">failSound.currentTime</span> &gt; <span class="number">0</span>)</span><span class="collection">{
+                                    alert<span class="list">(<span class="string">"登陆时间到了，重新登录再来吧"</span>)</span><span class="comment">;</span>
+                                    clearInterval<span class="list">(<span class="keyword"><span class="built_in">repeat</span></span>)</span><span class="comment">;</span>
+                                    clearInterval<span class="list">(<span class="keyword">fuckSafari2</span>)</span><span class="comment">;</span>
+                                    p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + <span class="list">(<span class="keyword">++count</span>)</span> + <span class="string">"次后，还是没有位置，rabaska让你重新登录了"</span><span class="comment">;</span>
+                                }</span>
+                            }</span>, <span class="number">100</span>)</span><span class="comment">;</span>
+                        }</span>
+                    }</span>
+                }</span> else <span class="collection">{
+                    alert<span class="list">(<span class="string">"服务器错误，刷新试试"</span>)</span><span class="comment">;</span>
+                    clearInterval<span class="list">(<span class="keyword"><span class="built_in">repeat</span></span>)</span><span class="comment">;</span>
+                }</span>
+                p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + <span class="list">(<span class="keyword">++count</span>)</span> + <span class="string">"次"</span><span class="comment">;</span>
+            }</span>
+        }</span><span class="comment">;</span>
+        submitData<span class="list">()</span><span class="comment">;</span>
+        var repeat = setInterval<span class="list">(<span class="keyword">submitData</span>, <span class="number">3000</span>)</span><span class="comment">;</span>
+    }</span>
+}</span>)</span><span class="list">()</span><span class="comment">;</span>
+</code></pre><p>上面代码中，主题上有3个函数serialize()、createXHR()、submitData()。serialize函数用于在不同浏览器中将表单的数据序列化然后发送给服务器。createXHR用于在不同浏览器中创建XMLHttpRequest对象来发送异步请求。submitData用于提交表单数据。通过给XHR对象绑定事件处理程序来实现成功接收相应后的回调函数和返回失败的错误处理。而生成的p元素被插入到原本的页面中来实现提示功能。</p>
+<h2 id="源码地址">源码地址</h2><p>GitHub repo：<a href="https://github.com/kmCha/courserefresh-uo" target="_blank" rel="external">水课哪里跑</a></p>
+<h1 id="这东西会不断完善（有时间的话）">这东西会不断完善（有时间的话）</h1><p>所以你们有什么建议意见欢迎给我说。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/96795509.jpg" alt=""><br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/12613772.jpg" alt=""></p>
+
+            
           </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/12/08/水课哪里跑－UO选课系统自动刷课/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -393,10 +569,10 @@
           </div>
 
           <div class="site-state-item site-state-categories">
-            <a href="/categories">
+            
               <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">分类</span>
-              </a>
+              
           </div>
 
           <div class="site-state-item site-state-tags">
