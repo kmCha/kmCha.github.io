@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #cc134d;
+  background: #cb4fbf;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2031,8 +2031,7 @@ strong {
 .sidebar .links-of-author-item a,
 .icon-next-heart.fa.fa-heart,
 .post-time,
-.post-category,
-.post-comments-count {
+.post-category {
   color: #46d4f3;
   transition: all linear 0.2s;
   transition-delay: 0.2s;
