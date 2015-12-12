@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ad1fe4;
+  background: #ffb458;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2001,11 +2001,18 @@ h6,
 strong {
   color: #46d4f3;
 }
+.sidebar {
+  box-shadow: 0 2px 6px #000;
+}
 .headband {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  background: #444;
+  height: 10px;
+  box-shadow: 0 2px 6px #000;
+  z-index: 9999;
 }
 .brand {
   background: #7f7f7f;
