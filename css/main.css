@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #cb4fbf;
+  background: #ff1aff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2095,7 +2095,6 @@ article {
 }
 .page-home article:hover .post-time,
 .page-home article:hover .post-category,
-.page-home article:hover .post-comments-count,
 .page-home article:hover .post-title-link {
   color: #fff;
 }
