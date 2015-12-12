@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #54851b;
+  background: #cc134d;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2020,8 +2020,7 @@ strong {
   border-bottom-left-radius: 10px;
 }
 .site-description.motion-element,
-.sidebar a,
-.post-comments-count.ds-thread-count {
+.sidebar a {
   color: #fe67c3;
   transition: all linear 0.2s;
   transition-delay: 0.2s;
