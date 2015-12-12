@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff1aff;
+  background: #a7cbff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2093,8 +2093,14 @@ article {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
+.page-home article .post-comments-count {
+  color: #46d4f3;
+  transition: all linear 0.2s;
+  transition-delay: 0.2s;
+}
 .page-home article:hover .post-time,
 .page-home article:hover .post-category,
+.page-home article:hover .post-comments-count,
 .page-home article:hover .post-title-link {
   color: #fff;
 }
