@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a7cbff;
+  background: #2ec8ff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2049,6 +2049,11 @@ strong {
   color: #fe67c3;
   border-radius: 5px;
 }
+.page-home article .post-comments-count {
+  color: #46d4f3;
+  transition: all linear 0.2s;
+  transition-delay: 0.2s;
+}
 a {
   color: #fe67c3;
   border-bottom: 1px solid #46d4f3;
@@ -2092,11 +2097,6 @@ article {
   background: #fe67c3;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-}
-.page-home article .post-comments-count {
-  color: #46d4f3;
-  transition: all linear 0.2s;
-  transition-delay: 0.2s;
 }
 .page-home article:hover .post-time,
 .page-home article:hover .post-category,
