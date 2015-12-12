@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffb458;
+  background: #1b4a82;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2082,7 +2082,7 @@ article {
   border-top: 1px solid #fe67c3;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px #000;
 }
 .page-home article header {
   padding-top: 10px;
