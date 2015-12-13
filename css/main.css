@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a8ff2b;
+  background: #250849;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2121,7 +2121,7 @@ article {
 .posts-expand article:hover .post-title-link:before {
   background: #fff;
 }
-.post-body {
+.page-home .post-body {
   padding: 10px 30px 10px 30px;
 }
 .post:last-child .post-eof.post-eof.post-eof {
