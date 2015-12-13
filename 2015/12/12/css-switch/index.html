@@ -67,7 +67,7 @@ checkbox元素一个checkbox元素，多数时候被用在表单的提交中用�
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/22567280.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/18744777.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/63436590.jpg">
-<meta property="og:updated_time" content="2015-12-13T05:12:34.000Z">
+<meta property="og:updated_time" content="2015-12-13T05:16:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="纯CSS实现简洁自定义开关样式">
 <meta name="twitter:description" content="在做网页的时候，项目里的各个组件外观通常要保证于其他组件的统一，不然看起来会很突兀。在项目中除了提交表单外，input[type=”checkbox”]组件还有一个作用就是可以用CSS轻易的”破坏”他的外观然后来定义你想让他成为的样子来适配你项目的主题样式。下面来分享一下实现自定样式的基本原理。
@@ -306,8 +306,8 @@ checkbox元素一个checkbox元素，多数时候被用在表单的提交中用�
         <span itemprop="articleBody"><p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/85827460.jpg" alt=""><br>在做网页的时候，项目里的各个组件外观通常要保证于其他组件的统一，不然看起来会很突兀。在项目中除了提交表单外，input[type=”checkbox”]组件还有一个作用就是可以用CSS轻易的”破坏”他的外观然后来定义你想让他成为的样子来适配你项目的主题样式。下面来分享一下实现自定样式的基本原理。</p>
 <h1 id="checkbox元素">checkbox元素</h1><p>一个checkbox元素，多数时候被用在表单的提交中用于表示一个键的true或false。他有两个值，选中表示true，没选中表示false。既然知道他能表示true和false，那么用的地方就能够无限的扩展了，比如典型的，一个开关就是两个值。所以表示开关一般也用checkbox，那么他在一个页面中是这样的：<input class="center" type="checkbox"><br>他的外观随不同操作系统而存在一点差异，不过不管什么操作系统，他都是一个框框加上里面一个钩钩而已。在提交表单也就是你要用到他的值的时候，这当然不会存在什么问题。但是你要想用它来提升用户体验的话，最好还是换一下它的样式。什么意思？举个例子，下面是我做的一个项目里的一个组件，我在一个框中的四个边角上放上了四个操作组件，其中左下角是要一个布尔值的组件来表示开关，如果我用系统自带的checkbox的话：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/22567280.jpg" alt=""><br>各位感受一下，这个checkbox看起来怎么样，请说实话。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/18744777.jpg" alt=""><br>好那么看一下改进之后的效果：<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/63436590.jpg" alt=""><br>是不是好多了？</p>
 <h1 id="纯CSS实现上述开关样式">纯CSS实现上述开关样式</h1><p>上面动图中的开关就是将系统自带checkbox改掉之后的效果，在说代码之前先说一下基本原理。实现这个效果的关键是label元素，每个label元素能够通过id绑定一个checkbox元素，而绑定之后，点击label和点击checkbox都能够出发状态的改变。因此，不能改变自带checkbox的外观的话，那就简单粗暴点直接把它隐藏了，通过css来自定义label的外观就行了。为了实现上面展现的效果，外面必须用个div把checkbox和label包起来，里面的滚动效果用label来实现，外面的包围部分用div的样式来实现。<br>下面给出包括上述开关在内的几种开关样式的代码，并且在最后附上了组件的实物，可以点击对应的开关查看效果。</p>
-<h2 id="HTML代码">HTML代码</h2><pre><code>&lt;<span class="tag">div</span> class=<span class="string">"km-switch switchWrap"</span>&gt;
-    &lt;<span class="tag">input</span> id=<span class="string">"switch-x"</span> type=<span class="string">"checkbox"</span>&gt;            <span class="comment">//x替换为相应的数字</span>
+<h2 id="HTML代码">HTML代码</h2><pre><code>&lt;<span class="tag">div</span> class=<span class="string">"km-switch switchWrap-x"</span>&gt;            <span class="comment">//x替换为相应的数字</span>
+    &lt;<span class="tag">input</span> id=<span class="string">"switch-x"</span> type=<span class="string">"checkbox"</span>&gt;
     &lt;<span class="tag">label</span> <span class="keyword">for</span>=<span class="string">"switch-x"</span>&gt;&lt;/label&gt;
 &lt;/div&gt;
 </code></pre><h2 id="CSS代码">CSS代码</h2><pre><code><span class="comment">//km-switch.css</span>
