@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fd6;
+  background: #6775ff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2068,6 +2068,9 @@ a:hover,
 .post-comments-count.ds-thread-count:hover {
   color: #222;
   border-bottom-color: #222;
+}
+.feed-link a:hover {
+  border-bottom-color: transparent;
 }
 .posts-expand .post-eof {
   background: #fe67c3;
