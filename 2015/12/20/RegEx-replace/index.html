@@ -65,7 +65,7 @@
 普通用法通常，我们（新手）用replace()的时候，大多数时候会传入调用该方法的字符串的一个substring作为该方法的第一个参数，也就是直接将第一个参数指定的子字符串替换为你指定的第二">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/50353302.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/40597977.jpg">
-<meta property="og:updated_time" content="2015-12-20T23:45:30.000Z">
+<meta property="og:updated_time" content="2015-12-20T23:46:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="String类的replace()方法妙用：正则表达式+函数">
 <meta name="twitter:description" content="在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：replace()。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。
@@ -301,7 +301,8 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/50353302.jpg" alt=""><br>在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：<code>replace()</code>。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。</p>
+        <span itemprop="articleBody"><p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/50353302.jpg" alt=""></p>
+<p>在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：<code>replace()</code>。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。</p>
 <h1 id="普通用法">普通用法</h1><p>通常，我们（新手）用<code>replace()</code>的时候，大多数时候会传入调用该方法的字符串的一个substring作为该方法的第一个参数，也就是直接将第一个参数指定的子字符串替换为你指定的第二个字符串。这样做对于非常非常（I mean，真的非常）简单的字符串操作是没有问题的，但是字符串一复杂，比如你要替换字符串中多个位置的字符就显得有点力不从心了。但是因为<code>replace()</code>的第一个参数支持正则表达式，所以有了第二种文艺用法。</p>
 <h1 id="文艺用法">文艺用法</h1><p>将第一个参数换成正则表达式之后，对字符串的操作就灵活了许多。我们可以指定匹配正则表达式来选取需要被替换的字符，但是光用正则表达式作为第一个参数实际上意义也不是很大，因为通常我们替换的时候需要知道正则表达式中抓取的某些片段是什么，才能决定第二个参数传入什么字符串来代替。<code>replace()</code>为我们提供了<code>$</code>操作符，我们能使用<code>$1</code>,<code>$2</code>等来获取第一个捕获的引用，第二个捕获的引用……因此，我们可以在全局正则每次捕获之后获取捕获的字符串的引用，从而放入第二个参数中。什么意思？先来个例子：</p>
 <pre><code>var style = <span class="string">"borderTopRightRadius"</span>;
@@ -336,7 +337,8 @@ function compress(source) {
 }
 
 compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"</span>) === <span class="string">"foo=1,2,3&amp;blah=a,b"</span>;    // ture
-</code></pre><p>以上例子利用<code>replace()</code>来遍历字符串而不是用它来得到最终结果，因此最后的返回值设什么都无所谓，我们只是利用正则表达式每次捕获都会调用函数这一特性来遍历整个字符串来对我们想操作的子字符串进行我们想要的操作。例如这个例子中，我们匹配原字符串中的<code>=</code>符号以及他前后的字符串，<code>key</code>为<code>=</code>前面的字符串，<code>value</code>为<code>=</code>后面的字符串。我们在函数中将每次捕获的相同<code>key</code>值的结果融合到了<code>keys</code>对象中对应的键中，最后遍历<code>keys</code>对象将他的键值对保存在<code>result</code>数组中，最后再将数组转换为字符串返回。<br>由此可以看出，一个简简单单的<code>replace()</code>方法可以用正则表达式和函数为所欲为，为字符串的操作带来了极大的灵活性（和高逼格）。在页面脚本的编写中可以优雅的使用，毕竟现在写个程序都在比谁更优(zhuang)雅(bi)。<br><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/40597977.jpg" alt=""></p>
+</code></pre><p>以上例子利用<code>replace()</code>来遍历字符串而不是用它来得到最终结果，因此最后的返回值设什么都无所谓，我们只是利用正则表达式每次捕获都会调用函数这一特性来遍历整个字符串来对我们想操作的子字符串进行我们想要的操作。例如这个例子中，我们匹配原字符串中的<code>=</code>符号以及他前后的字符串，<code>key</code>为<code>=</code>前面的字符串，<code>value</code>为<code>=</code>后面的字符串。我们在函数中将每次捕获的相同<code>key</code>值的结果融合到了<code>keys</code>对象中对应的键中，最后遍历<code>keys</code>对象将他的键值对保存在<code>result</code>数组中，最后再将数组转换为字符串返回。<br>由此可以看出，一个简简单单的<code>replace()</code>方法可以用正则表达式和函数为所欲为，为字符串的操作带来了极大的灵活性（和高逼格）。在页面脚本的编写中可以优雅的使用，毕竟现在写个程序都在比谁更优(zhuang)雅(bi)。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/40597977.jpg" alt=""></p>
 </span>
       
     </div>
