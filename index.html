@@ -249,6 +249,114 @@
             
               
                 
+                <a class="post-title-link" href="/2015/12/23/javascript-event/" itemprop="url">
+                  javascript事件管理与自定义事件解耦
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-23T20:40:11-05:00" content="2015-12-23">
+              2015-12-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/23/javascript-event/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/23/javascript-event/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            
+管理事件处理程序在javascript中，事件机制是很早就被提出了的。在DOM level0中，我们可以通过给元素的onXXXX特性（比如说onload、onclick、blablabla）赋值来实现事件处理。在非侵入式写法中就是在javascript中将该元素的onXXXX属性赋值为一个回调函数
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/23/javascript-event/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/12/20/RegEx-replace/" itemprop="url">
                   String类的replace()方法妙用：正则表达式+函数
                 </a>
@@ -637,121 +745,14 @@
         
           <span itemprop="articleBody">
             
-            今天来谈谈这个OOP中重要的话题——继承，路过的大神们轻点喷。
+            纪录一下自己对这个OOP中重要的话题——继承在javascript中的实现的理解。
 
 在javascript中，继承能够通过很多方法来实现，在这里将主要介绍4种继承的方法。
-原型链继承(prototype chain)javascript继承中，原型链占据了很大的一部分比重。要知道原型链继承的原理首先得知道原型链是啥东
+原型链继承(prototype chain)javascript继承中，原型链占据了很大的一部分比重。要知道原型链继承的原理首
             ...
           </span>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/12/07/javascript继承/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/20/Alfred+iterm2+hexo/" itemprop="url">
-                  效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-20T14:44:12-05:00" content="2015-11-20">
-              2015-11-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/20/Alfred+iterm2+hexo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/20/Alfred+iterm2+hexo/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            关于AlfredAlfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/20/Alfred+iterm2+hexo/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -819,7 +820,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -833,7 +834,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
