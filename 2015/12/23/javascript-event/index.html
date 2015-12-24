@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70805103.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/71914034.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg">
-<meta property="og:updated_time" content="2015-12-24T06:20:58.000Z">
+<meta property="og:updated_time" content="2015-12-24T06:47:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript事件管理与自定义事件解耦">
 <meta name="twitter:description" content="管理事件处理程序在javascript中，事件机制是很早就被提出了的。在DOM level0中，我们可以通过给元素的onXXXX特性（比如说onload、onclick、blablabla）赋值来实现事件处理。在非侵入式写法中就是在javascript中将该元素的onXXXX属性赋值为一个回调函数，当事件触发的时候该函数会被自动执行。简单易行的同时也存在很多问题，其中之一就是不能同时指定多个回调函">
@@ -647,6 +647,131 @@
 </code></pre><p>这样，<code>performAjaxOperation()</code>函数就只管在<code>ajax</code>开始的时候分发事件，不管也不知道有没有人注册，一副爱谁谁的洒脱模样。这样我们就能在不同的页面中重用<code>ajaxPerform.js</code>文件而不用在自己页面中申明一大堆函数了，只需要将需要在事件触发时进行的操作放在事件处理函数中并且注册文件中的<code>ajax</code>事件就行了。</p>
 <h2 id="总结-1">总结</h2><p>说了这么多，也不知道说清楚没有，也不知道有没有理解有误的地方。反正自定义事件是个缓解代码<strong>紧耦合</strong>的好东西就是了。耦合一松，全身轻松。</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg" alt=""></p>
+<h1 id="测试用例">测试用例</h1><pre><code><span class="comment">// KM.getData()</span>
+describe(<span class="string">"KM.getData(element) method"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> domElem1 = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+            checkAttr = <span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>{
+                <span class="keyword">for</span>(<span class="keyword">var</span> prop <span class="keyword">in</span> elem) {
+                    <span class="keyword">if</span>(prop.indexOf(<span class="string">"data-"</span>) &gt;= <span class="number">0</span>){
+                        <span class="keyword">return</span> <span class="literal">true</span>;
+                    }
+                }
+                <span class="keyword">return</span> <span class="literal">false</span>;
+            };
+    it(<span class="string">"can give an DIY property whose value is unique called guid to the input element"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        expect(checkAttr(domElem1)).toBe(<span class="literal">false</span>);
+        KM.getData(domElem1);
+        expect(checkAttr(domElem1)).toBe(<span class="literal">true</span>);
+    });
+
+    it(<span class="string">"can return an object containing the information about the element"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">var</span> data = KM.getData(domElem1);
+        data.dispatcher = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{};
+        <span class="keyword">var</span> data1 = KM.getData(domElem1);
+        expect(data1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>).toBe(<span class="literal">true</span>);
+        expect(data1.dispatcher <span class="keyword">instanceof</span> <span class="built_in">Function</span>).toBe(<span class="literal">true</span>);
+    });
+});
+
+<span class="comment">// KM.removeData()</span>
+describe(<span class="string">"KM.removeData(element) method"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> domElem1 = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+            data = KM.getData(domElem1);
+
+    data.dispatcher = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{};
+
+    it(<span class="string">"can remove the data binded on the element"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        expect(data.dispatcher <span class="keyword">instanceof</span> <span class="built_in">Function</span>).toBe(<span class="literal">true</span>);
+        KM.removeData(domElem1);
+        data = KM.getData(domElem1);
+        expect(data.dispatcher).toBeUndefined();
+    });
+});
+
+<span class="comment">//KM.EventUtil.addEventListener()</span>
+describe(<span class="string">"KM.EventUtil.addEventListener(element, type, handler) method"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+
+    it(<span class="string">"can push the handler into the handler array which is KM.getData(element).handlers[type]"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">var</span> domElem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+                type = <span class="string">"click"</span>,
+                data = KM.getData(domElem);
+        expect(data.handlers).toBeUndefined();
+        KM.EventUtil.addEventListener(domElem, type, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{});
+        expect(data.handlers <span class="keyword">instanceof</span> <span class="built_in">Object</span>).toBe(<span class="literal">true</span>);
+    });
+
+    it(<span class="string">"can add the dispatcher() function as a property of the element"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">var</span> domElem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+                type = <span class="string">"click"</span>,
+                data = KM.getData(domElem);
+        expect(data.dispatcher).toBeUndefined();
+        KM.EventUtil.addEventListener(domElem, type, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{});
+        expect(data.dispatcher <span class="keyword">instanceof</span> <span class="built_in">Function</span>).toBe(<span class="literal">true</span>);
+    });
+
+    it(<span class="string">"can give the input handler a property called guid for tracking"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">var</span> domElem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+                type = <span class="string">"click"</span>,
+                data = KM.getData(domElem),
+            listener1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{};
+
+        expect(listener1.guid).toBeUndefined();
+
+        KM.EventUtil.addEventListener(domElem, type, listener1);
+        expect(<span class="keyword">typeof</span> listener1.guid).toBe(<span class="string">"number"</span>);
+    });
+});
+
+<span class="comment">// KM.EventUtil.removeEventListener()</span>
+describe(<span class="string">"KM.EventUtil.removeEventListener(element, type, handler) method"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+
+    it(<span class="string">"can remove the handler from the array, which is KM.getData(element).handlers[type]"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">var</span> domElem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+                type = <span class="string">"click"</span>,
+                data = KM.getData(domElem),
+                listener1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{},
+                listener2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{};
+
+        KM.EventUtil.addEventListener(domElem, type, listener1);
+        KM.EventUtil.addEventListener(domElem, type, listener2);
+
+        expect(data.handlers[type].length).toBe(<span class="number">2</span>);
+        KM.EventUtil.removeEventListener(domElem, type, listener1);
+        expect(data.handlers[type].length).toBe(<span class="number">1</span>);
+    });
+});
+
+<span class="comment">// KM.EventUtil.triggerEvent()</span>
+describe(<span class="string">"KM.EventUtil.triggerEvent(element, event) method"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> domElem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+            parentElem = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
+            type = <span class="string">"speak"</span>,
+            data = KM.getData(domElem),
+        listener1,
+        listener2;
+
+    parentElem.appendChild(domElem);
+    listener1 = jasmine.createSpy(<span class="string">'listener1'</span>);
+    listener2 = jasmine.createSpy(<span class="string">'listener2'</span>);
+
+    it(<span class="string">"can trigger the specific event on the element"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        KM.EventUtil.addEventListener(domElem, type, listener1);
+        expect(listener1).not.toHaveBeenCalled();
+
+        KM.EventUtil.triggerEvent(domElem, type);
+        expect(listener1).toHaveBeenCalled();
+    });
+
+    it(<span class="string">"and the event can propagate"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        KM.EventUtil.addEventListener(parentElem, type, listener2);
+        expect(listener2).not.toHaveBeenCalled();
+
+        KM.EventUtil.triggerEvent(domElem, type);
+        expect(listener2).toHaveBeenCalled();
+    });
+});
+</code></pre><h1 id="工具函数源码">工具函数源码</h1><p><a href="https://github.com/kmCha/KM-tool" target="_blank" rel="external">GitHub: KM-tool</a></p>
+<h1 id="Reference">Reference</h1><p>本文代码改编自John Resig and Bear Bibeault, 《Secrets of the JavaScript Ninja》</p>
 </span>
       
     </div>
@@ -834,7 +959,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#管理事件处理程序"><span class="nav-number">1.</span> <span class="nav-text">管理事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义事件解耦"><span class="nav-number">2.</span> <span class="nav-text">自定义事件解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#松耦合和紧耦合"><span class="nav-number">2.1.</span> <span class="nav-text">松耦合和紧耦合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.2.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#管理事件处理程序"><span class="nav-number">1.</span> <span class="nav-text">管理事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义事件解耦"><span class="nav-number">2.</span> <span class="nav-text">自定义事件解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#松耦合和紧耦合"><span class="nav-number">2.1.</span> <span class="nav-text">松耦合和紧耦合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试用例"><span class="nav-number">3.</span> <span class="nav-text">测试用例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工具函数源码"><span class="nav-number">4.</span> <span class="nav-text">工具函数源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
