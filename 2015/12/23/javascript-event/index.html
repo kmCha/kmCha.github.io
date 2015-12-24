@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70805103.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/71914034.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg">
-<meta property="og:updated_time" content="2015-12-24T06:47:41.000Z">
+<meta property="og:updated_time" content="2015-12-24T15:27:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript事件管理与自定义事件解耦">
 <meta name="twitter:description" content="管理事件处理程序在javascript中，事件机制是很早就被提出了的。在DOM level0中，我们可以通过给元素的onXXXX特性（比如说onload、onclick、blablabla）赋值来实现事件处理。在非侵入式写法中就是在javascript中将该元素的onXXXX属性赋值为一个回调函数，当事件触发的时候该函数会被自动执行。简单易行的同时也存在很多问题，其中之一就是不能同时指定多个回调函">
@@ -594,7 +594,7 @@
       }
     }
 }();
-</code></pre><p>有了事件触发函数，我们就可以在选定元素上触发一个冒泡事件了。输入的<code>event</code>可以是字符串，也可以是标准<code>event</code>对象。在一个元素上触发一个事件会从该元素到元素所在的<code>document</code>对象一路冒泡上去，经过的每一个父节点都会对该事件作出响应。有了事件触发，我们就可以触发我们的自定义事件了。于是回到之前的<code>ajax</code>话题，最后通过自定义事件<strong>解耦</strong>之后的代码是这样的：</p>
+</code></pre><h2 id="触发自定义事件">触发自定义事件</h2><p>有了事件触发函数，我们就可以在选定元素上触发一个冒泡事件了。输入的<code>event</code>可以是字符串，也可以是标准<code>event</code>对象。在一个元素上触发一个事件会从该元素到元素所在的<code>document</code>对象一路冒泡上去，经过的每一个父节点都会对该事件作出响应。有了事件触发，我们就可以触发我们的自定义事件了。于是回到之前的<code>ajax</code>话题，最后通过自定义事件<strong>解耦</strong>之后的代码是这样的：</p>
 <pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span>&gt;</span>
   <span class="tag">&lt;<span class="title">head</span>&gt;</span>
@@ -959,7 +959,7 @@ describe(<span class="string">"KM.EventUtil.triggerEvent(element, event) method"
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#管理事件处理程序"><span class="nav-number">1.</span> <span class="nav-text">管理事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义事件解耦"><span class="nav-number">2.</span> <span class="nav-text">自定义事件解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#松耦合和紧耦合"><span class="nav-number">2.1.</span> <span class="nav-text">松耦合和紧耦合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试用例"><span class="nav-number">3.</span> <span class="nav-text">测试用例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工具函数源码"><span class="nav-number">4.</span> <span class="nav-text">工具函数源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#管理事件处理程序"><span class="nav-number">1.</span> <span class="nav-text">管理事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义事件解耦"><span class="nav-number">2.</span> <span class="nav-text">自定义事件解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#松耦合和紧耦合"><span class="nav-number">2.1.</span> <span class="nav-text">松耦合和紧耦合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发自定义事件"><span class="nav-number">2.2.</span> <span class="nav-text">触发自定义事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试用例"><span class="nav-number">3.</span> <span class="nav-text">测试用例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工具函数源码"><span class="nav-number">4.</span> <span class="nav-text">工具函数源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
