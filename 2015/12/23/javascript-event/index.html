@@ -68,8 +68,9 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/79967573.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70805103.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/71914034.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg">
-<meta property="og:updated_time" content="2015-12-24T15:27:03.000Z">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/96795509.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/12613772.jpg">
+<meta property="og:updated_time" content="2015-12-27T01:44:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript事件管理与自定义事件解耦">
 <meta name="twitter:description" content="管理事件处理程序在javascript中，事件机制是很早就被提出了的。在DOM level0中，我们可以通过给元素的onXXXX特性（比如说onload、onclick、blablabla）赋值来实现事件处理。在非侵入式写法中就是在javascript中将该元素的onXXXX属性赋值为一个回调函数，当事件触发的时候该函数会被自动执行。简单易行的同时也存在很多问题，其中之一就是不能同时指定多个回调函">
@@ -308,7 +309,7 @@
 <h1 id="管理事件处理程序">管理事件处理程序</h1><p>在javascript中，事件机制是很早就被提出了的。在DOM level0中，我们可以通过给元素的<code>onXXXX</code>特性（比如说<code>onload</code>、<code>onclick</code>、<code>blablabla</code>）赋值来实现事件处理。在非侵入式写法中就是在javascript中将该元素的<code>onXXXX</code>属性赋值为一个回调函数，当事件触发的时候该函数会被自动执行。简单易行的同时也存在很多问题，其中之一就是不能同时指定多个回调函数。好然后DOM level2来了，在非IE的浏览器中对应元素出现了一个<code>addEventListener(type, fn, false)</code>方法，IE中对应为<code>attachEvent(&quot;on&quot; + type, fn)</code>方法。两个方法在实现绑定事件处理程序的过程上稍有不同，但是结果是一样的（严格来说也不一样，比如说IE中只支持事件冒泡，不支持捕获，同时IE中事件处理函数中的<code>this</code>是绑定到window对象上的），只需要在绑定的时候稍作判断就能确定在当前上下文中应该使用哪一个方法。重点是用一个元素连续调用该方法多次，就可以方便地绑定事件处理程序多次，事件触发时就能调用多个你指定的函数了。当然DOM level2中的事件模型当然也有问题（不然我写这个干啥）。在简单的应用中，绑定的事件处理函数不多，当你需要解除绑定的时候，你可以一个一个的用<code>removeEventListener()</code>或者<code>detachEvent()</code>方法来解除绑定。但是如果你的应用稍微复杂了点，绑定和需要解绑的事件处理程序一多，管理就成了痛苦的事情，你不仅需要知道那些函数绑定在了哪些元素上，还得一个一个来解除绑定。那么这时候用这个方法当然就不能忍了，我们就需要一种能够方便管理绑定在元素身上的事件处理函数的方法。</p>
 <h2 id="基本思路">基本思路</h2><p>我们知道事件处理程序是绑定在元素身上的，但是绑定了之后我们居然没有办法查看他身上绑定了哪些甚至多少事件处理函数！</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/62993174.jpg" alt=""></p>
-<p>所以问题把我们导向了存储绑定信息上。我们可以在把函数绑定在了元素上之后，将这个过程记录下来。因为每个事件处理函数都会对应一个元素，因此我们要通过元素访问事件处理程序的话就需要将事件处理程序记录在元素的某个属性中。我们可以通过给每个要绑定事件处理程序的元素创建一个记录信息的属性来实现，为了便于管理，我们可以创建一个公共对象，存放各个元素的信息，每个元素只用提供一个唯一的id就可以与之对应。然后我们就可以在绑定事件处理程序之后将事件处理程序的引用保存在公共信息管理对象中对应元素id的那个子对象里面，这样就可以在之后对元素绑定过的事件处理程序进行操作和访问了。下面先来看看记录函数信息的代码：</p>
+<p>所以问题把我们导向了存储绑定信息上。我们可以在把函数绑定在了元素上之后，将这个过程记录下来。因为每个事件处理函数都会对应一个元素，因此我们要通过元素访问事件处理程序的话就需要将事件处理程序记录在元素的某个属性中。我们可以通过给每个要绑定事件处理程序的元素创建一个记录信息的属性来实现，为了便于管理，我们可以创建一个公共对象，存放各个元素的信息，每个元素只用提供一个唯一的id（guid）就可以与之对应。然后我们就可以在绑定事件处理程序之后将事件处理程序的引用保存在公共信息管理对象中对应元素guid的那个子对象里面，这样就可以在之后对元素绑定过的事件处理程序进行操作和访问了。下面先来看看记录函数信息的代码：</p>
 <pre><code><span class="keyword">var</span> KM = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
     <span class="comment">//＊＊＊＊＊＊＊＊纪录DOM元素相关信息＊＊＊＊＊＊＊＊</span>
     <span class="keyword">var</span> cache = {},                            <span class="comment">//私有对象属性，存放元素的guid，每个guid对应的值为一个存放元素信息的对象</span>
@@ -646,7 +647,6 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span>
 </code></pre><p>这样，<code>performAjaxOperation()</code>函数就只管在<code>ajax</code>开始的时候分发事件，不管也不知道有没有人注册，一副爱谁谁的洒脱模样。这样我们就能在不同的页面中重用<code>ajaxPerform.js</code>文件而不用在自己页面中申明一大堆函数了，只需要将需要在事件触发时进行的操作放在事件处理函数中并且注册文件中的<code>ajax</code>事件就行了。</p>
 <h2 id="总结-1">总结</h2><p>说了这么多，也不知道说清楚没有，也不知道有没有理解有误的地方。反正自定义事件是个缓解代码<strong>紧耦合</strong>的好东西就是了。耦合一松，全身轻松。</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg" alt=""></p>
 <h1 id="测试用例">测试用例</h1><pre><code><span class="comment">// KM.getData()</span>
 describe(<span class="string">"KM.getData(element) method"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
     <span class="keyword">var</span> domElem1 = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),
@@ -772,6 +772,8 @@ describe(<span class="string">"KM.EventUtil.triggerEvent(element, event) method"
 });
 </code></pre><h1 id="工具函数源码">工具函数源码</h1><p><a href="https://github.com/kmCha/KM-tool" target="_blank" rel="external">GitHub: KM-tool</a></p>
 <h1 id="Reference">Reference</h1><p>本文代码改编自John Resig and Bear Bibeault, 《Secrets of the JavaScript Ninja》</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/96795509.jpg" alt=""></p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/12613772.jpg" alt=""></p>
 </span>
       
     </div>
