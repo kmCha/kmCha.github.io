@@ -82,7 +82,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-10/41957075.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/42249496.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg">
-<meta property="og:updated_time" content="2015-12-27T23:43:05.000Z">
+<meta property="og:updated_time" content="2015-12-28T00:05:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="水课哪里跑－UO－Rabaska自动刷课脚本">
 <meta name="twitter:description" content="水课在手，天下我有。水课不仅能帮爱玩的同学们腾出大量时间去玩儿，也能帮学霸同学们节约大量时间来学习自己想学的东西。想必每个人都问学长学姐推荐过本专业的水课，没问题他们会告诉你，但是你上rabaska一看：
@@ -339,7 +339,7 @@
 <h2 id="书签栏问题">书签栏问题</h2><p>那么细心的盆友肯定已经发现了，说好的书签栏呢。对头，坑爹的uo把这个页面的书签栏隐藏了，但是机智的我找出了方法。</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/8143797.jpg" alt=""></p>
 <ol>
-<li>如果你用的是mac，而且浏览器是safari或者chrome（这两个能确定，其他浏览器太懒没测试，没准也能这样），那么你只需要在进入这个页面之前让浏览器进入全屏模式，然后再点开这个页面以后就有书签栏了（<strong>注意</strong>新版safari有个bug暂时不能运行脚本，所以最好还是用chrome）。</li>
+<li>如果你用的是mac，而且浏览器是safari或者chrome（这两个能确定，其他浏览器太懒没测试，没准也能这样），那么你只需要在进入这个页面之前让浏览器进入全屏模式，然后再点开这个页面以后就有书签栏了。</li>
 <li>如果你用的是windows，而且浏览器是chrome或者chrome内核的浏览器（比如说360极速浏览器），那么你在进入这个页面之后，在他的标题栏点右键，然后点击“显示为标签页”选项，然后书签栏就出来了。</li>
 </ol>
 <h2 id="下一步">下一步</h2><p>下一步当然就是选学期了（其实不选学期直接点书签页也可以），点选下拉列表里的学期选项之后，对于2016 winter，你要想水课的下面seats available不是0的话是不可能的，99.9%你想选的水课在你选择session之后，你会看到下面这个页面：</p>
@@ -364,7 +364,8 @@
 </ol>
 <p>然后这个页面就自动关闭了，也就是说当你回过神来的时候，点开这个页面之前那个搜索课的页面就被自动定位到你的cart页面了，如下图：</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/85262461.jpg" alt=""></p>
-<p>我能帮你们的就这么多，剩下的几个点鼠标的操作就只有靠你们自己了。<br>还有一种情况就是，登录时间到rabaska规定的时间了，也就是要重新登录才能继续刷课：</p>
+<p>我能帮你们的就这么多，剩下的几个点鼠标的操作就只有靠你们自己了。</p>
+<p>还有一种情况就是，登录时间到rabaska规定的时间了，也就是要重新登录才能继续刷课：</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-10/5130046.jpg" alt=""></p>
 <p>点击好之后，页面下方会总结本次<strong>水课哪里跑</strong>脚本尝试帮你刷了多少次课：</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-10/41957075.jpg" alt=""></p>
@@ -533,7 +534,7 @@
 }</span>)</span><span class="list">()</span><span class="comment">;</span>
 </code></pre><p>上面代码中，主题上有3个函数serialize()、createXHR()、submitData()。serialize函数用于在不同浏览器中将表单的数据序列化然后发送给服务器。createXHR用于在不同浏览器中创建XMLHttpRequest对象来发送异步请求。submitData用于提交表单数据。通过给XHR对象绑定事件处理程序来实现成功接收响应后的回调函数和返回失败的错误处理。而生成的p元素被插入到原本的页面中来实现提示功能。</p>
 <h2 id="v2的实现方法">v2的实现方法</h2><p>在讲v2方法之前先总结一下v1的失败原因。在测试v1的过程中，我发现，进入了选课页面（也就是还没有选择学期的页面）之后，点击下拉框选了学期以后，确实是post了一个请求到服务器，服务器返回了一个html页面没错。而且在点击了v1脚本之后每次post的数据和返回的数据也确实跟手动选了学期之后的post是完全相同的。但是服务器返回的页面却不是更新了课程状态之后的页面，而是跟我们提交的页面相同。为什么这么说，因为我用我的账号在两个不同的窗口打开一个只剩1个座位了的课，一个窗口用脚本自动刷新，另一个选择那个课加入cart。理论上在我加入了cart之后，自动刷新的窗口中从服务器返回的页面应该提示我“该课已经加入cart”了，但是并没有，还是跟之前的页面一样。然后我就急了，找了一会原因没能找到，然后就开始写v2，稍后介绍v2，下面是我写完v2之后对v1的思考。正如前面说的，v1从服务器返回的页面不会更新课程的状态，而且我发现即使手动刷新该页面也不行。但是如果我从没选学期的页面跳转到选了学期之后的页面的话，页面就更新了。因此肯定是选择学期那里的原因。最后我看到选了学期之后会触发一个事件处理函数，该函数会发送一个get请求到服务器。所以这才是问题所在，我觉得学校服务器对post请求的响应只是返回请求的页面而已，对get请求的响应才会返回更新之后的页面（真特么坑爹）。所以要想修复v1再加一条get请求用来获得更新的页面即可。</p>
-<p>接下来就是v2的实现方法。对于不刷新页面也能获得服务器数据，除了发送异步请求之外，还可以用iframe元素在页面中创建一个子页面。通过对子页面的刷新来获得服务器数据。通过把子页面的url设置成选课的页面，就能打开与当前页面相同的页面，对子页面的刷新不会影响我们的主页面，因此脚本不会失效，由于url相同，也不会出现跨域安全的问题。有个小问题需要注意，子页面刷新用重置url为当前url的方式，会让子页面回到没有选择学期之前的状态，而通过javascript指定选择的下拉框不会触发事件处理程序，所以需要手动触发事件处理函数，将页面源码中的对应函数复制过来即可。剩下的逻辑和实现就是对DOM的基本操作和布局而已了。v2代码：</p>
+<p>接下来就是v2的实现方法。对于不刷新页面也能获得服务器数据，除了发送异步请求之外，还可以用iframe元素在页面中创建一个子页面。通过对子页面的刷新来获得服务器数据。通过把子页面的url设置成选课的页面，就能打开与当前页面相同的页面，对子页面的刷新不会影响我们的主页面，因此脚本不会失效，由于url相同，也不会出现跨域安全的问题。有个小问题需要注意，子页面刷新用重置url为当前url的方式，会让子页面回到没有选择学期之前的状态，而通过javascript指定选择的下拉框不会触发事件处理程序，所以需要手动触发事件处理函数，将页面源码中的对应函数复制过来即可。剩下的逻辑和实现就是对DOM的基本操作和布局而已了。<strong>坑爹</strong>的safari在运行地址栏javascript的时候遇到<code>%</code>运算符会有不能运行脚本的bug，害我找了好久。v2代码：</p>
 <pre><code><span class="keyword">if</span>(location.href.indexOf(<span class="string">"web23.uottawa.ca/uopr/NavS/Popup.aspx?pageid=registerSelect&amp;code"</span>) &gt;= <span class="number">0</span> &amp;&amp; !<span class="built_in">document</span>.querySelector(<span class="string">"#courseInfo"</span>)) {
     (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
         <span class="keyword">var</span> frame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>),
@@ -601,7 +602,7 @@
             }
 
             <span class="keyword">else</span> {                        <span class="comment">//没有座位继续刷新</span>
-                <span class="keyword">if</span>(oddEven % <span class="number">2</span> === <span class="number">0</span>) {
+                <span class="keyword">if</span>(oddEven === <span class="number">0</span>) {        <span class="comment">// 本来用的是奇偶判断，但是safari有bug，只能用值判断</span>
                     contentDocument.getElementById(<span class="string">"_ctl0__Template_ddlSession"</span>).childNodes[<span class="number">3</span>].selected = <span class="string">"selected"</span>;    <span class="comment">// 刚打开页面选择学期</span>
                     <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);
                     script.text = <span class="string">"__doPostBack('_ctl0$_Template$ddlSession','');"</span>;
