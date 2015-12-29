@@ -82,7 +82,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-10/41957075.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/42249496.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/70765167.jpg">
-<meta property="og:updated_time" content="2015-12-29T15:03:47.000Z">
+<meta property="og:updated_time" content="2015-12-29T15:10:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="水课哪里跑－UO－Rabaska自动刷课脚本">
 <meta name="twitter:description" content="水课在手，天下我有。水课不仅能帮爱玩的同学们腾出大量时间去玩儿，也能帮学霸同学们节约大量时间来学习自己想学的东西。想必每个人都问学长学姐推荐过本专业的水课，没问题他们会告诉你，但是你上rabaska一看：
@@ -535,17 +535,17 @@
 </code></pre><p>上面代码中，主题上有3个函数serialize()、createXHR()、submitData()。serialize函数用于在不同浏览器中将表单的数据序列化然后发送给服务器。createXHR用于在不同浏览器中创建XMLHttpRequest对象来发送异步请求。submitData用于提交表单数据。通过给XHR对象绑定事件处理程序来实现成功接收响应后的回调函数和返回失败的错误处理。而生成的p元素被插入到原本的页面中来实现提示功能。</p>
 <h2 id="v2的实现方法">v2的实现方法</h2><p>在讲v2方法之前先总结一下v1的失败原因。在测试v1的过程中，我发现，进入了选课页面（也就是还没有选择学期的页面）之后，点击下拉框选了学期以后，确实是post了一个请求到服务器，服务器返回了一个html页面没错。而且在点击了v1脚本之后每次post的数据和返回的数据也确实跟手动选了学期之后的post是完全相同的。但是服务器返回的页面却不是更新了课程状态之后的页面，而是跟我们提交的页面相同。为什么这么说，因为我用我的账号在两个不同的窗口打开一个只剩1个座位了的课，一个窗口用脚本自动刷新，另一个选择那个课加入cart。理论上在我加入了cart之后，自动刷新的窗口中从服务器返回的页面应该提示我“该课已经加入cart”了，但是并没有，还是跟之前的页面一样。然后我就急了，找了一会原因没能找到，然后就开始写v2，稍后介绍v2，下面是我写完v2之后对v1的思考。正如前面说的，v1从服务器返回的页面不会更新课程的状态，而且我发现即使手动刷新该页面也不行。但是如果我从没选学期的页面跳转到选了学期之后的页面的话，页面就更新了。因此肯定是选择学期那里的原因。最后我看到选了学期之后会触发一个事件处理函数，该函数会发送一个get请求到服务器。所以这才是问题所在，我觉得学校服务器对post请求的响应只是返回请求的页面而已，对get请求的响应才会返回更新之后的页面（真特么坑爹）。所以要想修复v1再加一条get请求用来获得更新的页面即可。</p>
 <p>接下来就是v2的实现方法。对于不刷新页面也能获得服务器数据，除了发送异步请求之外，还可以用iframe元素在页面中创建一个子页面。通过对子页面的刷新来获得服务器数据。通过把子页面的url设置成选课的页面，就能打开与当前页面相同的页面，对子页面的刷新不会影响我们的主页面，因此脚本不会失效，由于url相同，也不会出现跨域安全的问题。有个小问题需要注意，子页面刷新用重置url为当前url的方式，会让子页面回到没有选择学期之前的状态，而通过javascript指定选择的下拉框不会触发事件处理程序，所以需要手动触发事件处理函数，将页面源码中的对应函数复制过来即可。剩下的逻辑和实现就是对DOM的基本操作和布局而已了。<strong>坑爹</strong>的safari在运行地址栏javascript的时候遇到<code>%</code>运算符会有不能运行脚本的bug，害我找了好久。v2代码：</p>
-<pre><code><span class="keyword">if</span>(location.href.indexOf(<span class="string">"web23.uottawa.ca/uopr/NavS/Popup.aspx?pageid=registerSelect&amp;code"</span>) &gt;= <span class="number">0</span> &amp;&amp; !<span class="built_in">document</span>.querySelector(<span class="string">"#courseInfo"</span>)) {
+<pre><code><span class="keyword">if</span> (location.href.indexOf(<span class="string">"web23.uottawa.ca/uopr/NavS/Popup.aspx?pageid=registerSelect&amp;code"</span>) &gt;= <span class="number">0</span> &amp;&amp; !<span class="built_in">document</span>.querySelector(<span class="string">"#courseInfo"</span>)) {
     (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
         <span class="keyword">var</span> frame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>),
-              count = <span class="number">0</span>,            <span class="comment">// 计数器</span>
-              oddEven = <span class="number">2</span>,        <span class="comment">// 奇偶交替刷新</span>
-              p = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>),
+            count = <span class="number">0</span>, <span class="comment">// 计数器</span>
+            oddEven = <span class="number">2</span>, <span class="comment">// 奇偶交替刷新</span>
+            p = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>),
             body = <span class="built_in">document</span>.body,
             successSound = <span class="built_in">document</span>.createElement(<span class="string">"audio"</span>),
             failSound = <span class="built_in">document</span>.createElement(<span class="string">"audio"</span>);
 
-        failSound.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/failSound.mp3"</span>;  <span class="comment">//失败提示音</span>
+        failSound.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/failSound.mp3"</span>; <span class="comment">//失败提示音</span>
         failSound.preload = <span class="string">"auto"</span>;
 
         successSound.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/successSound.mp3"</span>; <span class="comment">//新闻联播(成功提示音)</span>
@@ -563,7 +563,7 @@
         p.style.top = <span class="string">"100px"</span>;
         body.appendChild(p);
 
-          <span class="comment">//装载刷新页面的frame元素</span>
+        <span class="comment">//装载刷新页面的frame元素</span>
         frame.height = (<span class="built_in">document</span>.getElementById(<span class="string">"main"</span>).offsetHeight + <span class="number">100</span>) + <span class="string">"px"</span>;
         frame.width = body.offsetWidth + <span class="string">"px"</span>;
         frame.style.position = <span class="string">"absolute"</span>;
@@ -574,60 +574,54 @@
         frame.src = location.href;
 
         frame.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-            <span class="keyword">var</span> contentDocument = frame.contentDocument,                <span class="comment">// iframe的document对象</span>
-                tableTitle = contentDocument.querySelector(<span class="string">".DeAcDataGridListHeader"</span>),     <span class="comment">//这个元素在session到期的页面中不存在</span>
-                checkParents = contentDocument.body.querySelectorAll(<span class="string">"tr.SectionHeader"</span>),  <span class="comment">// 包裹checkbox的tr元素，每个section对应一个，不管有没有checkbox</span>
-                parentsLength = checkParents.length,                        <span class="comment">// section的个数</span>
-                seatsAvailable = <span class="literal">false</span>,                                                    <span class="comment">// 保存有没有位置的结果</span>
+            <span class="keyword">var</span> contentDocument = frame.contentDocument, <span class="comment">// iframe的document对象</span>
+                tableTitle = contentDocument.querySelector(<span class="string">".DeAcDataGridListHeader"</span>), <span class="comment">//这个元素在session到期的页面中不存在</span>
+                checkParents = contentDocument.body.querySelectorAll(<span class="string">"tr.SectionHeader"</span>), <span class="comment">// 包裹checkbox的tr元素，每个section对应一个，不管有没有checkbox</span>
+                parentsLength = checkParents.length, <span class="comment">// section的个数</span>
+                seatsAvailable = <span class="literal">false</span>, <span class="comment">// 保存有没有位置的结果</span>
                 i,
-                frameAddToCart = contentDocument.getElementById(<span class="string">"_ctl0__Template_btnCourseGo"</span>);        <span class="comment">// iframe中的add to chart按钮</span>
+                frameAddToCart = contentDocument.getElementById(<span class="string">"_ctl0__Template_btnCourseGo"</span>); <span class="comment">// iframe中的add to chart按钮</span>
 
-            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; parentsLength; i++) {                                <span class="comment">// 遍历每个section看有没有input元素，有就代表有位置了</span>
-                <span class="keyword">if</span>(checkParents[i].getElementsByTagName(<span class="string">"input"</span>).length &gt; <span class="number">0</span>) {
+            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; parentsLength; i++) { <span class="comment">// 遍历每个section看有没有input元素，有就代表有位置了</span>
+                <span class="keyword">if</span> (checkParents[i].getElementsByTagName(<span class="string">"input"</span>).length &gt; <span class="number">0</span>) {
                     seatsAvailable = <span class="literal">true</span>;
                     <span class="keyword">break</span>;
                 }
             }
 
-            <span class="keyword">if</span>(seatsAvailable) {   <span class="comment">//有座位了</span>
-                  successSound.onplaying = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="keyword">if</span> (seatsAvailable) { <span class="comment">//有座位了</span>
+                successSound.onplaying = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
                     <span class="keyword">var</span> conf = confirm(<span class="string">"这个课有位置了，赶紧的！要自动选就按确定"</span>);
-                      frame.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-                          <span class="built_in">window</span>.close();  <span class="comment">// 重设onload事件处理程序，点了add to chart之后触发</span>
-                      };
+                    frame.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                        <span class="built_in">window</span>.close(); <span class="comment">// 重设onload事件处理程序，点了add to chart之后触发</span>
+                    };
                     <span class="keyword">if</span> (conf === <span class="literal">true</span>) {
-                        checkParents[i].getElementsByTagName(<span class="string">"input"</span>)[<span class="number">0</span>].click();  <span class="comment">//选中相应section的选项框</span>
+                        checkParents[i].getElementsByTagName(<span class="string">"input"</span>)[<span class="number">0</span>].click(); <span class="comment">//选中相应section的选项框</span>
                         frameAddToCart.click(); <span class="comment">//自动点击add to cart进入cart页面</span>
                         successSound.pause();
-                    }
-                      <span class="keyword">else</span> {
-                         p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + (++count) + <span class="string">"次之后，帮你刷出来位置了，但是你点了取消，想选的话赶紧手动选还来得及哦"</span>;
+                    } <span class="keyword">else</span> {
+                        p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + (++count) + <span class="string">"次之后，帮你刷出来位置了，但是你点了取消，想选的话赶紧手动选还来得及哦"</span>;
                         successSound.pause();
-                      }
+                    }
                 };
                 successSound.play();
-            }
-
-            <span class="keyword">else</span> <span class="keyword">if</span> (!tableTitle) { <span class="comment">//session到期</span>
+            } <span class="keyword">else</span> <span class="keyword">if</span> (!tableTitle) { <span class="comment">//session到期</span>
                 failSound.onplaying = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-                      p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + (++count) + <span class="string">"次后，还是没有位置，rabaska让你重新登录了"</span>;
+                    p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + (++count) + <span class="string">"次后，还是没有位置，rabaska让你重新登录了"</span>;
                     alert(<span class="string">"登陆时间到了请重新登录"</span>);
                 };
                 failSound.play();
-            }
-
-            <span class="keyword">else</span> {                        <span class="comment">//没有座位继续刷新</span>
-                <span class="keyword">if</span>(oddEven === <span class="number">2</span>) {
-                    contentDocument.getElementById(<span class="string">"_ctl0__Template_ddlSession"</span>).childNodes[<span class="number">3</span>].selected = <span class="string">"selected"</span>;    <span class="comment">// 刚打开页面选择学期</span>
+            } <span class="keyword">else</span> { <span class="comment">//没有座位继续刷新</span>
+                <span class="keyword">if</span> (oddEven === <span class="number">2</span>) {
+                    contentDocument.getElementById(<span class="string">"_ctl0__Template_ddlSession"</span>).childNodes[<span class="number">3</span>].selected = <span class="string">"selected"</span>; <span class="comment">// 刚打开页面选择学期</span>
                     <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);
                     script.text = <span class="string">"__doPostBack('_ctl0$_Template$ddlSession','');"</span>;
                     script.type = <span class="string">"text/javascript"</span>;
-                    contentDocument.body.appendChild(script);                                        <span class="comment">// 手动触发选择学期之后的事件处理程序（会触发刷新）</span>
-                      p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + (++count) + <span class="string">"次"</span>;
-                      oddEven++;
-                }
-                <span class="keyword">else</span> {
-                    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{                                        <span class="comment">// 每2s刷新一次iframe中的页面</span>
+                    contentDocument.body.appendChild(script); <span class="comment">// 手动触发选择学期之后的事件处理程序（会触发刷新）</span>
+                    p.innerHTML = <span class="string">"水课哪里跑：尝试"</span> + (++count) + <span class="string">"次"</span>;
+                    oddEven++;
+                } <span class="keyword">else</span> {
+                    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{ <span class="comment">// 每2s刷新一次iframe中的页面</span>
                         frame.src = frame.src;
                         oddEven--;
                     }, <span class="number">2000</span>);
