@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2bff46;
+  background: #ac0f20;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1074,7 +1074,7 @@ body {
   margin-right: 10px;
 }
 .powered-by::after {
-  content: "|";
+  content: "由｜kMchA｜修改自";
   padding-left: 10px;
 }
 .cc-license {
