@@ -64,7 +64,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-29/20444356.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-29/21287352.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-29/98269947.jpg">
-<meta property="og:updated_time" content="2015-12-29T04:50:56.000Z">
+<meta property="og:updated_time" content="2015-12-29T14:15:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过less编写自己的栅格系统">
 <meta name="twitter:description" content="栅格系统用过bootstrap的都知道他的栅格系统，可以非常简便地给页面布局带来许多灵活性。我们只用在html文件中为元素指定特定的栅格类就可以精确地在水平方向上布局元素，再加上自己指定一些css规则，就完成了页面的布局。但是用久了发现他提供的12个栅格有时候并不能满足项目需求，想要更灵活精确一些，就需要对他动些手脚了（当然并不只bootstrap有栅格系统，很多css框架比如说pure都有栅格系">
@@ -302,7 +302,7 @@
         <span itemprop="articleBody"><h1 id="栅格系统">栅格系统</h1><p>用过bootstrap的都知道他的栅格系统，可以非常简便地给页面布局带来许多灵活性。我们只用在html文件中为元素指定特定的栅格类就可以精确地在水平方向上布局元素，再加上自己指定一些css规则，就完成了页面的布局。但是用久了发现他提供的12个栅格有时候并不能满足项目需求，想要更灵活精确一些，就需要对他动些手脚了（当然并不只bootstrap有栅格系统，很多css框架比如说pure都有栅格系统）。最简单也是最不应该用的方法是直接改他的css源文件，或者覆盖，那么我想说的是在bootstrap3.3.5的css文件中，跟grid系统相关的源代码从1585行到2251行，没错，刚好是666行，不信你自己去看。</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-29/20444356.jpg" alt=""></p>
 <p>应该没人愿意去改600多行代码来扩展他吧，就算你改了后期也根本没法维护。因此必须要想其他的办法。有个方法就是用其他框架，比如说pure的栅格系统有24列，但是毕竟那不是你自己的东西，而且不能就为了用pure的栅格系统在项目里又用bootstrap又用pure吧。所以为啥不自己写一个想有多少列就有多少列的栅格系统呢。那么问题就来了，要怎么写？这时候就可以看看人家是怎么写的了。</p>
-<h1 id="less">less</h1><p>bootstrap的css是用<a href="http://lesscss.org/#" target="_blank" rel="external">less</a>写的，less是一种css预处理语言，是动态的。他解决了css的最大短板，不能像编程语言一样使用变量函数等。写css给人感觉是在写口水话，没有在编程，而less解决了这个问题。同样的比较出名的css预处理语言还有<a href="http://sass-lang.com/" target="_blank" rel="external">sass</a>。这种大型库的维护没有预处理语言是不可能维护的。有了less，在编写好less文件之后，只用将less文件编译成css文件即可使用（给人感觉有点像es6编译成es5）。less的语法其实就是在css上的扩展，支持原生的css写法。他的几个核心语法并不难，但是整体挺杂的，感觉不是所有语法都常用，这是<a href="http://lesscss.org/features/" target="_blank" rel="external">官方文档</a>。</p>
+<h1 id="less">less</h1><p>bootstrap的css是用<a href="http://lesscss.org/#" target="_blank" rel="external">less</a>写的，less是一种css预处理语言，是动态的。他解决了css的最大短板，不能像编程语言一样使用变量函数等。写css给人感觉是在写口水话，没有在编程，而less解决了这个问题。同样的比较出名的css预处理语言还有<a href="http://sass-lang.com/" target="_blank" rel="external">sass</a>。这种大型库没有预处理语言是不可能维护的。有了less，在编写好less文件之后，只用将less文件编译成css文件即可使用（给人感觉有点像es6编译成es5）。less的语法其实就是在css上的扩展，支持原生的css写法。他的几个核心语法并不难，但是整体挺杂的，感觉不是所有语法都常用，这是<a href="http://lesscss.org/features/" target="_blank" rel="external">官方文档</a>。</p>
 <h1 id="实现">实现</h1><p>要编写自己的栅格系统，可以直接改写bootstrap提供的less源文件。但是bootstrap这个库比较大，关于grid的就有一个主文件和两个<code>mixin</code>文件。做为一个新手实在是hold不住也不能完全理解，所以干脆就自己写一个好了。</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-29/21287352.jpg" alt=""></p>
 <h2 id="基本思路">基本思路</h2><p>既然看他的less源码不好理解，那么就直接看css文件，然后再自己写出能输出那样css文件的less源码。虽然有666行，但是很多都是重复的代码（再次从编程的角度说明css有多辣鸡），而且非常好理解，所以可以从这里入手。其实要用到less语法的地方只有以下几个地方：</p>
@@ -793,14 +793,14 @@
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
