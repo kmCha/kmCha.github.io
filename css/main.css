@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #f9ffff;
+  background: #3c8669;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1991,6 +1991,151 @@ body {
   .use-motion .site-search form {
     top: 0 !important;
   }
+}
+.parallax {
+  perspective: 1px;
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallaxf {
+  perspective: 300px;
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallax.debug-on {
+  perspective: 300px;
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallax-group {
+  position: relative;
+  height: 50vh;
+  transform-style: preserve-3d;
+}
+.parallax-layer-base {
+  padding: 50vh 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateZ(0);
+}
+.parallax-layer-back1 {
+  padding: 50vh 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateZ(-1px);
+}
+.parallax-layer-back2 {
+  padding: 50vh 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateZ(-1px) scale(2);
+}
+.parallax-layer-basef {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateZ(0);
+}
+.parallax-layer-backf {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateZ(-300px) scale(2);
+}
+.parallax-layer-foref {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateZ(120px) scale(0.6);
+}
+.debug-on .parallax-layer-back2 {
+  transform: translateZ(-300px) scale(2);
+}
+.debug-on .parallax-group {
+  -webkit-transform: translate3d(800px, 0, -800px) rotateY(30deg);
+  transform: translate3d(700px, 0, -800px) rotateY(30deg);
+}
+.debug-on .parallax-layer-base,
+.debug-on .parallax-layer-back1,
+.debug-on .parallax-layer-back2,
+.debug-on .parallax-layer-foref,
+.debug-on .parallax-layer-basef,
+.debug-on .parallax-layer-backf {
+  box-shadow: 0 0 0 2px #000;
+  opacity: 0.9;
+}
+.parallax center,
+.parallaxf center {
+  color: #000;
+}
+.baset {
+  background-color: rgba(220,120,200,0.4);
+}
+.base1 {
+  background-color: #dc78c8;
+}
+.base2 {
+  background-color: transparent;
+}
+.base3 {
+  background-color: #78b4fa;
+}
+.base4 {
+  background-color: transparent;
+}
+.base5 {
+  background-color: #fa96c8;
+}
+.back1 {
+  background-color: #78dcc8;
+}
+.back2 {
+  background-color: #c8fa82;
+}
+.fore1 {
+  background-color: #c8c8c8;
+}
+.group1 {
+  z-index: 5;
+}
+.group2 {
+  z-index: 3;
+}
+.group3 {
+  z-index: 4;
+}
+.group4 {
+  z-index: 2;
+}
+.group5 {
+  z-index: 3;
 }
 h1,
 h2,
