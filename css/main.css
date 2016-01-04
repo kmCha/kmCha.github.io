@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #8ecdff;
+  background: #d133ff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -2080,7 +2080,7 @@ body {
 }
 .debug-on .parallax-group {
   -webkit-transform: translate3d(800px, 0, -800px) rotateY(30deg);
-  transform: translate3d(700px, 0, -800px) rotateY(30deg);
+  transform: translate3d(200px, 0, -800px) rotateY(35deg);
 }
 .debug-on .parallax-layer-base,
 .debug-on .parallax-layer-back1,
