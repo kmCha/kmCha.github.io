@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript,前端," />
+  <meta name="keywords" content="javascript,作用域,性能," />
 
 
 
@@ -55,19 +55,25 @@
 
 
 
-<meta name="description" content="相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常">
+<meta name="description" content="这两兄弟是啥eval()函数eval()是一个能够接收一个字符串作为参数的函数，能够在他所在的词法作用域中动态执行代码。比如说在程序的某个地方，你觉得之后会在运行时根据那时候的状态来执行某些语句，而不是在代码创建的时候就能确定要执行的代码，那么eval()就笑了：“朋友不用我还在等什么”
+
+with关键字with是个javascript中的关键字，主要解决某些地方需要重复引用对象的问题。比如说你需">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从原理来看javascript闭包－作用域链">
-<meta property="og:url" content="http://kmhaoshuai.com/2015/11/15/javascript闭包/index.html">
+<meta property="og:title" content="邪恶两兄弟：eval()和with">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/04/bad-eval-with/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/89735866.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/30952458.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/99274798.jpg">
-<meta property="og:updated_time" content="2015-12-24T01:34:07.000Z">
+<meta property="og:description" content="这两兄弟是啥eval()函数eval()是一个能够接收一个字符串作为参数的函数，能够在他所在的词法作用域中动态执行代码。比如说在程序的某个地方，你觉得之后会在运行时根据那时候的状态来执行某些语句，而不是在代码创建的时候就能确定要执行的代码，那么eval()就笑了：“朋友不用我还在等什么”
+
+with关键字with是个javascript中的关键字，主要解决某些地方需要重复引用对象的问题。比如说你需">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/19080076.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/54392010.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/14624659.jpg">
+<meta property="og:updated_time" content="2016-01-05T04:53:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从原理来看javascript闭包－作用域链">
-<meta name="twitter:description" content="相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常">
+<meta name="twitter:title" content="邪恶两兄弟：eval()和with">
+<meta name="twitter:description" content="这两兄弟是啥eval()函数eval()是一个能够接收一个字符串作为参数的函数，能够在他所在的词法作用域中动态执行代码。比如说在程序的某个地方，你觉得之后会在运行时根据那时候的状态来执行某些语句，而不是在代码创建的时候就能确定要执行的代码，那么eval()就笑了：“朋友不用我还在等什么”
+
+with关键字with是个javascript中的关键字，主要解决某些地方需要重复引用对象的问题。比如说你需">
 
 
 
@@ -79,7 +85,7 @@
   };
 </script>
 
-  <title> 从原理来看javascript闭包－作用域链 | kMchA的博客 </title>
+  <title> 邪恶两兄弟：eval()和with | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +260,7 @@
             
             
               
-                从原理来看javascript闭包－作用域链
+                邪恶两兄弟：eval()和with
               
             
           </h1>
@@ -263,8 +269,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-15T18:44:12-05:00" content="2015-11-15">
-              2015-11-15
+            <time itemprop="dateCreated" datetime="2016-01-04T22:40:35-05:00" content="2016-01-04">
+              2016-01-04
             </time>
           </span>
 
@@ -289,8 +295,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/15/javascript闭包/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/15/javascript闭包/" itemprop="commentsCount"></span>
+                <a href="/2016/01/04/bad-eval-with/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/04/bad-eval-with/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -309,51 +315,63 @@
       
 
       
-        <span itemprop="articleBody"><p>相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常被称为特权方法，是定义在对象内部的可以访问内部属性和方法的方法。而要想内部属性对外不可见，只能通过特权方法来访问或修改内部属性的话，就需要将特权方法放进闭包中，他就能访问包围他的对象构造函数中的私有属性了。<br>说了半天，估计像我一样的新手看见一篇这样的介绍闭包的文章的开篇要开始晕头转向了。因为当时我在搜索闭包是什么东西的时候的心情就是这样的：</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/89735866.jpg" alt=""></p>
-<p>所以废话先不多说，下面我就来一步一步谈谈我的理解。</p>
-<hr>
-<h1 id="要理解作用域链就要先知道我之_——_变量对象">要理解作用域链就要先知道我之 —— 变量对象</h1><p>变量对象保存了一个作用域中的所有变量和函数，比如全局作用域的全局变量函数中就保存了在全局作用域中申明的变量和函数。而在一个函数执行的时候，有一个叫做活动对象的充当了变量对象的角色，当中保存了在函数体中申明的变量和函数，通常当函数返回之后就会自动销毁（注意是通常不是总是，因为闭包就用到了他的例外）。</p>
-<h1 id="要理解闭包就要先知道我之_——_作用域链">要理解闭包就要先知道我之 —— 作用域链</h1><p>作用域链本质上是一个指向各个不同执行环境（上下文）的变量对象的指针列表。调用函数或者返回一个函数时，该函数会从他的内部属性[[scope]]中创建出一个作用域链，作用域链的最前端指向该函数的活动对象（作为变量对象使用），最后端则指向全局作用域的变量对象，在中间的指向包含该函数的函数（如果有的话）的作用域中的活动对象。</p>
-<h1 id="回到闭包">回到闭包</h1><p>知道了作用域链的原理，可以帮助理解闭包是怎么回事。当一个函数被调用的时候或者内部匿名函数被外部函数返回的时候，就会产生一个作用域链。拿内部匿名函数被返回的例子来说，假设内部匿名函数返回后被传递给了一个变量，他的作用域链包涵了他自己的活动对象、包围函数（外部函数）的活动对象和全局变量对象。一般情况下当函数执行完毕的时候他的执行环境中的作用域链和活动对象都会被销毁，前提是在没有其他的作用域链引用他的活动对象的情况下。而闭包就不是在这个前提下的，内部匿名函数的作用域链引用了外部包围函数的活动对象，因此当外部包围函数返回后，他的作用域链会被销毁，但是他的活动对象因为内部函数的作用域链的引用而依旧坚挺，所以才会产生闭包这种神奇的现象。只要那个指向返回的匿名函数的变量不被设置为null（手动让垃圾回收装置回收），那么那个返回他的外部函数的活动对象就一直存在于他的作用域链中，因此内部函数也就一直能访问外部函数中的变量了。<br>这正是闭包的强大之处，也是容易犯错的地方。利用这个特性，可以在外部函数返回之后继续访问或修改外部函数的变量，这就是在开篇介绍的用特权方法访问私有属性的本质原理。利用闭包强大的特性还能够实现很多有趣而且强大的功能，很多javascript高级用法都用到了闭包的特性。</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/30952458.jpg" alt=""></p>
-<h2 id="新手容易踩的坑">新手容易踩的坑</h2><p>为了更好的理解，我这里就举一个网上一抓一大把的例子然后按照上面讲的原理来分析一下：</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">woShiShuaiGe</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
-        arr[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-            <span class="keyword">return</span> i;
-        };
-    }
-    <span class="keyword">return</span> arr;
+        <span itemprop="articleBody"><h1 id="这两兄弟是啥">这两兄弟是啥</h1><h2 id="eval()函数">eval()函数</h2><p>eval()是一个能够接收一个字符串作为参数的函数，能够在他所在的词法作用域中动态执行代码。比如说在程序的某个地方，你觉得之后会在运行时根据那时候的状态来执行某些语句，而不是在代码创建的时候就能确定要执行的代码，那么eval()就笑了：“朋友不用我还在等什么”</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/19080076.jpg" alt=""></p>
+<h2 id="with关键字">with关键字</h2><p>with是个javascript中的关键字，主要解决某些地方需要重复引用对象的问题。比如说你需要执行类似下面的代码：</p>
+<pre><code>var lalala = {
+    a: <span class="number">1</span>,
+    b: <span class="number">2</span>,
+    c: <span class="number">3</span>
+};
+lalala.a = <span class="number">4</span>;
+lalala.b = <span class="number">5</span>;
+lalala.c = <span class="number">6</span>;
+</code></pre><p>那么要是你用with的话就可以写成：</p>
+<pre><code>var lalala = {
+    a: <span class="number">1</span>,
+    b: <span class="number">2</span>,
+    c: <span class="number">3</span>
+};
+with(lalala) {
+    a = <span class="number">4</span>;
+    b = <span class="number">5</span>;
+    c = <span class="number">6</span>;
 }
-<span class="keyword">var</span> globalArr = woShiShuaiGe();
-</code></pre><p>上面的函数中，woShiShuaiGe函数调用后会反悔一个由函数组成的数组，数组中每个函数调用之后会返回一个索引值。刚接触闭包这个概念同学（比如说我当时）就觉得那这每个函数肯定都会返回自己的索引值啊，像下面那样</p>
-<pre><code>globalArr[<span class="link_label">0</span>](<span class="link_url"></span>);      //以为是0，实际是10
-globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);      //以为是5，实际是10
-</code></pre><p>实际上数组中的所有函数调用后都返回10，也就是woShiShuaiGe执行完毕后的i变量的值。再回头看看woShiShuaiGe函数，for中定义了i变量并且赋值为0。在javascript中只有函数作用域一说，因此i变量实际上是存在于woShiShuaiGe函数的活动对象中的。这时候，作为闭包的arr[i]函数当然就能访问他的包围函数（也就是woShiShuaiGe函数）中的变量，而这个例子中他就返回了i。<br>下面我根据前面讲的原理来分析一下上面的过程。首先woShiShuaiGe函数申明之后被调用，然后返回的数组被赋值给了一个变量，而且返回的数组中保存着有woShiShuaiGe的闭包，所以本应该在woShiShuaiGe函数执行完毕后自动销毁的活动对象不会被销毁（因为globalArr变量中的函数还保存有对woShiShuaiGe函数中变量的引用）。既然woShiShuaiGe的活动对象没有被销毁，那么现在闭包要访问其中的变量那当然就是函数执行后的变量值了。因为woShiShuaiGe函数调用后i＝10，所以globalArr中的函数调用后都返回10。<br>那么造成以上问题的原因，相信大家如果看过相关闭包的文章的话，应该看到过类似下面这句话：</p>
-<blockquote>
-<p>闭包中引用的值是外部函数中的最终值，而不是闭包函数被创建的时候的值</p>
-</blockquote>
-<p>那既然话是这么说的，那我们是不是让闭包引用创建他的时候的值就行了？ exactly！</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/99274798.jpg" alt=""></p>
-<p>话不多说先看例子:</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">woShiShuaiGe</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
-        arr[i] = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>{
-            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-                <span class="keyword">return</span> num;
-            };
-        }(i);
-    }
-    <span class="keyword">return</span> arr;
+</code></pre><p>嗯，看上去也相当美味可口。但是事实上不管是网络上还是各种书籍里，甚至是javascript标准都不待见他们。</p>
+<h1 id="好好的怎么就被通缉了">好好的怎么就被通缉了</h1><p>看上去不错的两个功能怎么这么不受待见？不管是各类文章还是各种书籍，只要是关于javascript的，就叫你不要用这俩功能。在ES5中加入的严格模式对eval()进行了限制，对with直接就禁止使用了。下面来看看这些都是为什么。</p>
+<h2 id="eval()犯什么法了">eval()犯什么法了</h2><p>eval()虽然能运行时求值，但是仔细想想能用到运行时求值的时候多吗，怕是不多吧，更何况他还能轻易改变他所在的作用域：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">text</span>) </span>{
+    <span class="built_in">eval</span>(text);
+    <span class="built_in">console</span>.log(a);
 }
-<span class="keyword">var</span> globalArr = woShiShuaiGe();
-</code></pre><p>上面的改进方法中，我们将一个立即执行的匿名函数的返回的函数赋值给了arr[i]（注意最后的(i)）。我们将此时woShiShuaiGe函数的活动对象中的i变量传递给了那个立即执行的匿名函数，因为那个函数悲催地连世界都没好好的看一眼就被立即执行了，因此传给他的i的值正是他创建（刚创建就被执行了）的时候的i的值。这时候i的值进入了外部匿名函数并且被赋值给了外部匿名函数活动对象中的num变量，而返回的内部匿名函数因为是闭包所以能够访问外部匿名函数中的变量值，因此他返回了num。最终woShiShuaiGe函数返回的数组中的每个函数都有自己的num值，而自己那个num值都是自己在被创建的时候的i值，所以这样就能正确返回索引值了。</p>
-<pre><code>globalArr[<span class="link_label">0</span>](<span class="link_url"></span>);      //0
-globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);      //5
-</code></pre><h1 id="总结">总结</h1><p>以上就是我对闭包的理解和分析，希望能对刚接触这个概念的新手们有点帮助，因为我觉得真正搞懂了原理才能更好的应用。本文举的一个例子仅仅是为了解释闭包的原理，除此之外闭包还有很多的用法。在很多高级概念中闭包都是最基础的内容，因此搞懂闭包还是很有必要的。</p>
+<span class="keyword">var</span> a = <span class="number">1</span>;
+foo(<span class="string">"var b = 1;"</span>);     <span class="comment">// 1</span>
+foo(<span class="string">"var a = 2;"</span>);  <span class="comment">// 2</span>
+</code></pre><p>可以看到，eval()执行了<code>var a = 2;</code>之后，相当于在代码创建的时候<code>var a = 2;</code>就在那里，因此<code>console.log(a)</code>会输出<code>2</code>。因此，想在运行时修改程序中的任何词法作用域就变得非常简单，这是非常危险的。这是eval()函数邪恶的地方之一，还有一个重要的方面是对性能的影响，放在后面和with一起介绍。</p>
+<h2 id="with又招谁惹谁了">with又招谁惹谁了</h2><p>招谁惹谁没事，关键是with惹到javascript运行环境的哥老官全局对象了。直接看例子：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">go</span>(<span class="params">obj</span>) </span>{
+    <span class="keyword">with</span>(obj) {
+        a = <span class="number">2</span>;
+    }
+}
+<span class="keyword">var</span> foo = {
+    a: <span class="number">1</span>
+},
+    bar = {
+    b: <span class="number">1</span>
+};
+
+go(foo);
+<span class="built_in">console</span>.log(foo.a); <span class="comment">// 1</span>
+<span class="built_in">console</span>.log(a);     <span class="comment">// undefined</span>
+
+go(bar);
+<span class="built_in">console</span>.log(bar.a); <span class="comment">// undefined</span>
+<span class="built_in">console</span>.log(a);        <span class="comment">// 3(对头，a变成了一枚金闪闪的全局变量)</span>
+</code></pre><p>不难看出，当用with关键字时，当传入的对象存在跟下面要赋值的标识符同名的属性时，with会按我们预期完成任务。但是如果不存在咋办呢，不存在的时候with居然去碰了全局对象，你说他该不该被一枪崩了？就光是这一个理由就够他吃枪子了，但是事情还没完，他也会和eval()一样影响javascript的运行性能。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/54392010.jpg" alt=""></p>
+<h1 id="对性能的影响">对性能的影响</h1><p>要分析他们对性能的影响，就要从较为底层的编译器说起。javascript是一门编译型语言，但是他的特殊性，他跟其他的编译型语言在编译过程中又有一些不同。我们写好的javascript代码会在执行之前被编译器编译（I mean, exactly之前，一般情况下编译后就立即执行），在编译过程（词法分析、语法分析、代码生成）中的词法分析阶段，编译器会对词法作用域中的标识符的访问方式做优化，让我们的代码在运行时能够更快的访问到需要访问的标识符（变量、函数等）。编译器能这样做的前提是在代码编写之后各个标识符都是已经确定了的，这样他就能定位我们的每个标识符然后通过某些手段来优化访问他们的过程。但是正如我们上面讨论过的，<code>eval()</code>和<code>with</code>会在代码运行时改变我们的词法作用域，因此编译器是没办法提前知道他们哥俩要加入的标识符的名字和位置是什么的，所以也就没办法在代码编译的过程中对他们进行优化。更严重的是因为他们能够改变程序的作用域，所以编译器就算之前对作用域做了优化，在作用域改变之后，那些优化都会付诸流水，所以在大量使用<code>eval()</code>和<code>with</code>之后，程序运行会变的特别的慢。<br>虽然都知道要远离他们，但是知道个所以然还是多少会对理解javascript这门语言有帮助的。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/14624659.jpg" alt=""></p>
 </span>
       
     </div>
@@ -364,7 +382,9 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
           
             <a href="/tags/javascript/" rel="tag">#javascript</a>
           
-            <a href="/tags/前端/" rel="tag">#前端</a>
+            <a href="/tags/作用域/" rel="tag">#作用域</a>
+          
+            <a href="/tags/性能/" rel="tag">#性能</a>
           
         </div>
       
@@ -373,13 +393,13 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/01/02/css-based-parallax-scroll/" rel="next" title="纯css实现面向未来的视差滚动">
+                <i class="fa fa-chevron-left"></i> 纯css实现面向未来的视差滚动
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/20/Alfred+iterm2+hexo/" rel="prev" title="效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传">
-                效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -394,10 +414,10 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/11/15/javascript闭包/"
-     data-title="从原理来看javascript闭包－作用域链"
+        <div class="ds-share flat" data-thread-key="2016/01/04/bad-eval-with/"
+     data-title="邪恶两兄弟：eval()和with"
      data-content=""
-     data-url="http://kmhaoshuai.com/2015/11/15/javascript闭包/">
+     data-url="http://kmhaoshuai.com/2016/01/04/bad-eval-with/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -425,8 +445,8 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/15/javascript闭包/"
-           data-title="从原理来看javascript闭包－作用域链" data-url="http://kmhaoshuai.com/2015/11/15/javascript闭包/">
+      <div class="ds-thread" data-thread-key="2016/01/04/bad-eval-with/"
+           data-title="邪恶两兄弟：eval()和with" data-url="http://kmhaoshuai.com/2016/01/04/bad-eval-with/">
       </div>
     
   </div>
@@ -541,7 +561,7 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#要理解作用域链就要先知道我之_——_变量对象"><span class="nav-number">1.</span> <span class="nav-text">要理解作用域链就要先知道我之 —— 变量对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#要理解闭包就要先知道我之_——_作用域链"><span class="nav-number">2.</span> <span class="nav-text">要理解闭包就要先知道我之 —— 作用域链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回到闭包"><span class="nav-number">3.</span> <span class="nav-text">回到闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新手容易踩的坑"><span class="nav-number">3.1.</span> <span class="nav-text">新手容易踩的坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#这两兄弟是啥"><span class="nav-number">1.</span> <span class="nav-text">这两兄弟是啥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#eval()函数"><span class="nav-number">1.1.</span> <span class="nav-text">eval()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with关键字"><span class="nav-number">1.2.</span> <span class="nav-text">with关键字</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#好好的怎么就被通缉了"><span class="nav-number">2.</span> <span class="nav-text">好好的怎么就被通缉了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#eval()犯什么法了"><span class="nav-number">2.1.</span> <span class="nav-text">eval()犯什么法了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#with又招谁惹谁了"><span class="nav-number">2.2.</span> <span class="nav-text">with又招谁惹谁了</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对性能的影响"><span class="nav-number">3.</span> <span class="nav-text">对性能的影响</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
