@@ -75,7 +75,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-8/9109857.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/88476076.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/35413482.jpg">
-<meta property="og:updated_time" content="2015-12-24T01:35:50.000Z">
+<meta property="og:updated_time" content="2016-01-08T02:04:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript继承">
 <meta name="twitter:description" content="纪录一下自己对这个OOP中重要的话题——继承在javascript中的实现的理解。
@@ -428,6 +428,51 @@ You.prototype.sayName = <span class="function"><span class="keyword">function</s
 }
 </code></pre><p>这样前三种方法的缺点都消失了，可以说是最万能的继承方法。他能去除子类原型对象中多余的父类实例属性，还能保持原型链不变，因此也能用instanceof操作符来判断子类实例所属的类，还能用子类的原型对象的isPrototypeOf()方法来判断子类实例的原型对象，所以</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/35413482.jpg" alt=""></p>
+<p>实际上，在ES5中，Object有一个方法叫做creat()，我们可以用他来创建子类prototype的原型链继承。<code>Object.creat()</code>方法接受一个对象参数，返回一个关联（关于关联，我的理解是既不是副本，也不是引用，只是在获取对象属性的时候会沿着关联对象向上搜索）传入对象的新对象。因此，我们可以将子类的prototype对象设置为父类prototype的关联对象，然后再在上面添加子类特有的静态方法，同时不要忘了给prototype对象添加不可枚举（上面例子里没有设置这个特性）的constructor属性，因此上面的例子可以写为：</p>
+<pre><code><span class="comment">// ES5</span>
+<span class="keyword">var</span> Me = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>{                                <span class="comment">//父类实例属性</span>
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.charac = [<span class="string">"tall"</span>, <span class="string">"rich"</span>, <span class="string">"handsome"</span>];
+};
+Me.prototype.papapa = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{            <span class="comment">//父类静态方法</span>
+    <span class="comment">//啪啪啪</span>
+};
+
+<span class="keyword">var</span> You = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>{
+    Me.call(<span class="keyword">this</span>, name);                                    <span class="comment">//继承实例属性</span>
+    <span class="keyword">this</span>.age = age;                                                <span class="comment">//新增实例属性</span>
+};
+
+You.prototype = <span class="built_in">Object</span>.create(Me.prototype);                        <span class="comment">//继承静态方法</span>
+<span class="built_in">Object</span>.defineProperty( You.prototype, <span class="string">"constructor"</span> , {
+    enumerable: <span class="literal">false</span>,            <span class="comment">// 模拟默认prototype对象中的constructor</span>
+    writable: <span class="literal">true</span>,
+    configurable: <span class="literal">true</span>,
+    value: You                     <span class="comment">// 让.constructor指向You</span>
+});
+You.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{    <span class="comment">//新增静态方法</span>
+    alert(<span class="keyword">this</span>.name);
+}
+</code></pre><p>缺点其实可以忽略，就是如果你需要用到constructor属性的话就必须手动指定子类的constructor属性，只是有点不方便而已。然后ES6拯救了懒人们，ES6的标准中加入了<code>Object.setPrototypeOf()</code>方法，接受两个对象参数，将第二个对象关联到第一个对象上面。这样我们就能直接把<code>Me.prototype</code>关联到<code>You.prototype</code>上面而不用给<code>You.prototype</code>设置一个新对象然后再手动添加<code>construcor</code>属性了。</p>
+<pre><code><span class="comment">// ES6</span>
+<span class="keyword">var</span> Me = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>{                                <span class="comment">//父类实例属性</span>
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.charac = [<span class="string">"tall"</span>, <span class="string">"rich"</span>, <span class="string">"handsome"</span>];
+};
+Me.prototype.papapa = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{            <span class="comment">//父类静态方法</span>
+    <span class="comment">//啪啪啪</span>
+};
+
+<span class="keyword">var</span> You = <span class="function"><span class="keyword">function</span>(<span class="params">name, age</span>) </span>{
+    Me.call(<span class="keyword">this</span>, name);                                    <span class="comment">//继承实例属性</span>
+    <span class="keyword">this</span>.age = age;                                                <span class="comment">//新增实例属性</span>
+};
+
+<span class="built_in">Object</span>.setPrototypeOf(You.prototype, Me.prototype);                        <span class="comment">//继承静态方法</span>
+You.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{    <span class="comment">//新增静态方法</span>
+    alert(<span class="keyword">this</span>.name);
+}
+</code></pre><p>这段代码跟上面ES5的代码效果相同。</p>
 </span>
       
     </div>

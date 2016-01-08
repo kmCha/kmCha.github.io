@@ -68,7 +68,7 @@ with关键字with是个javascript中的关键字，主要解决某些地方需�
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/19080076.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/54392010.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-5/14624659.jpg">
-<meta property="og:updated_time" content="2016-01-05T04:53:11.000Z">
+<meta property="og:updated_time" content="2016-01-05T04:54:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="邪恶两兄弟：eval()和with">
 <meta name="twitter:description" content="这两兄弟是啥eval()函数eval()是一个能够接收一个字符串作为参数的函数，能够在他所在的词法作用域中动态执行代码。比如说在程序的某个地方，你觉得之后会在运行时根据那时候的状态来执行某些语句，而不是在代码创建的时候就能确定要执行的代码，那么eval()就笑了：“朋友不用我还在等什么”
@@ -337,7 +337,7 @@ with(lalala) {
     b = <span class="number">5</span>;
     c = <span class="number">6</span>;
 }
-</code></pre><p>嗯，看上去也相当美味可口。但是事实上不管是网络上还是各种书籍里，甚至是javascript标准都不待见他们。</p>
+</code></pre><p>嗯，看上去也相当美味可口。但是事实上不管是网络上还是各种书籍里，甚至是javascript标准委员会都不待见他们。</p>
 <h1 id="好好的怎么就被通缉了">好好的怎么就被通缉了</h1><p>看上去不错的两个功能怎么这么不受待见？不管是各类文章还是各种书籍，只要是关于javascript的，就叫你不要用这俩功能。在ES5中加入的严格模式对eval()进行了限制，对with直接就禁止使用了。下面来看看这些都是为什么。</p>
 <h2 id="eval()犯什么法了">eval()犯什么法了</h2><p>eval()虽然能运行时求值，但是仔细想想能用到运行时求值的时候多吗，怕是不多吧，更何况他还能轻易改变他所在的作用域：</p>
 <pre><code><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">text</span>) </span>{
