@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript,正则表达式," />
+  <meta name="keywords" content="javascript,前端,设计模式," />
 
 
 
@@ -55,21 +55,20 @@
 
 
 
-<meta name="description" content="在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：replace()。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。
-普通用法通常，我们（新手）用replace()的时候，大多数时候会传入调用该方法的字符串的一个substring作为该方法的第一个参数，也就是直接将第一个参数指定的子字符串替换为你指定的第二">
+<meta name="description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
+&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="String类的replace()方法妙用：正则表达式+函数">
-<meta property="og:url" content="http://kmhaoshuai.com/2015/12/20/RegEx-replace/index.html">
+<meta property="og:title" content="javascript设计模式之策略模式(strategy)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/06/pattern-strategy/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：replace()。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。
-普通用法通常，我们（新手）用replace()的时候，大多数时候会传入调用该方法的字符串的一个substring作为该方法的第一个参数，也就是直接将第一个参数指定的子字符串替换为你指定的第二">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/50353302.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/40597977.jpg">
-<meta property="og:updated_time" content="2015-12-20T23:46:24.000Z">
+<meta property="og:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
+&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg">
+<meta property="og:updated_time" content="2016-01-11T00:26:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="String类的replace()方法妙用：正则表达式+函数">
-<meta name="twitter:description" content="在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：replace()。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。
-普通用法通常，我们（新手）用replace()的时候，大多数时候会传入调用该方法的字符串的一个substring作为该方法的第一个参数，也就是直接将第一个参数指定的子字符串替换为你指定的第二">
+<meta name="twitter:title" content="javascript设计模式之策略模式(strategy)">
+<meta name="twitter:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
+&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
 
 
 
@@ -81,7 +80,7 @@
   };
 </script>
 
-  <title> String类的replace()方法妙用：正则表达式+函数 | kMchA的博客 </title>
+  <title> javascript设计模式之策略模式(strategy) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +255,7 @@
             
             
               
-                String类的replace()方法妙用：正则表达式+函数
+                javascript设计模式之策略模式(strategy)
               
             
           </h1>
@@ -265,8 +264,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-20T17:18:30-05:00" content="2015-12-20">
-              2015-12-20
+            <time itemprop="dateCreated" datetime="2016-01-06T17:33:13-05:00" content="2016-01-06">
+              2016-01-06
             </time>
           </span>
 
@@ -291,8 +290,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/20/RegEx-replace/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/20/RegEx-replace/" itemprop="commentsCount"></span>
+                <a href="/2016/01/06/pattern-strategy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/06/pattern-strategy/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -311,44 +310,114 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/50353302.jpg" alt=""></p>
-<p>在原生javascript中，有一个基本每个开发者都知道甚至经常使用的字符串方法：<code>replace()</code>。他通常被用于一个很简单的情况：将字符串中的某些字符替换为指定字符。正因为他的用法很简单，所以很容易被低估。</p>
-<h1 id="普通用法">普通用法</h1><p>通常，我们（新手）用<code>replace()</code>的时候，大多数时候会传入调用该方法的字符串的一个substring作为该方法的第一个参数，也就是直接将第一个参数指定的子字符串替换为你指定的第二个字符串。这样做对于非常非常（I mean，真的非常）简单的字符串操作是没有问题的，但是字符串一复杂，比如你要替换字符串中多个位置的字符就显得有点力不从心了。但是因为<code>replace()</code>的第一个参数支持正则表达式，所以有了第二种文艺用法。</p>
-<h1 id="文艺用法">文艺用法</h1><p>将第一个参数换成正则表达式之后，对字符串的操作就灵活了许多。我们可以指定匹配正则表达式来选取需要被替换的字符，但是光用正则表达式作为第一个参数实际上意义也不是很大，因为通常我们替换的时候需要知道正则表达式中抓取的某些片段是什么，才能决定第二个参数传入什么字符串来代替。<code>replace()</code>为我们提供了<code>$</code>操作符，我们能使用<code>$1</code>,<code>$2</code>等来获取第一个捕获的引用，第二个捕获的引用……因此，我们可以在全局正则每次捕获之后获取捕获的字符串的引用，从而放入第二个参数中。什么意思？先来个例子：</p>
-<pre><code>var style = <span class="string">"borderTopRightRadius"</span>;
-style.replace<span class="comment">(/([A-Z])</span>/g, <span class="string">"-$1"</span>).toLowerCase<span class="comment">()</span> === <span class="string">"border-top-right-radius"</span>; <span class="comment">//true</span>
-</code></pre><p>上面只用了两行代码就将一个驼峰式表示的字符串转换成了用横线分隔的字符串。试想一下用普通方法来实现这个，还需要遍历整个字符串来替换符合要求的字符。在这里，我们用<code>/([A-Z])/g</code>表达式来匹配<code>style</code>中的大写字母（这里是T，R，R），因为他们被放在了捕获分组中，因此可以用<code>$1</code>来读取每次捕获的引用，并且加上<code>-</code>符号放入第二个参数中，即：第一次将<code>T</code>替换成了<code>-T</code>，第二次将<code>R</code>替换成了<code>-R</code>，第三次将<code>R</code>替换成了<code>-R</code>。然后用返回的新字符串调用<code>toLowerCase()</code>方法，将字符串转换为全部小写，最后就得到了<code>border-top-right-radius</code>字符串。但是，<code>replace()</code>方法的第二个参数其实是支持函数的。因此，对字符串的操作还能够更灵活。</p>
-<h1 id="高逼格用法">高逼格用法</h1><p>当<code>replace()</code>方法的第一个参数是正则表达式，第二个参数是函数的时候，对正则表达式中的每一个捕获，都会调用一次函数，并且会有若干个参数传入函数的参数列表</p>
-<ol>
-<li>匹配的完整文本</li>
-<li>匹配的捕获，一个捕获对应一个参数</li>
-<li>匹配字符串在源字符串中的索引</li>
-<li>源字符串</li>
-</ol>
-<p>函数需要有个返回值作为<code>replace()</code>的第二个参数。<br>有了这个特性，我们当然可以用函数来实现文艺用法中的例子，只用将第二个参数换成能够处理传入捕获引用的函数就行了。在这里不写出来了。下面来说一个高逼格用法能够实现的高逼格查询字符串压缩方案。假如有一个查询字符串长这样：<code>foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3</code>，我们想将它压缩成这样<code>foo=1,2,3&amp;blah=a,b</code>，看如下例子：</p>
-<pre><code>//代码来源：<span class="type">John</span> <span class="type">Resig</span> &amp; <span class="type">Bear</span> <span class="type">Bibeult</span>, javascript ninja, <span class="number">7</span>.<span class="number">10</span>
-function compress(source) {
-    <span class="keyword">var</span> keys = {};                //保存每个捕获的键
-
-    source.replace(                //利用replace遍历字符串
-        /([^=&amp;]+)=([^&amp;]*)/g,
-        function(full, key, value) {
-            keys[key] = (keys[key] ? keys[key] + <span class="string">","</span> : <span class="string">""</span>) + value;  //将相同key的值放到keys对象的同一个key中形成字符串
-            reture <span class="string">""</span>;                //返回的字符串无关紧要
-        }
-    );
-
-    <span class="keyword">var</span> <span class="literal">result</span> = [];            //存放最终压缩结果的数组
-    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> keys) {
-        <span class="literal">result</span>.push(key + <span class="string">"="</span> + keys[key]);
+        <span itemprop="articleBody"><h1 id="先从表单验证说起">先从表单验证说起</h1><p>我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。<br>表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：</p>
+<pre><code>&lt;form action=<span class="string">"#"</span> id=<span class="string">"registerForm"</span> <span class="keyword">method</span>=<span class="string">"post"</span>&gt;
+    用户名：&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> name=<span class="string">"userName"</span>/ &gt;
+    密码：&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> name=<span class="string">"password"</span>/ &gt;
+    &lt;button&gt;提交&lt;/button&gt;
+&lt;/form&gt;
+</code></pre><p>那么这时候如果我们需要在提交表单到后台之前现在前端验证表单的正确性，从而减轻后台的负担的话，我们就需要编写表单验证代码，简单起见假设我们现在只需要验证用户名是否为非空和最大长度是否超过10，那么我们可能会像下面这样写：</p>
+<pre><code><span class="keyword">var</span> validate = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>{
+    <span class="keyword">if</span>(value === <span class="string">""</span>) {
+        <span class="keyword">return</span> <span class="string">"用户名不能为空"</span>;
     }
-
-    <span class="keyword">return</span> <span class="literal">result</span>.join(<span class="string">"&amp;"</span>);        //将结果数组转换成用&amp;分隔的字符串
+    <span class="keyword">if</span>(value.length &gt; <span class="number">10</span>) {
+        <span class="keyword">return</span> <span class="string">"用户名长度不能超过10"</span>;
+    }
 }
+<span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById(<span class="string">"registerForm"</span>);
+registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> msg = validate(registerForm.userName.value);
+    <span class="keyword">if</span>(msg) {
+        alert(msg);
+        retuen <span class="literal">false</span>;
+    }
+}
+</code></pre><p>实际上上面的代码我写了一半就不太想继续写下去了，但是为了说明它有多烂我还是保存下来了。</p>
+<ul>
+<li>首先，在<code>validate()</code>函数中，用了两个<code>if</code>判断句来实现不同的表单验证策略，这里只有俩看上去没什么，但是实际情况是不可能只有两种验证策略的，给每一个都加上<code>if</code>无疑会使<code>validate()</code>函数变得庞大无比。</li>
+<li>在每个<code>if</code>中<code>return</code>的警告用户的消息直接写在了<code>validate()</code>函数里，如果用户想改动，必须要在<code>validate()</code>函数中来改，想要改动最大长度限制也需要在<code>validate()</code>函数里改动，违反开放－封闭原则。这种需要变化的东西也应该让使用者来决定他的值是什么而不应该事先定义好。</li>
+<li>验证策略的复用性差，如果想在程序其他地方也用到这样的验证策略，那就只有复制粘贴。</li>
+</ul>
+<h1 id="策略模式">策略模式</h1><p>策略模式的核心是，定义一系列不同的算法，将它们包装起来，并且可以相互替换。在传统的面向对象语言中，相互替换由于存在类的限制显得要麻烦许多。在javascript中，函数就是对象，因此不必把每个策略定义成对象，把他们定义成函数就能实现互换。策略模式的目的是把算法的实现和算法的使用分离开来，将不同算法放进一个strategy对象中，并且定义一个context对象来实现他们。需要改动或者添加算法的实现的时候，就只用改动或添加strategy对象的方法，而不关context的事，context对象只关心根据用户传入的信息来调用strategy对象中对应的算法。</p>
+<h2 id="用策略模式重构表单验证代码">用策略模式重构表单验证代码</h2><p>首先定义strategy对象，将所有的算法定义为它的方法：</p>
+<pre><code>var strategies = {
+    notEmpty: <span class="function"><span class="keyword">function</span><span class="params">(value, errMsg)</span> {</span>
+        <span class="keyword">if</span>(value === <span class="string">""</span>) {
+            <span class="keyword">return</span> errMsg;
+        }
+    },
+    maxLength: <span class="function"><span class="keyword">function</span><span class="params">(value, length, errMsg)</span> {</span>
+        <span class="keyword">if</span>(<span class="transposed_variable">value.</span><span class="built_in">length</span> &gt; <span class="built_in">length</span>) {
+            <span class="keyword">return</span> errMsg;
+        }
+    },
+    minLength: <span class="function"><span class="keyword">function</span><span class="params">(value, length, errMsg)</span> {</span>
+        <span class="keyword">if</span>(<span class="transposed_variable">value.</span><span class="built_in">length</span> &lt; <span class="built_in">length</span>) {
+            <span class="keyword">return</span> errMsg;
+        }
+    }
+};
+</code></pre><p>可以看到，这里的每个验证策略比之前的灵活性高了很多，错误提醒消息和长度等需要自定义的参数都能够自定义。由于strategy对象是被context对象调用来实现具体任务的，下面来定义context对象的构造函数：</p>
+<pre><code><span class="keyword">var</span> Validator = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="keyword">this</span>.cache = [];
+};
 
-compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"</span>) === <span class="string">"foo=1,2,3&amp;blah=a,b"</span>;    // ture
-</code></pre><p>以上例子利用<code>replace()</code>来遍历字符串而不是用它来得到最终结果，因此最后的返回值设什么都无所谓，我们只是利用正则表达式每次捕获都会调用函数这一特性来遍历整个字符串来对我们想操作的子字符串进行我们想要的操作。例如这个例子中，我们匹配原字符串中的<code>=</code>符号以及他前后的字符串，<code>key</code>为<code>=</code>前面的字符串，<code>value</code>为<code>=</code>后面的字符串。我们在函数中将每次捕获的相同<code>key</code>值的结果融合到了<code>keys</code>对象中对应的键中，最后遍历<code>keys</code>对象将他的键值对保存在<code>result</code>数组中，最后再将数组转换为字符串返回。<br>由此可以看出，一个简简单单的<code>replace()</code>方法可以用正则表达式和函数为所欲为，为字符串的操作带来了极大的灵活性（和高逼格）。在页面脚本的编写中可以优雅的使用，毕竟现在写个程序都在比谁更优(zhuang)雅(bi)。</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-21/40597977.jpg" alt=""></p>
+Validator.prototype.add = <span class="function"><span class="keyword">function</span><span class="params">(elem, rules)</span> </span>{
+    <span class="keyword">var</span> value = elem.value,
+        that = <span class="keyword">this</span>;
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; rules.length; i++) {
+        (<span class="function"><span class="keyword">function</span><span class="params">(strategy)</span> </span>{
+            <span class="keyword">var</span> ruleArr = strategy.strategy.split(<span class="string">":"</span>),
+                errMsg = strategy.errMsg;
+            that.cache.push(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+                <span class="keyword">var</span> rule = ruleArr.shift();
+                ruleArr.unshift(value);
+                ruleArr.push(errMsg);
+                <span class="keyword">return</span> strategies[rule].apply(elem, ruleArr);
+            });
+        })(rules[i]);
+    }
+};
+
+Validator.prototype.start = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="keyword">this</span>.cache.length; i &lt; l; i++) {
+        <span class="keyword">var</span> msg = <span class="keyword">this</span>.cache[i]();
+        <span class="keyword">if</span>(msg) {
+            <span class="keyword">return</span> msg;
+        }
+    }
+};
+</code></pre><p>在构造函数中，我们能看到Validator的每个实例都有一个cache数组属性来保存需要调用的策略。而具体的保存逻辑在Validator的实例对象的<code>add()</code>方法中实现。我们给<code>add()</code>方法传入两个参数，一个是需要验证的表单元素，一个是具体的验证规则，这里规定验证规则的格式为<code>[{strategy: &quot;maxLength:6&quot;, errMsg: &quot;blabla&quot;}, {strategy: &quot;notEmpty&quot;, errMsg: &quot;aaaa&quot;}]</code>，同一个元素可以通过在数组中指定多个对象绑定多个验证策略，每个对象的<code>strategy</code>属性指出了策略的名字，如果该策略需要多余的参数，则用<code>:</code>分开。于是通过传入的rules我们可以将对应的<code>strategy</code>推入<code>Validator</code>的实例的<code>cache</code>数组中。通过<code>Validator</code>的实例的<code>start()</code>方法就可以调用所有的验证策略了。<br>这样我们就将策略的实现和策略的使用分离开来了。<code>strategies</code>对象负责实现，<code>validator</code>对象负责使用。需要添加或者修改策略的时候就只用改动<code>strategies</code>对象。需要绑定和调用验证表单的策略的时候就只用调用<code>validator</code>对象的<code>add()</code>和<code>start()</code>方法。<br>同时这也是一个高度可复用插件，可以用在各种不同的项目中，只要你需要表单验证，都能根据需要使用它，如果怕全局变量名冲突可以自己加上命名空间。添加自定义验证策略也非常简单，这里简单起见只定义了三种。下面是具体使用方法：</p>
+<pre><code><span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById( <span class="string">'registerForm'</span> );
+<span class="keyword">var</span> validataFunc = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> validator = <span class="keyword">new</span> Validator();
+    validator.add( registerForm.userName, [{
+        strategy: <span class="string">'notEmpty'</span>,
+        errMsg: <span class="string">'用户名不能为空'</span>
+    }, {
+        strategy: <span class="string">'maxLength:10'</span>,
+        errMsg: <span class="string">'用户名长度不能大于10位'</span>
+    }, {
+        strategy: <span class="string">'minLength:6'</span>,
+        errMsg: <span class="string">'用户名长度不能小于6位'</span>
+    }]);
+    <span class="keyword">var</span> errorMsg = validator.start();
+    <span class="keyword">return</span> errorMsg;
+};
+registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> errorMsg = validataFunc();
+    <span class="keyword">if</span> ( errorMsg ){
+        alert ( errorMsg );
+        <span class="keyword">return</span> <span class="literal">false</span>;                <span class="comment">// 阻止表单提交</span>
+    }
+};
+</code></pre><p>上面将验证的过程又包装在了<code>validator()</code>函数中，执行后会根据验证结果返回错误信息。这样可以在应用中存在多个表单需要验证的情况下增强插件的复用性。</p>
+<h1 id="策略模式的缺点">策略模式的缺点</h1><p>说了这么多好话也不是说策略模式没有缺点，缺点还是有的。如上面的例子，作为一个插件，暴露给用户的东西越少当然就越容易使用，这叫做<strong>最小知识原则</strong>，而策略模式看来是违背了这一个原则了。用户在使用的时候必须要知道策略的实现，才能按规定格式正确传入参数，不然插件是不能正常工作的。</p>
+<h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/form-validation" target="_blank" rel="external">form-validation</a></p>
+<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
+<p>写完这一篇居然没发一张图，不行必须补一张</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg" alt=""></p>
 </span>
       
     </div>
@@ -359,7 +428,9 @@ compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"<
           
             <a href="/tags/javascript/" rel="tag">#javascript</a>
           
-            <a href="/tags/正则表达式/" rel="tag">#正则表达式</a>
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
           
         </div>
       
@@ -368,17 +439,13 @@ compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"<
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/12/css-switch/" rel="next" title="纯CSS实现简洁自定义开关样式">
-                <i class="fa fa-chevron-left"></i> 纯CSS实现简洁自定义开关样式
+              <a href="/2016/01/04/bad-eval-with/" rel="next" title="邪恶两兄弟：eval()和with">
+                <i class="fa fa-chevron-left"></i> 邪恶两兄弟：eval()和with
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/23/javascript-event/" rel="prev" title="javascript事件管理与自定义事件解耦">
-                javascript事件管理与自定义事件解耦 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -393,10 +460,10 @@ compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"<
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/12/20/RegEx-replace/"
-     data-title="String类的replace()方法妙用：正则表达式+函数"
+        <div class="ds-share flat" data-thread-key="2016/01/06/pattern-strategy/"
+     data-title="javascript设计模式之策略模式(strategy)"
      data-content=""
-     data-url="http://kmhaoshuai.com/2015/12/20/RegEx-replace/">
+     data-url="http://kmhaoshuai.com/2016/01/06/pattern-strategy/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -424,8 +491,8 @@ compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"<
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/12/20/RegEx-replace/"
-           data-title="String类的replace()方法妙用：正则表达式+函数" data-url="http://kmhaoshuai.com/2015/12/20/RegEx-replace/">
+      <div class="ds-thread" data-thread-key="2016/01/06/pattern-strategy/"
+           data-title="javascript设计模式之策略模式(strategy)" data-url="http://kmhaoshuai.com/2016/01/06/pattern-strategy/">
       </div>
     
   </div>
@@ -540,7 +607,7 @@ compress(<span class="string">"foo=1&amp;foo=2&amp;blah=a&amp;blah=b&amp;foo=3"<
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#普通用法"><span class="nav-number">1.</span> <span class="nav-text">普通用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文艺用法"><span class="nav-number">2.</span> <span class="nav-text">文艺用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高逼格用法"><span class="nav-number">3.</span> <span class="nav-text">高逼格用法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#先从表单验证说起"><span class="nav-number">1.</span> <span class="nav-text">先从表单验证说起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式"><span class="nav-number">2.</span> <span class="nav-text">策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用策略模式重构表单验证代码"><span class="nav-number">2.1.</span> <span class="nav-text">用策略模式重构表单验证代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式的缺点"><span class="nav-number">3.</span> <span class="nav-text">策略模式的缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">4.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
