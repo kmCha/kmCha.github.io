@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript,前端," />
+  <meta name="keywords" content="javascript,前端,设计模式," />
 
 
 
@@ -55,19 +55,20 @@
 
 
 
-<meta name="description" content="相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常">
+<meta name="description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
+实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从原理来看javascript闭包－作用域链">
-<meta property="og:url" content="http://kmhaoshuai.com/2015/11/15/javascript闭包/index.html">
+<meta property="og:title" content="javascript设计模式之单例模式(singleton)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/08/pattern-singleton/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/89735866.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/30952458.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/99274798.jpg">
-<meta property="og:updated_time" content="2015-12-24T01:34:07.000Z">
+<meta property="og:description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
+实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/12028706.jpg">
+<meta property="og:updated_time" content="2016-01-11T02:36:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从原理来看javascript闭包－作用域链">
-<meta name="twitter:description" content="相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常">
+<meta name="twitter:title" content="javascript设计模式之单例模式(singleton)">
+<meta name="twitter:description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
+实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
 
 
 
@@ -79,7 +80,7 @@
   };
 </script>
 
-  <title> 从原理来看javascript闭包－作用域链 | kMchA的博客 </title>
+  <title> javascript设计模式之单例模式(singleton) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +255,7 @@
             
             
               
-                从原理来看javascript闭包－作用域链
+                javascript设计模式之单例模式(singleton)
               
             
           </h1>
@@ -263,8 +264,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-15T18:44:12-05:00" content="2015-11-15">
-              2015-11-15
+            <time itemprop="dateCreated" datetime="2016-01-08T19:23:15-05:00" content="2016-01-08">
+              2016-01-08
             </time>
           </span>
 
@@ -289,8 +290,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/15/javascript闭包/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/15/javascript闭包/" itemprop="commentsCount"></span>
+                <a href="/2016/01/08/pattern-singleton/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/08/pattern-singleton/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -309,51 +310,77 @@
       
 
       
-        <span itemprop="articleBody"><p>相信大家在学习闭包的时候一定看过类似下面这句话“闭包就是内部函数能访问外部函数中的变量，即使外部函数已经返回”。这句话的确能简单粗暴地总结出闭包的精髓，但是却不能透露任何能够帮助理解的细节。抛开多出来的那点（对于现在的javascript引擎来说）性能开销不看，使用闭包的特性确实能做很多神奇有趣的事情。比如说你想隐藏某些对象的属性从而不会被随意访问或更改，而是只能通过某些接口对外开放，这个接口通常被称为特权方法，是定义在对象内部的可以访问内部属性和方法的方法。而要想内部属性对外不可见，只能通过特权方法来访问或修改内部属性的话，就需要将特权方法放进闭包中，他就能访问包围他的对象构造函数中的私有属性了。<br>说了半天，估计像我一样的新手看见一篇这样的介绍闭包的文章的开篇要开始晕头转向了。因为当时我在搜索闭包是什么东西的时候的心情就是这样的：</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/89735866.jpg" alt=""></p>
-<p>所以废话先不多说，下面我就来一步一步谈谈我的理解。</p>
-<hr>
-<h1 id="要理解作用域链就要先知道我之_——_变量对象">要理解作用域链就要先知道我之 —— 变量对象</h1><p>变量对象保存了一个作用域中的所有变量和函数，比如全局作用域的全局变量函数中就保存了在全局作用域中申明的变量和函数。而在一个函数执行的时候，有一个叫做活动对象的充当了变量对象的角色，当中保存了在函数体中申明的变量和函数，通常当函数返回之后就会自动销毁（注意是通常不是总是，因为闭包就用到了他的例外）。</p>
-<h1 id="要理解闭包就要先知道我之_——_作用域链">要理解闭包就要先知道我之 —— 作用域链</h1><p>作用域链本质上是一个指向各个不同执行环境（上下文）的变量对象的指针列表。调用函数或者返回一个函数时，该函数会从他的内部属性[[scope]]中创建出一个作用域链，作用域链的最前端指向该函数的活动对象（作为变量对象使用），最后端则指向全局作用域的变量对象，在中间的指向包含该函数的函数（如果有的话）的作用域中的活动对象。</p>
-<h1 id="回到闭包">回到闭包</h1><p>知道了作用域链的原理，可以帮助理解闭包是怎么回事。当一个函数被调用的时候或者内部匿名函数被外部函数返回的时候，就会产生一个作用域链。拿内部匿名函数被返回的例子来说，假设内部匿名函数返回后被传递给了一个变量，他的作用域链包涵了他自己的活动对象、包围函数（外部函数）的活动对象和全局变量对象。一般情况下当函数执行完毕的时候他的执行环境中的作用域链和活动对象都会被销毁，前提是在没有其他的作用域链引用他的活动对象的情况下。而闭包就不是在这个前提下的，内部匿名函数的作用域链引用了外部包围函数的活动对象，因此当外部包围函数返回后，他的作用域链会被销毁，但是他的活动对象因为内部函数的作用域链的引用而依旧坚挺，所以才会产生闭包这种神奇的现象。只要那个指向返回的匿名函数的变量不被设置为null（手动让垃圾回收装置回收），那么那个返回他的外部函数的活动对象就一直存在于他的作用域链中，因此内部函数也就一直能访问外部函数中的变量了。<br>这正是闭包的强大之处，也是容易犯错的地方。利用这个特性，可以在外部函数返回之后继续访问或修改外部函数的变量，这就是在开篇介绍的用特权方法访问私有属性的本质原理。利用闭包强大的特性还能够实现很多有趣而且强大的功能，很多javascript高级用法都用到了闭包的特性。</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-6/30952458.jpg" alt=""></p>
-<h2 id="新手容易踩的坑">新手容易踩的坑</h2><p>为了更好的理解，我这里就举一个网上一抓一大把的例子然后按照上面讲的原理来分析一下：</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">woShiShuaiGe</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
-        arr[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-            <span class="keyword">return</span> i;
-        };
+        <span itemprop="articleBody"><h1 id="单例？">单例？</h1><p>所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。</p>
+<h1 id="实现">实现</h1><p>知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并且保存。如果创建过就直接返回保存的对象。</p>
+<h2 id="普通单例模式">普通单例模式</h2><p>拿创建一个div元素举例，如果我们要创建一个页面中唯一的div，比如说网页的登录框，那么可以这样子写：</p>
+<pre><code><span class="keyword">var</span> createLogin = <span class="function"><span class="keyword">function</span>(<span class="params">html</span>) </span>{
+    <span class="keyword">var</span> div = <span class="literal">null</span>;
+    <span class="keyword">if</span>(!div) {
+        div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);
+        div.innerHTML = html;
+        div.style.display = <span class="string">"none"</span>;
+        <span class="built_in">document</span>.body.appendChild(div);
     }
-    <span class="keyword">return</span> arr;
-}
-<span class="keyword">var</span> globalArr = woShiShuaiGe();
-</code></pre><p>上面的函数中，woShiShuaiGe函数调用后会反悔一个由函数组成的数组，数组中每个函数调用之后会返回一个索引值。刚接触闭包这个概念同学（比如说我当时）就觉得那这每个函数肯定都会返回自己的索引值啊，像下面那样</p>
-<pre><code>globalArr[<span class="link_label">0</span>](<span class="link_url"></span>);      //以为是0，实际是10
-globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);      //以为是5，实际是10
-</code></pre><p>实际上数组中的所有函数调用后都返回10，也就是woShiShuaiGe执行完毕后的i变量的值。再回头看看woShiShuaiGe函数，for中定义了i变量并且赋值为0。在javascript中只有函数作用域一说，因此i变量实际上是存在于woShiShuaiGe函数的活动对象中的。这时候，作为闭包的arr[i]函数当然就能访问他的包围函数（也就是woShiShuaiGe函数）中的变量，而这个例子中他就返回了i。<br>下面我根据前面讲的原理来分析一下上面的过程。首先woShiShuaiGe函数申明之后被调用，然后返回的数组被赋值给了一个变量，而且返回的数组中保存着有woShiShuaiGe的闭包，所以本应该在woShiShuaiGe函数执行完毕后自动销毁的活动对象不会被销毁（因为globalArr变量中的函数还保存有对woShiShuaiGe函数中变量的引用）。既然woShiShuaiGe的活动对象没有被销毁，那么现在闭包要访问其中的变量那当然就是函数执行后的变量值了。因为woShiShuaiGe函数调用后i＝10，所以globalArr中的函数调用后都返回10。<br>那么造成以上问题的原因，相信大家如果看过相关闭包的文章的话，应该看到过类似下面这句话：</p>
-<blockquote>
-<p>闭包中引用的值是外部函数中的最终值，而不是闭包函数被创建的时候的值</p>
-</blockquote>
-<p>那既然话是这么说的，那我们是不是让闭包引用创建他的时候的值就行了？ exactly！</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/99274798.jpg" alt=""></p>
-<p>话不多说先看例子:</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">woShiShuaiGe</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
-        arr[i] = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>{
-            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-                <span class="keyword">return</span> num;
-            };
-        }(i);
+    <span class="keyword">return</span> div;
+};
+loginButton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> login = createLogin(<span class="string">"我是登录框"</span>);
+    login.style.display = <span class="string">"block"</span>;
+};
+</code></pre><p>上面的代码可以实现单例模式，每次点击loginButton（假设存在）的时候就只会返回<code>createLogin()</code>函数第一次创建的保存在闭包中的那个<code>div</code>而不会重复创建。但是既然这是第一个例子那么注定是个炮灰，他有啥缺点呢？</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/12028706.jpg" alt=""></p>
+<p>我们看到，<code>createLogin()</code>函数中既处理了创建div元素的事情，又负责了判断div到底存不存在的逻辑，不符合“单一指责原则”。那有些人要说了，别给我扯些啥原则不原则的，你还怕函数累着了怎么的，没有实际的影响吗？<br>不好意思还真有，你想，这里是创建一个唯一的div，那么如果你要继续创建一个唯一的iframe来显示第三方页面，你怎么做？是不是要复制粘贴那段判断的逻辑代码然后放在<code>createIframe()</code>函数中？<br>这就是问题所在，设计模式的核心就是要将会改变的和不会改变的代码分离开来，进而增强代码的复用性。因此，正确的打开方式应该是下面的例子。</p>
+<h2 id="文艺单例模式">文艺单例模式</h2><p>同样如果我们要创建一个登录框：</p>
+<pre><code><span class="keyword">var</span> singleton = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>{
+    <span class="keyword">var</span> instance = <span class="literal">null</span>;
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">return</span> instance || instance = fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
     }
-    <span class="keyword">return</span> arr;
+};
+<span class="keyword">var</span> createLogin = <span class="function"><span class="keyword">function</span>(<span class="params">html</span>) </span>{
+    <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);
+    div.innerHTML = html;
+    div.style.display = <span class="string">"none"</span>;
+    <span class="built_in">document</span>.body.appendChild(div);
+    <span class="keyword">return</span> div;
+};
+
+<span class="keyword">var</span> createSingleLogin = singleton(createLogin);
+
+loginButton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> login = createSingleLogin(<span class="string">"我是登录框"</span>);
+    login.style.display = <span class="string">"block"</span>;
+};
+</code></pre><p>这样，创建元素和判断是否创建过两件事就分离开来了，现在如果我们要想创建一个唯一的iframe元素，就可以像这样：</p>
+<pre><code><span class="keyword">var</span> createIframe = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
+    <span class="keyword">var</span> frame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);
+    frame.src = src;
+    frame.style.display = <span class="string">"none"</span>;
+    <span class="built_in">document</span>.body.appendChild(frame);
+    <span class="keyword">return</span> frame;
+};
+
+<span class="keyword">var</span> createSingleIframe = singleton(createIframe);
+
+frameBotton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> frame = createSingleIframe(<span class="string">"www.kmhaoshuai.com"</span>);
+    frame.style.display = <span class="string">"block"</span>;
 }
-<span class="keyword">var</span> globalArr = woShiShuaiGe();
-</code></pre><p>上面的改进方法中，我们将一个立即执行的匿名函数的返回的函数赋值给了arr[i]（注意最后的(i)）。我们将此时woShiShuaiGe函数的活动对象中的i变量传递给了那个立即执行的匿名函数，因为那个函数悲催地连世界都没好好的看一眼就被立即执行了，因此传给他的i的值正是他创建（刚创建就被执行了）的时候的i的值。这时候i的值进入了外部匿名函数并且被赋值给了外部匿名函数活动对象中的num变量，而返回的内部匿名函数因为是闭包所以能够访问外部匿名函数中的变量值，因此他返回了num。最终woShiShuaiGe函数返回的数组中的每个函数都有自己的num值，而自己那个num值都是自己在被创建的时候的i值，所以这样就能正确返回索引值了。</p>
-<pre><code>globalArr[<span class="link_label">0</span>](<span class="link_url"></span>);      //0
-globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);      //5
-</code></pre><h1 id="总结">总结</h1><p>以上就是我对闭包的理解和分析，希望能对刚接触这个概念的新手们有点帮助，因为我觉得真正搞懂了原理才能更好的应用。本文举的一个例子仅仅是为了解释闭包的原理，除此之外闭包还有很多的用法。在很多高级概念中闭包都是最基础的内容，因此搞懂闭包还是很有必要的。</p>
+</code></pre><p>现在想创建任何单一对象都可以用这个方法了。</p>
+<h2 id="单例模式不只能用于创建单例">单例模式不只能用于创建单例</h2><p>在上面实现单例模式的代码中，<code>singleton()</code>函数是关键，他接收一个函数当作参数。在上面的例子中，这个函数是用来创建一个对象并且返回的。返回的对象保存到了闭包中的<code>instance</code>变量中。那么问题来了，what if 传进<code>singleton()</code>函数的函数不是用来创建对象用的？<br>其实这个问题很好回答，看<code>singleton()</code>函数的实现原理就能很容易的发现他是根据<code>instance</code>变量中的值来判断对象是否被创建过了，或者，说得更准确一点，他是根据<code>instance</code>变量中的值来判断传入的函数是否被调用过了。如果没被调用，则让<code>instance</code>的值等于函数的返回值，在上面的例子中，为一个对象。那么要是函数不是返回对象用的，我们只用让他在最后返回一个真值，例如<code>true</code>，就能同样使用<code>singleton()</code>来让函数只能执行一次。拿绑定事件处理函数的操作来说，<code>singleton()</code>实现的效果相当于用jQuery的<code>$().one()</code>函数的效果：</p>
+<pre><code><span class="keyword">var</span> bindEvent1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    $(<span class="string">'#div'</span>).one(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        alert(<span class="string">'click'</span>);
+    });
+};
+
+<span class="keyword">var</span> bindEvent2 = singleton(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="built_in">document</span>.getElementById(<span class="string">"div"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        alert(<span class="string">'click'</span>);
+    }
+});
+</code></pre><p>上面两个函数的效果是相同的。</p>
+<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
 </span>
       
     </div>
@@ -366,6 +393,8 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
           
             <a href="/tags/前端/" rel="tag">#前端</a>
           
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+          
         </div>
       
 
@@ -373,13 +402,13 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/01/06/pattern-strategy/" rel="next" title="javascript设计模式之策略模式(strategy)">
+                <i class="fa fa-chevron-left"></i> javascript设计模式之策略模式(strategy)
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/20/Alfred+iterm2+hexo/" rel="prev" title="效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传">
-                效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -394,10 +423,10 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/11/15/javascript闭包/"
-     data-title="从原理来看javascript闭包－作用域链"
+        <div class="ds-share flat" data-thread-key="2016/01/08/pattern-singleton/"
+     data-title="javascript设计模式之单例模式(singleton)"
      data-content=""
-     data-url="http://kmhaoshuai.com/2015/11/15/javascript闭包/">
+     data-url="http://kmhaoshuai.com/2016/01/08/pattern-singleton/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -425,8 +454,8 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/15/javascript闭包/"
-           data-title="从原理来看javascript闭包－作用域链" data-url="http://kmhaoshuai.com/2015/11/15/javascript闭包/">
+      <div class="ds-thread" data-thread-key="2016/01/08/pattern-singleton/"
+           data-title="javascript设计模式之单例模式(singleton)" data-url="http://kmhaoshuai.com/2016/01/08/pattern-singleton/">
       </div>
     
   </div>
@@ -541,7 +570,7 @@ globalArr[<span class="link_label">5</span>](<span class="link_url"></span>);   
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#要理解作用域链就要先知道我之_——_变量对象"><span class="nav-number">1.</span> <span class="nav-text">要理解作用域链就要先知道我之 —— 变量对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#要理解闭包就要先知道我之_——_作用域链"><span class="nav-number">2.</span> <span class="nav-text">要理解闭包就要先知道我之 —— 作用域链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回到闭包"><span class="nav-number">3.</span> <span class="nav-text">回到闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新手容易踩的坑"><span class="nav-number">3.1.</span> <span class="nav-text">新手容易踩的坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单例？"><span class="nav-number">1.</span> <span class="nav-text">单例？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通单例模式"><span class="nav-number">2.1.</span> <span class="nav-text">普通单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文艺单例模式"><span class="nav-number">2.2.</span> <span class="nav-text">文艺单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式不只能用于创建单例"><span class="nav-number">2.3.</span> <span class="nav-text">单例模式不只能用于创建单例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
