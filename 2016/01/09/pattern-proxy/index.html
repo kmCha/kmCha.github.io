@@ -55,20 +55,19 @@
 
 
 
-<meta name="description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
-&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
+<meta name="description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
+为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript设计模式之策略模式(strategy)">
-<meta property="og:url" content="http://kmhaoshuai.com/2016/01/06/pattern-strategy/index.html">
+<meta property="og:title" content="javascript设计模式之代理模式(proxy)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/09/pattern-proxy/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
-&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg">
-<meta property="og:updated_time" content="2016-01-11T01:34:23.000Z">
+<meta property="og:description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
+为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
+<meta property="og:updated_time" content="2016-01-12T04:01:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript设计模式之策略模式(strategy)">
-<meta name="twitter:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
-&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
+<meta name="twitter:title" content="javascript设计模式之代理模式(proxy)">
+<meta name="twitter:description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
+为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
 
 
 
@@ -80,7 +79,7 @@
   };
 </script>
 
-  <title> javascript设计模式之策略模式(strategy) | kMchA的博客 </title>
+  <title> javascript设计模式之代理模式(proxy) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +254,7 @@
             
             
               
-                javascript设计模式之策略模式(strategy)
+                javascript设计模式之代理模式(proxy)
               
             
           </h1>
@@ -264,8 +263,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-06T17:33:13-05:00" content="2016-01-06">
-              2016-01-06
+            <time itemprop="dateCreated" datetime="2016-01-09T16:53:22-05:00" content="2016-01-09">
+              2016-01-09
             </time>
           </span>
 
@@ -290,8 +289,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/06/pattern-strategy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/06/pattern-strategy/" itemprop="commentsCount"></span>
+                <a href="/2016/01/09/pattern-proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/09/pattern-proxy/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -310,114 +309,137 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="先从表单验证说起">先从表单验证说起</h1><p>我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。<br>表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：</p>
-<pre><code>&lt;form action=<span class="string">"#"</span> id=<span class="string">"registerForm"</span> <span class="keyword">method</span>=<span class="string">"post"</span>&gt;
-    用户名：&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> name=<span class="string">"userName"</span>/ &gt;
-    密码：&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> name=<span class="string">"password"</span>/ &gt;
-    &lt;button&gt;提交&lt;/button&gt;
-&lt;/form&gt;
-</code></pre><p>那么这时候如果我们需要在提交表单到后台之前现在前端验证表单的正确性，从而减轻后台的负担的话，我们就需要编写表单验证代码，简单起见假设我们现在只需要验证用户名是否为非空和最大长度是否超过10，那么我们可能会像下面这样写：</p>
-<pre><code><span class="keyword">var</span> validate = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>{
-    <span class="keyword">if</span>(value === <span class="string">""</span>) {
-        <span class="keyword">return</span> <span class="string">"用户名不能为空"</span>;
-    }
-    <span class="keyword">if</span>(value.length &gt; <span class="number">10</span>) {
-        <span class="keyword">return</span> <span class="string">"用户名长度不能超过10"</span>;
-    }
+        <span itemprop="articleBody"><h1 id="代理是什么？">代理是什么？</h1><p>代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。<br>因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。</p>
+<h1 id="为什么要用代理？">为什么要用代理？</h1><p>我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问题，先来看一个具体的例子——图片预加载。</p>
+<h2 id="代理模式实现图片预加载">代理模式实现图片预加载</h2><p>图片预加载就是加载一个图片的时候，在图片还没有下载完成的那一段空白时期，让一个提前加载好的图片（比如各种loading菊花图）来填充图片元素，当要我们想要加载的图片下载完成后再替换成我们想要的图片。知道了原理那么就来编写代码实现一个图片预加载：</p>
+<p>首先是html文件：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>image-preload<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span>&gt;</span>点我加载图片<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"../src/image-preload.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> img = createPreloadImage();
+        <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>)[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            img.setSrc(<span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/22567280.jpg"</span>);
+        };
+    };
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p>这里能看到我们需要编写一个<code>createPreloadIamge()</code>函数然后用它来返回一个<code>img</code>对象，通过调用<code>img</code>对象的<code>srtSrc()</code>方法并传入一个<code>url</code>来设置图片的地址。下面来看看这个怎么实现</p>
+<h3 id="普通图片预加载">普通图片预加载</h3><pre><code><span class="comment">// image-preload.js</span>
+<span class="keyword">var</span> createPreloadIamge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> proxyImg = <span class="keyword">new</span> Image(),
+        loadingImg = <span class="keyword">new</span> Image(),
+        realImg = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);
+
+    <span class="built_in">document</span>.body.appendChild(realImg);
+
+    loadingImg.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/16-1-12/64506391.jpg"</span>;
+
+    proxyImg.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        realImg.src(<span class="keyword">this</span>.src);
+    };
+
+    <span class="keyword">return</span> {
+        setSrc: <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
+            realImg.src(loadingImg.src);
+            proxyImg.src = src;
+        }
+    };
 }
-<span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById(<span class="string">"registerForm"</span>);
-registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> msg = validate(registerForm.userName.value);
-    <span class="keyword">if</span>(msg) {
-        alert(msg);
-        retuen <span class="literal">false</span>;
-    }
-}
-</code></pre><p>实际上上面的代码我写了一半就不太想继续写下去了，但是为了说明它有多烂我还是保存下来了。</p>
-<ul>
-<li>首先，在<code>validate()</code>函数中，用了两个<code>if</code>判断句来实现不同的表单验证策略，这里只有俩看上去没什么，但是实际情况是不可能只有两种验证策略的，给每一个都加上<code>if</code>无疑会使<code>validate()</code>函数变得庞大无比。</li>
-<li>在每个<code>if</code>中<code>return</code>的警告用户的消息直接写在了<code>validate()</code>函数里，如果用户想改动，必须要在<code>validate()</code>函数中来改，想要改动最大长度限制也需要在<code>validate()</code>函数里改动，违反开放－封闭原则。这种需要变化的东西也应该让使用者来决定他的值是什么而不应该事先定义好。</li>
-<li>验证策略的复用性差，如果想在程序其他地方也用到这样的验证策略，那就只有复制粘贴。</li>
-</ul>
-<h1 id="策略模式">策略模式</h1><p>策略模式的核心是，定义一系列不同的算法，将它们包装起来，并且可以相互替换。在传统的面向对象语言中，相互替换由于存在类的限制显得要麻烦许多。在javascript中，函数就是对象，因此不必把每个策略定义成对象，把他们定义成函数就能实现互换。策略模式的目的是把算法的实现和算法的使用分离开来，将不同算法放进一个strategy对象中，并且定义一个context对象来实现他们。需要改动或者添加算法的实现的时候，就只用改动或添加strategy对象的方法，而不关context的事，context对象只关心根据用户传入的信息来调用strategy对象中对应的算法。</p>
-<h2 id="用策略模式重构表单验证代码">用策略模式重构表单验证代码</h2><p>首先定义strategy对象，将所有的算法定义为它的方法：</p>
-<pre><code>var strategies = {
-    notEmpty: <span class="function"><span class="keyword">function</span><span class="params">(value, errMsg)</span> {</span>
-        <span class="keyword">if</span>(value === <span class="string">""</span>) {
-            <span class="keyword">return</span> errMsg;
+</code></pre><p>遵循<code>首当其冲原则</code>（一看就是我乱编的好吗），第一个例子必定成为炮灰，那么它的问题在哪？问题在于这段代码不符合<code>单一职责原则</code>（这个是正儿八经的）。什么是<code>单一职责原则</code>？引用<strong>曾探</strong>老师的话：</p>
+<blockquote>
+<p>单一职责原则指的是，就一个类（通常也包括对象和函数等）而言，应该仅有一个引起它变<br>化的原因。如果一个对象承担了多项职责，就意味着这个对象将变得巨大，引起它变化的原因可<br>能会有多个。面向对象设计鼓励将行为分布到细粒度的对象之中，如果一个对象承担的职责过多，<br>等于把这些职责耦合到了一起，这种耦合会导致脆弱和低内聚的设计。当变化发生时，设计可能<br>会遭到意外的破坏。</p>
+</blockquote>
+<p>那不符合<code>单一职责原则</code>又怎么了？我还不是能实现图片预加载。是的能实现，但是当<code>createPreloadIamge()</code>函数既担任了创建图片的责任，又担任了图片预加载的责任的时候，那如果以后网速飞起不需要再用预加载了，或者由于某些原因不需要用图片预加载了，需要将这个功能删除，那就麻烦了。要想不改动前面的<code>html</code>文件继续实现图片的创建，必须要从<code>createPreloadIamge()</code>函数中分离出图片创建的那部分，删除掉图片预加载的那一部分，并且还要提供一样的<code>setSrc()</code>接口，想想都觉得麻烦。<br>下面用代理模式重构上面的代码。</p>
+<h3 id="文艺图片预加载">文艺图片预加载</h3><pre><code><span class="keyword">var</span> createImage = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);
+    <span class="built_in">document</span>.body.appendChild(img);
+    <span class="keyword">return</span> {
+        setSrc: <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
+            img.src = src;
         }
-    },
-    maxLength: <span class="function"><span class="keyword">function</span><span class="params">(value, length, errMsg)</span> {</span>
-        <span class="keyword">if</span>(<span class="transposed_variable">value.</span><span class="built_in">length</span> &gt; <span class="built_in">length</span>) {
-            <span class="keyword">return</span> errMsg;
-        }
-    },
-    minLength: <span class="function"><span class="keyword">function</span><span class="params">(value, length, errMsg)</span> {</span>
-        <span class="keyword">if</span>(<span class="transposed_variable">value.</span><span class="built_in">length</span> &lt; <span class="built_in">length</span>) {
-            <span class="keyword">return</span> errMsg;
-        }
-    }
-};
-</code></pre><p>可以看到，这里的每个验证策略比之前的灵活性高了很多，错误提醒消息和长度等需要自定义的参数都能够自定义。由于strategy对象是被context对象调用来实现具体任务的，下面来定义context对象的构造函数：</p>
-<pre><code><span class="keyword">var</span> Validator = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="keyword">this</span>.cache = [];
+    };
 };
 
-Validator.prototype.add = <span class="function"><span class="keyword">function</span><span class="params">(elem, rules)</span> </span>{
-    <span class="keyword">var</span> value = elem.value,
-        that = <span class="keyword">this</span>;
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; rules.length; i++) {
-        (<span class="function"><span class="keyword">function</span><span class="params">(strategy)</span> </span>{
-            <span class="keyword">var</span> ruleArr = strategy.strategy.split(<span class="string">":"</span>),
-                errMsg = strategy.errMsg;
-            that.cache.push(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-                <span class="keyword">var</span> rule = ruleArr.shift();
-                ruleArr.unshift(value);
-                ruleArr.push(errMsg);
-                <span class="keyword">return</span> strategies[rule].apply(elem, ruleArr);
-            });
-        })(rules[i]);
+<span class="keyword">var</span> createPreloadImage = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
+    <span class="keyword">var</span> proxyImg = <span class="keyword">new</span> Image(),            <span class="comment">// 用于预加载图片</span>
+        loadingImg = <span class="keyword">new</span> Image(),        <span class="comment">// 用于提前加载菊花图</span>
+        realImg = createImage();        <span class="comment">// 真正的图片元素</span>
+
+    loadingImg.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/16-1-12/64506391.jpg"</span>;
+
+    proxyImg.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        realImg.setSrc(<span class="keyword">this</span>.src);
+    };
+
+    <span class="keyword">return</span> {
+        setSrc: <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
+            realImg.setSrc(loadingImg.src);
+            proxyImg.src = src;
+        }
+    };
+};
+</code></pre><p>可以看到我们创建了两个函数，都会返回一个带有<code>setSrc()</code>方法的对象，但实际上要实现预加载用户只会用到<code>createPreloadIamge()</code>函数，这里为了理解方便用了两个全局变量来保存函数，实际可以用命名空间将<code>createImage()</code>函数隐藏起来，只将<code>createPreloadIamge()</code>函数暴露出来。<br>要实现预加载，我们要调用<code>createPreloadIamge()</code>函数，在<code>createPreloadIamge()</code>函数内部，它只管预加载的部分，创建图片的功能通过调用<code>createImage()</code>函数来实现。这样职责分离之后，在我们不再需要图片预加载的时候，就只用将<code>html</code>文件中的函数名从<code>createPreloadIamge</code>改为<code>createImage</code>，就能只实现创建图片的功能了。<br>所以，代理对象（函数）要和本体对象（函数）的接口保持一致，这样就能容易地将本体替换为代理，用户也只用放心地请求代理，只用关心是否能得到想要的结果。</p>
+<h2 id="代理模式实现缓存">代理模式实现缓存</h2><p>javascript中复杂的计算会是一笔开销，如果能将计算结果缓存起来，下次接收到一样的参数的时候就能直接返回结算结果而不用重新麻烦处理器再算一次。下面用乘法运算来模拟复杂的运算：</p>
+<pre><code><span class="keyword">var</span> multiply = function() {
+    <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">1</span>,
+        args = arguments;
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
+        <span class="literal">result</span> *= args[i];
+    }
+    <span class="keyword">return</span> <span class="literal">result</span>;
+};
+
+<span class="keyword">var</span> proxyMul = function() {
+    <span class="keyword">var</span> cache = {};
+    <span class="keyword">return</span> function() {
+        <span class="keyword">var</span> argsStr = <span class="type">Array</span>.prototype.join.call(arguments, <span class="string">","</span>);   // 将传入的参数合为一个字符串作为缓存的键名
+        <span class="keyword">return</span> cache[argsStr] || cache[argsStr] = multiply.apply(this, arguments);
     }
 };
 
-Validator.prototype.start = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="keyword">this</span>.cache.length; i &lt; l; i++) {
-        <span class="keyword">var</span> msg = <span class="keyword">this</span>.cache[i]();
-        <span class="keyword">if</span>(msg) {
-            <span class="keyword">return</span> msg;
-        }
+proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); // <span class="number">6</span>
+</code></pre><p>这样通过乘法函数<code>multiply()</code>的代理函数<code>proxyMul()</code>函数就可以用相同的传入参数实现带有缓存功能的乘法运算了。还可以对<code>proxyMul()</code>函数稍加改动编写一个可以根据传入本体运算函数来生成对应的代理函数的函数：</p>
+<pre><code><span class="keyword">var</span> multiply = function() {
+    <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">1</span>,
+        args = arguments;
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
+        <span class="literal">result</span> *= args[i];
+    }
+    <span class="keyword">return</span> <span class="literal">result</span>;
+};
+
+<span class="keyword">var</span> add = function() {
+    <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">0</span>,
+        args = arguments;
+    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
+        <span class="literal">result</span> += args[i];
+    }
+    <span class="keyword">return</span> <span class="literal">result</span>;
+};
+
+<span class="keyword">var</span> createProxy = function(fn) {
+    <span class="keyword">var</span> cache = {};
+    <span class="keyword">return</span> function() {
+        <span class="keyword">var</span> argsStr = <span class="type">Array</span>.prototype.join.call(arguments, <span class="string">","</span>);   // 将传入的参数合为一个字符串作为缓存的键名
+        <span class="keyword">return</span> cache[argsStr] || cache[argsStr] = fn.apply(this, arguments);
     }
 };
-</code></pre><p>在构造函数中，我们能看到Validator的每个实例都有一个cache数组属性来保存需要调用的策略。而具体的保存逻辑在Validator的实例对象的<code>add()</code>方法中实现。我们给<code>add()</code>方法传入两个参数，一个是需要验证的表单元素，一个是具体的验证规则，这里规定验证规则的格式为<code>[{strategy: &quot;maxLength:6&quot;, errMsg: &quot;blabla&quot;}, {strategy: &quot;notEmpty&quot;, errMsg: &quot;aaaa&quot;}]</code>，同一个元素可以通过在数组中指定多个对象绑定多个验证策略，每个对象的<code>strategy</code>属性指出了策略的名字，如果该策略需要多余的参数，则用<code>:</code>分开。于是通过传入的rules我们可以将对应的<code>strategy</code>推入<code>Validator</code>的实例的<code>cache</code>数组中。通过<code>Validator</code>的实例的<code>start()</code>方法就可以调用所有的验证策略了。<br>这样我们就将策略的实现和策略的使用分离开来了。<code>strategies</code>对象负责实现，<code>validator</code>对象负责使用。需要添加或者修改策略的时候就只用改动<code>strategies</code>对象。需要绑定和调用验证表单的策略的时候就只用调用<code>validator</code>对象的<code>add()</code>和<code>start()</code>方法。<br>同时这也是一个高度可复用插件，可以用在各种不同的项目中，只要你需要表单验证，都能根据需要使用它，如果怕全局变量名冲突可以自己加上命名空间。添加自定义验证策略也非常简单，这里简单起见只定义了三种。下面是具体使用方法：</p>
-<pre><code><span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById( <span class="string">'registerForm'</span> );
-<span class="keyword">var</span> validataFunc = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-    <span class="keyword">var</span> validator = <span class="keyword">new</span> Validator();
-    validator.add( registerForm.userName, [{
-        strategy: <span class="string">'notEmpty'</span>,
-        errMsg: <span class="string">'用户名不能为空'</span>
-    }, {
-        strategy: <span class="string">'maxLength:10'</span>,
-        errMsg: <span class="string">'用户名长度不能大于10位'</span>
-    }, {
-        strategy: <span class="string">'minLength:6'</span>,
-        errMsg: <span class="string">'用户名长度不能小于6位'</span>
-    }]);
-    <span class="keyword">var</span> errorMsg = validator.start();
-    <span class="keyword">return</span> errorMsg;
-};
-registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-    <span class="keyword">var</span> errorMsg = validataFunc();
-    <span class="keyword">if</span> ( errorMsg ){
-        alert ( errorMsg );
-        <span class="keyword">return</span> <span class="literal">false</span>;                <span class="comment">// 阻止表单提交</span>
-    }
-};
-</code></pre><p>上面将验证的过程又包装在了<code>validator()</code>函数中，执行后会根据验证结果返回错误信息。这样可以在应用中存在多个表单需要验证的情况下增强插件的复用性。</p>
-<h1 id="策略模式的缺点">策略模式的缺点</h1><p>说了这么多好话也不是说策略模式没有缺点，缺点还是有的。如上面的例子，作为一个插件，暴露给用户的东西越少当然就越容易使用，这叫做<strong>最小知识原则</strong>，而策略模式看来是违背了这一个原则了。用户在使用的时候必须要知道策略的实现，才能按规定格式正确传入参数，不然插件是不能正常工作的。</p>
-<h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/form-validation" target="_blank" rel="external">form-validation</a></p>
-<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
-<p>写完这一篇居然没发一张图，不行必须补一张</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg" alt=""></p>
+
+<span class="keyword">var</span> proxyMul = createProxy(multiply);
+<span class="keyword">var</span> proxyAdd = createProxy(add);
+
+proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); // <span class="number">6</span>
+proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>); // <span class="number">3</span>
+</code></pre><h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
 </span>
       
     </div>
@@ -439,17 +461,13 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/04/bad-eval-with/" rel="next" title="邪恶两兄弟：eval()和with">
-                <i class="fa fa-chevron-left"></i> 邪恶两兄弟：eval()和with
+              <a href="/2016/01/08/pattern-singleton/" rel="next" title="javascript设计模式之单例模式(singleton)">
+                <i class="fa fa-chevron-left"></i> javascript设计模式之单例模式(singleton)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/08/pattern-singleton/" rel="prev" title="javascript设计模式之单例模式(singleton)">
-                javascript设计模式之单例模式(singleton) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -464,10 +482,10 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/01/06/pattern-strategy/"
-     data-title="javascript设计模式之策略模式(strategy)"
+        <div class="ds-share flat" data-thread-key="2016/01/09/pattern-proxy/"
+     data-title="javascript设计模式之代理模式(proxy)"
      data-content=""
-     data-url="http://kmhaoshuai.com/2016/01/06/pattern-strategy/">
+     data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -495,8 +513,8 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/06/pattern-strategy/"
-           data-title="javascript设计模式之策略模式(strategy)" data-url="http://kmhaoshuai.com/2016/01/06/pattern-strategy/">
+      <div class="ds-thread" data-thread-key="2016/01/09/pattern-proxy/"
+           data-title="javascript设计模式之代理模式(proxy)" data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
       </div>
     
   </div>
@@ -611,7 +629,7 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#先从表单验证说起"><span class="nav-number">1.</span> <span class="nav-text">先从表单验证说起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式"><span class="nav-number">2.</span> <span class="nav-text">策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用策略模式重构表单验证代码"><span class="nav-number">2.1.</span> <span class="nav-text">用策略模式重构表单验证代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式的缺点"><span class="nav-number">3.</span> <span class="nav-text">策略模式的缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">4.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代理是什么？"><span class="nav-number">1.</span> <span class="nav-text">代理是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要用代理？"><span class="nav-number">2.</span> <span class="nav-text">为什么要用代理？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式实现图片预加载"><span class="nav-number">2.1.</span> <span class="nav-text">代理模式实现图片预加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通图片预加载"><span class="nav-number">2.1.1.</span> <span class="nav-text">普通图片预加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文艺图片预加载"><span class="nav-number">2.1.2.</span> <span class="nav-text">文艺图片预加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式实现缓存"><span class="nav-number">2.2.</span> <span class="nav-text">代理模式实现缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
