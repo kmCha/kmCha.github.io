@@ -70,7 +70,7 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/71914034.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/96795509.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/12613772.jpg">
-<meta property="og:updated_time" content="2016-01-12T15:27:19.000Z">
+<meta property="og:updated_time" content="2016-01-12T15:42:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript事件管理与自定义事件解耦">
 <meta name="twitter:description" content="管理事件处理程序在javascript中，事件机制是很早就被提出了的。在DOM level0中，我们可以通过给元素的onXXXX特性（比如说onload、onclick、blablabla）赋值来实现事件处理。在非侵入式写法中就是在javascript中将该元素的onXXXX属性赋值为一个回调函数，当事件触发的时候该函数会被自动执行。简单易行的同时也存在很多问题，其中之一就是不能同时指定多个回调函">
@@ -400,8 +400,6 @@
 
     <span class="comment">//＊＊＊＊＊＊＊＊解绑事件处理程序＊＊＊＊＊＊＊＊</span>
     inKM.<span class="type">EventUtil</span>.removeEventListener = function(element, <span class="class"><span class="keyword">type</span>, <span class="title">handler</span>) {</span>        <span class="comment">//根据传入的参数个数决定解绑方式</span>
-                                                                                            <span class="comment">//只传入element则解绑元素上绑定的所有事件处理程序</span>
-                                                                                            <span class="comment">//只传入element和type则解绑元素上该type的所有事件处理程序</span>
         <span class="keyword">var</span> data = <span class="type">KM</span>.getData(element);
 
         <span class="keyword">if</span>(!data.handlers) {        <span class="comment">//传入的元素上没有绑定handlers信息，即没绑定过事件处理函数</span>
@@ -491,33 +489,25 @@
         <span class="tag">&lt;<span class="title">style</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span><span class="css">
               <span class="id">#whirlyThing</span> <span class="rules">{ <span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>; }</span>
         </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
-
         <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
-
-              addEvent(<span class="built_in">window</span>,<span class="string">'load'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-
+              KM.EventUtil.addEventListener(<span class="built_in">window</span>,<span class="string">'load'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
                 <span class="keyword">var</span> button = <span class="built_in">document</span>.getElementById(<span class="string">'clickMe'</span>);
-                addEvent(button,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+                KM.EventUtil.addEventListener(button,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
                       performAjaxOperation(<span class="keyword">this</span>);
                 });
-              });
-
+            });
               <span class="function"><span class="keyword">function</span> <span class="title">performAjaxOperation</span>(<span class="params">target</span>) </span>{
                   <span class="built_in">document</span>.getElementById(<span class="string">'whirlyThing'</span>).style.display = <span class="string">'inline-block'</span>; <span class="comment">//ajax操作刚开始</span>
-
                   setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{            <span class="comment">//定时器模拟ajax操作</span>
                       <span class="built_in">document</span>.getElementById(<span class="string">'whirlyThing'</span>).style.display = <span class="string">'none'</span>;    <span class="comment">// ajax操作执行完毕，回调函数中隐藏图片</span>
                   }, <span class="number">5000</span>);
               }
-
         </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
       <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
       <span class="tag">&lt;<span class="title">body</span>&gt;</span>
-
         <span class="tag">&lt;<span class="title">button</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">id</span>=<span class="value">"clickMe"</span>&gt;</span>Start<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
 
         <span class="tag">&lt;<span class="title">img</span> <span class="attribute">id</span>=<span class="value">"whirlyThing"</span> <span class="attribute">src</span>=<span class="value">"whirly-thing.gif"</span>&gt;</span>
-
       <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span>
 </code></pre><p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/79967573.jpg" alt=""></p>
@@ -533,10 +523,10 @@
 
         <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
 
-            addEvent(<span class="built_in">window</span>,<span class="string">'load'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+            KM.EventUtil.addEventListener(<span class="built_in">window</span>,<span class="string">'load'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
 
                 <span class="keyword">var</span> button = <span class="built_in">document</span>.getElementById(<span class="string">'clickMe'</span>);
-                addEvent(button,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+                KM.EventUtil.addEventListener(button,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
                   performAjaxOperation(<span class="keyword">this</span>);
                 });
               });
@@ -617,20 +607,20 @@
 
         <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
 
-            addEvent(<span class="built_in">window</span>,<span class="string">'load'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+            KM.EventUtil.addEventListener(<span class="built_in">window</span>,<span class="string">'load'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
 
                 <span class="keyword">var</span> button = <span class="built_in">document</span>.getElementById(<span class="string">'clickMe'</span>);
-                addEvent(button,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+                KM.EventUtil.addEventListener(button,<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
                       performAjaxOperation(<span class="keyword">this</span>);
                 });
 
                 <span class="keyword">var</span> body = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'body'</span>)[<span class="number">0</span>];
 
-                addEvent(body,<span class="string">'ajax-start'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>{
+                KM.EventUtil.addEventListener(body,<span class="string">'ajax-start'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>{
                       <span class="built_in">document</span>.getElementById(<span class="string">'whirlyThing'</span>).style.display = <span class="string">'inline-block'</span>;
                 });
 
-                addEvent(body,<span class="string">'ajax-complete'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>{
+                KM.EventUtil.addEventListener(body,<span class="string">'ajax-complete'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>{
                       <span class="built_in">document</span>.getElementById(<span class="string">'whirlyThing'</span>).style.display = <span class="string">'none'</span>;
                 });
               });
@@ -778,7 +768,7 @@ describe(<span class="string">"KM.EventUtil.triggerEvent(element, event) method"
         expect(listener2).toHaveBeenCalled();
     });
 });
-</code></pre><h1 id="工具函数源码">工具函数源码</h1><p><a href="https://github.com/kmCha/KM-tool" target="_blank" rel="external">GitHub: KM-tool</a></p>
+</code></pre><h1 id="工具函数源码">工具函数源码</h1><p>GitHub: <a href="https://github.com/kmCha/KM-tool" target="_blank" rel="external">KM-tool</a></p>
 <h1 id="Reference">Reference</h1><p>本文代码改编自John Resig and Bear Bibeault, 《Secrets of the JavaScript Ninja》</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/96795509.jpg" alt=""></p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-9/12613772.jpg" alt=""></p>
