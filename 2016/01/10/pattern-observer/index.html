@@ -55,19 +55,16 @@
 
 
 
-<meta name="description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
-为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
+<meta name="description" content="什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript设计模式之代理模式(proxy)">
-<meta property="og:url" content="http://kmhaoshuai.com/2016/01/09/pattern-proxy/index.html">
+<meta property="og:title" content="javascript设计模式之观察者模式(observer)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/10/pattern-observer/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
-为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
-<meta property="og:updated_time" content="2016-01-12T14:12:09.000Z">
+<meta property="og:description" content="什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开">
+<meta property="og:updated_time" content="2016-01-12T23:50:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript设计模式之代理模式(proxy)">
-<meta name="twitter:description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
-为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
+<meta name="twitter:title" content="javascript设计模式之观察者模式(observer)">
+<meta name="twitter:description" content="什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开">
 
 
 
@@ -79,7 +76,7 @@
   };
 </script>
 
-  <title> javascript设计模式之代理模式(proxy) | kMchA的博客 </title>
+  <title> javascript设计模式之观察者模式(observer) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +251,7 @@
             
             
               
-                javascript设计模式之代理模式(proxy)
+                javascript设计模式之观察者模式(observer)
               
             
           </h1>
@@ -263,8 +260,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-09T16:53:22-05:00" content="2016-01-09">
-              2016-01-09
+            <time itemprop="dateCreated" datetime="2016-01-10T18:22:45-05:00" content="2016-01-10">
+              2016-01-10
             </time>
           </span>
 
@@ -289,8 +286,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/09/pattern-proxy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/09/pattern-proxy/" itemprop="commentsCount"></span>
+                <a href="/2016/01/10/pattern-observer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/10/pattern-observer/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -309,138 +306,154 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="代理是什么？">代理是什么？</h1><p>代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。<br>因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。</p>
-<h1 id="为什么要用代理？">为什么要用代理？</h1><p>我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问题，先来看一个具体的例子——图片预加载。</p>
-<h2 id="代理模式实现图片预加载">代理模式实现图片预加载</h2><p>图片预加载就是加载一个图片的时候，在图片还没有下载完成的那一段空白时期，让一个提前加载好的图片（比如各种loading菊花图）来填充图片元素，当要我们想要加载的图片下载完成后再替换成我们想要的图片。知道了原理那么就来编写代码实现一个图片预加载：</p>
-<p>首先是html文件：</p>
+        <span itemprop="articleBody"><h1 id="什么是观察者模式？">什么是观察者模式？</h1><p>说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做<strong>发布——订阅(publish-subscribe)模式</strong>。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，<strong>发布</strong>和<strong>订阅</strong>。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开销。</p>
+<h1 id="观察者模式的原理">观察者模式的原理</h1><h2 id="事件冒泡">事件冒泡</h2><p>实际上在我之前的文章“<a href="http://www.kmhaoshuai.com/2015/12/23/javascript-event/" target="_blank" rel="external">javascript事件管理与自定义事件解耦</a>”中，就运用了观察者模式。在那篇文章中，用编写的通用事件对象来触发冒泡事件实现了发布对象和订阅对象之间的解耦。简单说来就是通过在<code>DOM</code>元素上绑定一个数据对象，将该元素绑定的事件处理程序都引用到数据对象上，然后定义一个调度函数在事件发生时触发事件处理函数。在通用事件对象上有个<code>trigger()</code>方法可以在一个指定的<code>DOM</code>元素上触发任意冒泡事件，因此我们可以在该元素的任意父元素上捕获（订阅）该事件。<br>上述的方法是通过事件冒泡来削弱发布对象和订阅对象之间的耦合，只要在订阅对象的子元素上发布了一个事件，那么子元素上面所有订阅了该事件的父元素上的事件处理函数都会被调用，跟发布事件的对象显式一个个调用订阅对象的事件处理函数相比，这种用事件回调的方式的实现使得用户并不用关心哪些具体的对象订阅了该事件，只用将事件发布出去，剩下的事件冒泡和事件处理函数的调用会自动实现。</p>
+<h2 id="中介对象">中介对象</h2><p>事件冒泡在类似<code>DOM</code>对象那种层级分明的情况下很好用，但是当发布对象和订阅对象是通用的对象的时候就不能用了。因此需要编写一种能够应用于任何情况下的观察者模式。在普通的对象中没有了事件冒泡应该怎么来联系发布对象和订阅对象呢，要想解除他们之间的耦合，不难想到可以定义一个处在他们中间的对象，这里把它叫做中介对象。有了中介对象之后，不管有多少发布者，他们不在乎谁订阅了，只用无脑在事件发生的时候将该消息发布在中介那里，而订阅者也不用关心是谁发布了他们的订阅信息，他们只在乎收到的消息的正确性。中间的事情就是中介对象需要做的事了。</p>
+<h1 id="模块间的通信">模块间的通信</h1><p>知道了通用的观察者模式的原理——中介对象之后，我们就可以来看一个实际的例子。假如在一个项目中，我负责写一个<code>ajax</code>模块，在该模块执行过后，需要调用来自其他同学的各种模块，比如说插入图片啊、渲染一个组件啊、blablabla。那么我们可（bu）能（yao）这样写：</p>
+<pre><code>ajax.success(<span class="function"><span class="keyword">function</span><span class="params">(data)</span></span> {
+    appendImg.init(<span class="type">data</span>);
+    renderWidget.render(<span class="type">data</span>);
+    blablabla.init(<span class="type">data</span>);
+});
+</code></pre><p>然后突然有一天需要在ajax成功返回数据之后添加一个新功能，那么写新功能模块的同学就要联系我，让我在我的<code>ajax</code>代码的回调里再添加一条。可想而之这是相当麻烦的。观察者模式就是致力于解决这种问题的，我在编写<code>ajax</code>模块的时候，在成功返回数据之后，只需要发布<code>数据成功返回</code>这样的一条消息，订阅了该消息的组件就会各自执行自己该做的事情。相应订阅的代码也存在于各个组件的内部，不需要让我知道。而需要添加的组件也只需要在内部订阅该消息就能在不用麻烦我的情况下实现跟存在于回调函数之中相同的效果。<br>下面来看看用观察者模式重构的代码：</p>
+<pre><code><span class="keyword">var</span> middle = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> _events = {},
+        _listen,
+        _trigger,
+        _remove;
+
+    _listen = <span class="function"><span class="keyword">function</span>(<span class="params">event, fn</span>) </span>{
+        <span class="keyword">if</span>(!_events[event]) {
+            _events[event] = [];
+        }
+        _events[event].push(fn);
+    };
+
+    _trigger = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> event = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>),
+            fns = _events[event];
+        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = fns.length; i &lt; l; i++) {
+            fns[i].apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        }
+    };
+
+    _remove = <span class="function"><span class="keyword">function</span>(<span class="params">event, fn</span>) </span>{
+        <span class="keyword">if</span>(!_events[event]) {
+            <span class="keyword">return</span>;
+        }
+        <span class="keyword">if</span>(!fn) {
+            _events[event] = [];
+        }
+        <span class="keyword">else</span> {
+            <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = _events[event].length; i &lt; l; i++) {
+                <span class="keyword">if</span>(fn === _events[event][i]) {
+                    _events[event].splice(i, <span class="number">1</span>);
+                    <span class="keyword">return</span>;
+                }
+            }
+        }
+    };
+
+    <span class="keyword">return</span> {
+        listen: _listen,
+        trigger: _trigger,
+        remove: _remove
+    };
+})();
+
+<span class="keyword">var</span> appendImg = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    middle.listen(<span class="string">"ajaxSuccess"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+        appendImg.init(data);
+    });
+
+    <span class="keyword">return</span> {
+        init: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+            <span class="comment">// 初始化代码</span>
+        }
+    };
+})();
+
+<span class="keyword">var</span> renderWidget = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    middle.listen(<span class="string">"ajaxSuccess"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+        renderWidget.render(data);
+    });
+
+    <span class="keyword">return</span> {
+        render: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+            <span class="comment">// 初始化代码</span>
+        }
+    };
+})();
+
+<span class="keyword">var</span> blablabla = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    middle.listen(<span class="string">"ajaxSuccess"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+        balblabla.init(data);
+    })
+
+    <span class="keyword">return</span> {
+        init: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+            <span class="comment">// 初始化代码</span>
+        }
+    };
+})();
+
+ajax.success(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+    middle.trigger(<span class="string">"ajaxSuccess"</span>, data);
+});
+</code></pre><p>可以看到我们定义了一个中介对象<code>middle</code>，最后在我编写的模块中，只用在回调函数中通过中介对象来发布<code>&quot;ajaxSuccess&quot;</code>这个消息，并不用知道谁需要用到。在需要用到这个消息的模块中，编写模块的人需要在其模块内部订阅该消息，当有另外的模块发布该消息的时候，中介对象就会调用模块传进去的回调函数并且传入从发布者那里传过来的数据。</p>
+<p>通过观察者模式，我们可以很容易的添加或者删除他们之间的关联。例如如果现在有一个新的模块需要在<code>ajax</code>成功请求之后调用，那么编写那个模块的人就只用在其内部用中介对象的<code>listen()</code>方法订阅<code>&quot;ajaxSuccess&quot;</code>消息，而不用再联系我修改我的代码了。同样，需要删除的时候，也可以通过中介对象的<code>remove()</code>方法来清除一个回调函数或者清除一个消息的所有订阅者，取决于传入该方法的参数中有没有指定特定的订阅者。</p>
+<p>下面通过用定时器来模拟<code>ajax</code>请求并且使用我们上面定义的<code>middle</code>中介对象来实现<code>ajax</code>模块和<code>loadImg</code>模块的模块间的通信：</p>
 <pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
 <span class="tag">&lt;<span class="title">head</span>&gt;</span>
     <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">title</span>&gt;</span>image-preload<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>模块间通信<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
 <span class="tag">&lt;<span class="title">body</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">button</span>&gt;</span>点我加载图片<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"../src/image-preload.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span>&gt;</span>点我发送请求<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"../src/module-subscribe.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
     <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
     <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-        <span class="keyword">var</span> img = createPreloadImage();
+        <span class="keyword">var</span> p = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"p"</span>)[<span class="number">0</span>];
+
+        <span class="keyword">var</span> ajax = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="keyword">var</span> _send = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                p.innerHTML = <span class="string">"正在发送ajax请求"</span>;
+                setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                    p.innerHTML = <span class="string">"请求成功返回"</span>;
+                    middle.trigger(<span class="string">"ajaxSuccess"</span>, <span class="string">"success"</span>);
+                }, <span class="number">3000</span>);
+            };
+            <span class="keyword">return</span> {
+                send: _send
+            };
+        })();
+        <span class="keyword">var</span> loadImg = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            middle.listen(<span class="string">"ajaxSuccess"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+                loadImg.init(data);
+            });
+
+            <span class="keyword">var</span> _init = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
+                <span class="keyword">if</span>(data === <span class="string">"success"</span>)
+                alert(<span class="string">"加载图片"</span>);
+            };
+            <span class="keyword">return</span> {
+                init: _init
+            };
+        })();
         <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>)[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-            img.setSrc(<span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/15-12-13/22567280.jpg"</span>);
+            ajax.send();
         };
     };
     </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span>
-</code></pre><p>这里能看到我们需要编写一个<code>createPreloadIamge()</code>函数然后用它来返回一个<code>img</code>对象，通过调用<code>img</code>对象的<code>srtSrc()</code>方法并传入一个<code>url</code>来设置图片的地址。下面来看看这个怎么实现</p>
-<h3 id="普通图片预加载">普通图片预加载</h3><pre><code><span class="comment">// image-preload.js</span>
-<span class="keyword">var</span> createPreloadIamge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> proxyImg = <span class="keyword">new</span> Image(),
-        loadingImg = <span class="keyword">new</span> Image(),
-        realImg = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);
-
-    <span class="built_in">document</span>.body.appendChild(realImg);
-
-    loadingImg.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/16-1-12/64506391.jpg"</span>;
-
-    proxyImg.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-        realImg.src(<span class="keyword">this</span>.src);
-    };
-
-    <span class="keyword">return</span> {
-        setSrc: <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
-            realImg.src(loadingImg.src);
-            proxyImg.src = src;
-        }
-    };
-}
-</code></pre><p>遵循<code>首当其冲原则</code>（一看就是我乱编的好吗），第一个例子必定成为炮灰，那么它的问题在哪？问题在于这段代码不符合<code>单一职责原则</code>（这个是正儿八经的）。什么是<code>单一职责原则</code>？引用<strong>曾探</strong>老师的话：</p>
-<blockquote>
-<p>单一职责原则指的是，就一个类（通常也包括对象和函数等）而言，应该仅有一个引起它变<br>化的原因。如果一个对象承担了多项职责，就意味着这个对象将变得巨大，引起它变化的原因可<br>能会有多个。面向对象设计鼓励将行为分布到细粒度的对象之中，如果一个对象承担的职责过多，<br>等于把这些职责耦合到了一起，这种耦合会导致脆弱和低内聚的设计。当变化发生时，设计可能<br>会遭到意外的破坏。</p>
-</blockquote>
-<p>那不符合<code>单一职责原则</code>又怎么了？我还不是能实现图片预加载。是的能实现，但是当<code>createPreloadIamge()</code>函数既担任了创建图片的责任，又担任了图片预加载的责任的时候，那如果以后网速飞起不需要再用预加载了，或者由于某些原因不需要用图片预加载了，需要将这个功能删除，那就麻烦了。要想不改动前面的<code>html</code>文件继续实现图片的创建，必须要从<code>createPreloadIamge()</code>函数中分离出图片创建的那部分，删除掉图片预加载的那一部分，并且还要提供一样的<code>setSrc()</code>接口，想想都觉得麻烦。<br>下面用代理模式重构上面的代码。</p>
-<h3 id="文艺图片预加载">文艺图片预加载</h3><pre><code><span class="keyword">var</span> createImage = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);
-    <span class="built_in">document</span>.body.appendChild(img);
-    <span class="keyword">return</span> {
-        setSrc: <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
-            img.src = src;
-        }
-    };
-};
-
-<span class="keyword">var</span> createPreloadImage = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
-    <span class="keyword">var</span> proxyImg = <span class="keyword">new</span> Image(),            <span class="comment">// 用于预加载图片</span>
-        loadingImg = <span class="keyword">new</span> Image(),        <span class="comment">// 用于提前加载菊花图</span>
-        realImg = createImage();        <span class="comment">// 真正的图片元素</span>
-
-    loadingImg.src = <span class="string">"http://7xoxzw.com1.z0.glb.clouddn.com/16-1-12/64506391.jpg"</span>;
-
-    proxyImg.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-        realImg.setSrc(<span class="keyword">this</span>.src);
-    };
-
-    <span class="keyword">return</span> {
-        setSrc: <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
-            realImg.setSrc(loadingImg.src);
-            proxyImg.src = src;
-        }
-    };
-};
-</code></pre><p>可以看到我们创建了两个函数，都会返回一个带有<code>setSrc()</code>方法的对象，但实际上要实现预加载用户只会用到<code>createPreloadIamge()</code>函数，这里为了理解方便用了两个全局变量来保存函数，实际可以用命名空间将<code>createImage()</code>函数隐藏起来，只将<code>createPreloadIamge()</code>函数暴露出来。<br>要实现预加载，我们要调用<code>createPreloadIamge()</code>函数，在<code>createPreloadIamge()</code>函数内部，它只管预加载的部分，创建图片的功能通过调用<code>createImage()</code>函数来实现。这样职责分离之后，在我们不再需要图片预加载的时候，就只用将<code>html</code>文件中的函数名从<code>createPreloadIamge</code>改为<code>createImage</code>，就能只实现创建图片的功能了。<br>所以，代理对象（函数）要和本体对象（函数）的接口保持一致，这样就能容易地将本体替换为代理，用户也只用放心地请求代理，只用关心是否能得到想要的结果。</p>
-<h2 id="代理模式实现缓存">代理模式实现缓存</h2><p>javascript中复杂的计算会是一笔开销，如果能将计算结果缓存起来，下次接收到一样的参数的时候就能直接返回结算结果而不用重新麻烦处理器再算一次。下面用乘法运算来模拟复杂的运算：</p>
-<pre><code><span class="keyword">var</span> multiply = function() {
-    <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">1</span>,
-        args = arguments;
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
-        <span class="literal">result</span> *= args[i];
-    }
-    <span class="keyword">return</span> <span class="literal">result</span>;
-};
-
-<span class="keyword">var</span> proxyMul = function() {
-    <span class="keyword">var</span> cache = {};
-    <span class="keyword">return</span> function() {
-        <span class="keyword">var</span> argsStr = <span class="type">Array</span>.prototype.join.call(arguments, <span class="string">","</span>);   // 将传入的参数合为一个字符串作为缓存的键名
-        <span class="keyword">return</span> cache[argsStr] || cache[argsStr] = multiply.apply(this, arguments);
-    }
-};
-
-proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); // <span class="number">6</span>
-</code></pre><p>这样通过乘法函数<code>multiply()</code>的代理函数<code>proxyMul()</code>函数就可以用相同的传入参数实现带有缓存功能的乘法运算了。还可以对<code>proxyMul()</code>函数稍加改动编写一个可以根据传入本体运算函数来生成对应的代理函数的函数：</p>
-<pre><code><span class="keyword">var</span> multiply = function() {
-    <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">1</span>,
-        args = arguments;
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
-        <span class="literal">result</span> *= args[i];
-    }
-    <span class="keyword">return</span> <span class="literal">result</span>;
-};
-
-<span class="keyword">var</span> add = function() {
-    <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">0</span>,
-        args = arguments;
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = args.length; i &lt; l; i++) {
-        <span class="literal">result</span> += args[i];
-    }
-    <span class="keyword">return</span> <span class="literal">result</span>;
-};
-
-<span class="keyword">var</span> createProxy = function(fn) {
-    <span class="keyword">var</span> cache = {};
-    <span class="keyword">return</span> function() {
-        <span class="keyword">var</span> argsStr = <span class="type">Array</span>.prototype.join.call(arguments, <span class="string">","</span>);   // 将传入的参数合为一个字符串作为缓存的键名
-        <span class="keyword">return</span> cache[argsStr] || cache[argsStr] = fn.apply(this, arguments);
-    }
-};
-
-<span class="keyword">var</span> proxyMul = createProxy(multiply);
-<span class="keyword">var</span> proxyAdd = createProxy(add);
-
-proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); // <span class="number">6</span>
-proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>); // <span class="number">3</span>
-</code></pre><h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/image-preload" target="_blank" rel="external">image-preload</a></p>
-<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
+</code></pre><h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/module-subscribe" target="_blank" rel="external">module-subscribe</a></p>
+<h1 id="reference">reference</h1><ul>
+<li><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></li>
+<li><a href="http://www.kmhaoshuai.com/2015/12/23/javascript-event/" target="_blank" rel="external">javascript事件管理与自定义事件解耦</a></li>
+</ul>
 </span>
       
     </div>
@@ -462,17 +475,13 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/08/pattern-singleton/" rel="next" title="javascript设计模式之单例模式(singleton)">
-                <i class="fa fa-chevron-left"></i> javascript设计模式之单例模式(singleton)
+              <a href="/2016/01/09/pattern-proxy/" rel="next" title="javascript设计模式之代理模式(proxy)">
+                <i class="fa fa-chevron-left"></i> javascript设计模式之代理模式(proxy)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/10/pattern-observer/" rel="prev" title="javascript设计模式之观察者模式(observer)">
-                javascript设计模式之观察者模式(observer) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -487,10 +496,10 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/01/09/pattern-proxy/"
-     data-title="javascript设计模式之代理模式(proxy)"
+        <div class="ds-share flat" data-thread-key="2016/01/10/pattern-observer/"
+     data-title="javascript设计模式之观察者模式(observer)"
      data-content=""
-     data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
+     data-url="http://kmhaoshuai.com/2016/01/10/pattern-observer/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -518,8 +527,8 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/09/pattern-proxy/"
-           data-title="javascript设计模式之代理模式(proxy)" data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
+      <div class="ds-thread" data-thread-key="2016/01/10/pattern-observer/"
+           data-title="javascript设计模式之观察者模式(observer)" data-url="http://kmhaoshuai.com/2016/01/10/pattern-observer/">
       </div>
     
   </div>
@@ -634,7 +643,7 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代理是什么？"><span class="nav-number">1.</span> <span class="nav-text">代理是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要用代理？"><span class="nav-number">2.</span> <span class="nav-text">为什么要用代理？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式实现图片预加载"><span class="nav-number">2.1.</span> <span class="nav-text">代理模式实现图片预加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通图片预加载"><span class="nav-number">2.1.1.</span> <span class="nav-text">普通图片预加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文艺图片预加载"><span class="nav-number">2.1.2.</span> <span class="nav-text">文艺图片预加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式实现缓存"><span class="nav-number">2.2.</span> <span class="nav-text">代理模式实现缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">3.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是观察者模式？"><span class="nav-number">1.</span> <span class="nav-text">什么是观察者模式？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式的原理"><span class="nav-number">2.</span> <span class="nav-text">观察者模式的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件冒泡"><span class="nav-number">2.1.</span> <span class="nav-text">事件冒泡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中介对象"><span class="nav-number">2.2.</span> <span class="nav-text">中介对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块间的通信"><span class="nav-number">3.</span> <span class="nav-text">模块间的通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">4.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
