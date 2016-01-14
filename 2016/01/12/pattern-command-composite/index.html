@@ -1,0 +1,921 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,前端,设计模式," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="kMchA的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="命令模式优点：撤销、队列、重放、宏命令
+什么是命令模式？有些时候，需要向某些对象发送请求，但是并不知道接收请求的对象是谁，或者不知道接收者应该怎么对请求作出反应，这时候，为了解除发送请求和接收请求双方的耦合，就可以用命令模式。咋听起来这么像观察者模式？我也觉得
+
+好了，既然命令模式和观察者模式会以两个不同的名字同时存在，那他们的使用方式或者原理肯定是不同的。在观察者模式中，消息的发送方可以在合适的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript设计模式之命令模式(command)和组合模式(composite)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/12/pattern-command-composite/index.html">
+<meta property="og:site_name" content="kMchA的博客">
+<meta property="og:description" content="命令模式优点：撤销、队列、重放、宏命令
+什么是命令模式？有些时候，需要向某些对象发送请求，但是并不知道接收请求的对象是谁，或者不知道接收者应该怎么对请求作出反应，这时候，为了解除发送请求和接收请求双方的耦合，就可以用命令模式。咋听起来这么像观察者模式？我也觉得
+
+好了，既然命令模式和观察者模式会以两个不同的名字同时存在，那他们的使用方式或者原理肯定是不同的。在观察者模式中，消息的发送方可以在合适的">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/48556800.jpg">
+<meta property="og:updated_time" content="2016-01-14T02:04:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript设计模式之命令模式(command)和组合模式(composite)">
+<meta name="twitter:description" content="命令模式优点：撤销、队列、重放、宏命令
+什么是命令模式？有些时候，需要向某些对象发送请求，但是并不知道接收请求的对象是谁，或者不知道接收者应该怎么对请求作出反应，这时候，为了解除发送请求和接收请求双方的耦合，就可以用命令模式。咋听起来这么像观察者模式？我也觉得
+
+好了，既然命令模式和观察者模式会以两个不同的名字同时存在，那他们的使用方式或者原理肯定是不同的。在观察者模式中，消息的发送方可以在合适的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> javascript设计模式之命令模式(command)和组合模式(composite) | kMchA的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-71275047-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?de501561394cbbb3abc142c4c786a527";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">kMchA的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">前端小菜鸡</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search icon-next-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hdvJctNov5dTzHp_Syn9','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javascript设计模式之命令模式(command)和组合模式(composite)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-12T09:45:21-05:00" content="2016-01-12">
+              2016-01-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/12/pattern-command-composite/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/12/pattern-command-composite/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>命令模式优点：撤销、队列、重放、宏命令</p>
+<h1 id="什么是命令模式？">什么是命令模式？</h1><p>有些时候，需要向某些对象发送请求，但是并不知道接收请求的对象是谁，或者不知道接收者应该怎么对请求作出反应，这时候，为了解除发送请求和接收请求双方的耦合，就可以用命令模式。咋听起来这么像观察者模式？我也觉得</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/48556800.jpg" alt=""></p>
+<p>好了，既然命令模式和观察者模式会以两个不同的名字同时存在，那他们的使用方式或者原理肯定是不同的。在观察者模式中，消息的发送方可以在合适的时候将消息发送至中间的中介对象，然后中介对象再根据消息来调用订阅了该消息的函数。而在命令模式中，命令是在发送命令的对象中执行的，然后命令再传送到命令的接收者(receiver)对象上。他们都通过某种方式实现了两个对象间的解耦。</p>
+<h2 id="命令模式的核心——命令对象">命令模式的核心——命令对象</h2><p>命令(command)对象，通常是一个具有<code>receiver</code>属性和<code>exec()</code>方法的对象。在<code>receiver</code>属性中装的是命令的接收对象。<code>exec()</code>方法就是暴露给命令的执行对象的方法。命令的执行者之用调用命令对象的<code>exec()</code>方法，至于怎么讲命令传达给命令的接收方，就是命令对象的事了。对于不同的操作，都会有与之对应的命令对象，这句话的意思是虽然命令的执行对象不知道命令的接收对象，但是命令对象必须要知道命令的接收对象的相应方法的调用方式。比如说有两个按钮，一个负责执行图片的加载，另一个负责菜单的刷新，那么用命令模式写出来就是：</p>
+<pre><code><span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"load"</span>&gt;</span>加载图片<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"refresh"</span>&gt;</span>刷新菜单<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="keyword">var</span> LoadCommand = <span class="function"><span class="keyword">function</span>(<span class="params">receiver</span>) </span>{
+        <span class="keyword">this</span>.receiver = receiver;
+    };
+    LoadCommand.prototype.exec = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">this</span>.receiver.load();
+    };
+
+    <span class="keyword">var</span> RefreshCommand = <span class="function"><span class="keyword">function</span>(<span class="params">receiver</span>) </span>{
+        <span class="keyword">this</span>.receiver = receiver;
+    };
+    RefreshCommand.prototype.exec = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">this</span>.receiver.refresh();
+    };
+
+    <span class="keyword">var</span> loadImg = {
+        load: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="comment">// 加载图片</span>
+        }
+    };
+    <span class="keyword">var</span> refreshMenu = {
+        refresh: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="comment">// 刷新菜单</span>
+        }
+    };
+
+    <span class="keyword">var</span> loadCommand = <span class="keyword">new</span> LoadCommand(loadImg);
+    <span class="keyword">var</span> refreshCommand = <span class="keyword">new</span> RefreshCommand(refreshMenu);
+
+    <span class="keyword">var</span> setCommand = <span class="function"><span class="keyword">function</span>(<span class="params">id, command</span>) </span>{
+        <span class="built_in">document</span>.getElementById(id).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            command.exec();
+        };
+    };
+
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        setCommand(<span class="string">"load"</span>, loadCommand);
+        setCommand(<span class="string">"refresh"</span>, refreshCommand);
+    };
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>那么接下来点击加载图片按钮就会执行<code>loadCommand.exec()</code>，点击刷新菜单按钮就会执行<code>refreshMenu.exec()</code>。因为每个命令对象都有<code>exec()</code>方法，所以我们可以用一个通用的<code>setCommand()</code>函数将命令对象绑定给执行命令的操作。</p>
+<h2 id="命令模式的好处">命令模式的好处</h2><p>上面那个例子显然说明不了命令模式的优势，将操作封装在一个命令对象中，然后再传入<code>setCommand()</code>函数，what’s the point? 确实，当时看得我也是一头雾水，与其写这么麻烦，我这么写不一样的吗：</p>
+<pre><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="keyword">var</span> loadImg = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="comment">// 加载图片</span>
+    };
+    <span class="keyword">var</span> refreshMenu = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="comment">// 刷新菜单</span>
+    };
+
+    <span class="keyword">var</span> setCommand = <span class="function"><span class="keyword">function</span>(<span class="params">id, fn</span>) </span>{
+        <span class="built_in">document</span>.getElementById(id).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            fn();
+        };
+    };
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        setCommand(<span class="string">"load"</span>, loadImg);
+        setCommand(<span class="string">"refresh"</span>, refreshMenu);
+    };
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>确实，这样写也能实现相同的效果，因为在javascript里头函数是一型对象，需要在传统面向对象语言中传来传去的命令对象在javascript里可以直接传函数，这是语言自带的优势，因此在javascript中命令模式是一种隐形的模式。<br>但是，将命令的接收者包装成命令对象确实是有好处的，比如说命令模式的高级用法：<code>exec()</code>的逆操作<code>undo()</code>和运用队列缓存命令确保一个命令执行完毕以后才执行下一个等等。</p>
+<h2 id="智能命令">智能命令</h2><p>第一个例子中，我们将命令的接收者包装在了命令对象中，由命令对象来负责调用他，命令对象暴露一个<code>exec()</code>方法来让命令的执行者执行命令。第二个例子中，我们直接将第一个例子中的命令的接收者直接作为命令本身传入了命令的执行者之中，命令执行者直接调用命令的接收者来执行命令，这是javascript语言带来的便利。但是我们说了对于命令本身而言，暴露出相同的接口（比如<code>exec()</code>和<code>undo()</code>等）是很重要的，因此我们需要将以上两个例子结合一下，就形成了我们的智能命令：</p>
+<pre><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="keyword">var</span> loadImgCommand = {
+        exec: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="comment">// 加载图片</span>
+        }
+    };
+    <span class="keyword">var</span> refreshMenuCommand = {
+        exec: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="comment">// 刷新菜单</span>
+        }
+    };
+
+    <span class="keyword">var</span> setCommand = <span class="function"><span class="keyword">function</span>(<span class="params">id, command</span>) </span>{
+        <span class="built_in">document</span>.getElementById(id).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            command.exec();
+        };
+    };
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        setCommand(<span class="string">"load"</span>, loadImgCommand);
+        setCommand(<span class="string">"refresh"</span>, refreshMenuCommand);
+    };
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>可以看到，本例中，有第一个例子的命令对象，但是区别在于这里的命令对象里面并没有<code>receiver</code>属性，取而代之的是<code>exec()</code>方法中直接执行命令接受者需要做的事情，也就是我们第二个例子中传入命令执行者的函数。这样的命令对象会执行命令接受者做的事情，而不是像智障一样传给命令的接收者做，因此叫他智能命令。</p>
+<h1 id="什么是组合模式">什么是组合模式</h1><p>组合模式就是说一个对象是由其他对象所组成的，适用于对象间的关系类似于树的情况。树中的节点分为两种，叶子节点和组合节点，非叶子节点的就是组合节点。在组合模式中，节点类型是对外透明的，意思就是所有节点对外暴露的接口都是相同的，命令模式的<code>exec()</code>在这里就有用武之地了。因此用户是不知道节点到底是叶子节点还是组合节点的，保持这样的透明性有利于封闭——开放原则。</p>
+<h2 id="宏命令_＝_命令模式_＋_组合模式">宏命令 ＝ 命令模式 ＋ 组合模式</h2><p>宏命令就是许多命令的集合体，比如说魔兽世界在插件中设置了宏之后，原本的12345无限循环变成只用逮着1啪啪啪按不停就行了。在这里，想要执行一连串的命令，那么就可以结合命令模式和组合模式，将需要执行的命令作为根节点的叶子节点形成一棵树，然后只用执行根节点的<code>exec()</code>方法就可以遍历整个树挨个执行叶子节点了。有点像深度优先搜索。下面还是用之前的例子，看用宏命令该怎么写：</p>
+<pre><code><span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"both"</span>&gt;</span>组合命令<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="keyword">var</span> MacroCommand = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> commands = [];
+        <span class="keyword">return</span> {
+            add: <span class="function"><span class="keyword">function</span>(<span class="params">command</span>) </span>{
+                commands.push(command);
+            },
+            exec: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+                <span class="keyword">for</span>(i = <span class="number">0</span>, l = commands.length; i &lt; l; i++) {
+                    commands[i].exec();
+                }
+            }
+        };
+    }
+
+    <span class="keyword">var</span> loadImgCommand = {
+        add: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"叶子节点不能添加子节点！"</span>);
+        },
+        exec: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="comment">// 加载图片</span>
+        }
+    };
+    <span class="keyword">var</span> refreshMenuCommand = {
+        add: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"叶子节点不能添加子节点！"</span>);
+        },
+        exec: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="comment">// 刷新菜单</span>
+        }
+    };
+
+    <span class="keyword">var</span> macroCommand = MacroCommand();
+    macroCommand.add(loadImgCommand);
+    macroCommand.add(refreshMenuCommand);
+
+    <span class="keyword">var</span> setCommand = <span class="function"><span class="keyword">function</span>(<span class="params">id, command</span>) </span>{
+        <span class="built_in">document</span>.getElementById(id).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            command.exec();
+        };
+    };
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        setCommand(<span class="string">"both"</span>, macroCommand);
+    };
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>这样，点击按钮之后，就会遍历根节点下的所有叶子节点并且执行他们各自的<code>exec()</code>方法了，因此暴露相同的<code>exec()</code>方法很重要。同时，为了确保组合节点和叶子节点之间差异的透明性，我们需要为叶子节点也添加<code>add()</code>方法，只是调用的时候会抛出错误，可以帮助用户在错误调用该方法的时候尽快找到问题所在。<br>命令模式和组合模式组成的宏命令系统的结构可以更加复杂，节点可以无限延伸下去，组合节点可以包含任意多的组合节点和叶子节点，因此就像一棵树一样。另外在上面例子的基础上还可以扩展出很多的用法，例如给组合节点新增删除节点的方法、让子节点可以引用父节点等等。</p>
+<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/10/pattern-observer/" rel="next" title="javascript设计模式之观察者模式(observer)">
+                <i class="fa fa-chevron-left"></i> javascript设计模式之观察者模式(observer)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/01/12/pattern-command-composite/"
+     data-title="javascript设计模式之命令模式(command)和组合模式(composite)"
+     data-content=""
+     data-url="http://kmhaoshuai.com/2016/01/12/pattern-command-composite/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/12/pattern-command-composite/"
+           data-title="javascript设计模式之命令模式(command)和组合模式(composite)" data-url="http://kmhaoshuai.com/2016/01/12/pattern-command-composite/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="kMchA" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kMchA</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">kmhaoshuai.com</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kmCha" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/2483546133" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是命令模式？"><span class="nav-number">1.</span> <span class="nav-text">什么是命令模式？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式的核心——命令对象"><span class="nav-number">1.1.</span> <span class="nav-text">命令模式的核心——命令对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式的好处"><span class="nav-number">1.2.</span> <span class="nav-text">命令模式的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能命令"><span class="nav-number">1.3.</span> <span class="nav-text">智能命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是组合模式"><span class="nav-number">2.</span> <span class="nav-text">什么是组合模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#宏命令_＝_命令模式_＋_组合模式"><span class="nav-number">2.1.</span> <span class="nav-text">宏命令 ＝ 命令模式 ＋ 组合模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">reference</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kMchA</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"kmcha"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
