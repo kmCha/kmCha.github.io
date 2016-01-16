@@ -1,0 +1,1022 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,前端,设计模式," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="kMchA的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="职责链是什么？如果我们有一个请求需要其他对象处理，那么将可能处理这个请求的对象连成一根链条，将请求在这根链条上向下传递，知道有一个对象处理这个请求为止，这种设计模式就叫做职责链模式。要理解这个模式的好处，就先来看看例子。
+一道编程题(FizzBuzzWhizz)下面这个编程题来自之前拉勾网上的一个面试活动，这里仅仅为了展示职责链，代码可能写得有点丑。
+
+大道至简，知易行难！我们的题目简约而不简单，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript设计模式之职责链模式(chain of responsibility)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/14/pattern-chain-of-responsibility/index.html">
+<meta property="og:site_name" content="kMchA的博客">
+<meta property="og:description" content="职责链是什么？如果我们有一个请求需要其他对象处理，那么将可能处理这个请求的对象连成一根链条，将请求在这根链条上向下传递，知道有一个对象处理这个请求为止，这种设计模式就叫做职责链模式。要理解这个模式的好处，就先来看看例子。
+一道编程题(FizzBuzzWhizz)下面这个编程题来自之前拉勾网上的一个面试活动，这里仅仅为了展示职责链，代码可能写得有点丑。
+
+大道至简，知易行难！我们的题目简约而不简单，">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-17/74601689.jpg">
+<meta property="og:updated_time" content="2016-01-16T21:54:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript设计模式之职责链模式(chain of responsibility)">
+<meta name="twitter:description" content="职责链是什么？如果我们有一个请求需要其他对象处理，那么将可能处理这个请求的对象连成一根链条，将请求在这根链条上向下传递，知道有一个对象处理这个请求为止，这种设计模式就叫做职责链模式。要理解这个模式的好处，就先来看看例子。
+一道编程题(FizzBuzzWhizz)下面这个编程题来自之前拉勾网上的一个面试活动，这里仅仅为了展示职责链，代码可能写得有点丑。
+
+大道至简，知易行难！我们的题目简约而不简单，">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> javascript设计模式之职责链模式(chain of responsibility) | kMchA的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-71275047-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?de501561394cbbb3abc142c4c786a527";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">kMchA的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">前端小菜鸡</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search icon-next-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hdvJctNov5dTzHp_Syn9','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javascript设计模式之职责链模式(chain of responsibility)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-14T15:25:44-05:00" content="2016-01-14">
+              2016-01-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/14/pattern-chain-of-responsibility/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/14/pattern-chain-of-responsibility/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="职责链是什么？">职责链是什么？</h1><p>如果我们有一个请求需要其他对象处理，那么将可能处理这个请求的对象连成一根链条，将请求在这根链条上向下传递，知道有一个对象处理这个请求为止，这种设计模式就叫做职责链模式。要理解这个模式的好处，就先来看看例子。</p>
+<h1 id="一道编程题(FizzBuzzWhizz)">一道编程题(FizzBuzzWhizz)</h1><p>下面这个编程题来自之前拉勾网上的一个面试活动，这里仅仅为了展示职责链，代码可能写得有点丑。</p>
+<blockquote>
+<p>大道至简，知易行难！<br>我们的题目简约而不简单，千万不要轻敌，即使简单的代码，做到尽善尽美一样难能可贵，所以，提交之前，请想一想，它是不是可以更卓越，有人可以10行搞定，亲，你呢 ：）<br>代码要求：<br>1，语言不限，Java, C#, Ruby, C++, Js, Python, Scala, objective-C统统可以，小语种也没问题，只要你擅长；<br>2，强烈建议写单元测试；<br>3，请展示出你超赞的面向对象/函数式编程功底；<br>4，建议尽量减少圈复杂度；<br>5，请提交可运行的代码，及相关构建脚本/说明文档（代码运行平台和环境）；<br>FizzBuzzWhizz<br>你是一名体育老师，在某次课距离下课还有五分钟时，你决定搞一个游戏。此时有100名学生在上课。游戏的规则是：</p>
+<ol>
+<li>你首先说出三个不同的特殊数，要求必须是个位数，比如3、5、7。</li>
+<li>让所有学生拍成一队，然后按顺序报数。</li>
+<li>学生报数时，如果所报数字是第一个特殊数（3）的倍数，那么不能说该数字，而要说Fizz；如果所报数字是第二个特殊数（5）的倍数，那么要说Buzz；如果所报数字是第三个特殊数（7）的倍数，那么要说Whizz。</li>
+<li>学生报数时，如果所报数字同时是两个特殊数的倍数情况下，也要特殊处理，比如第一个特殊数和第二个特殊数的倍数，那么不能说该数字，而是要说FizzBuzz, 以此类推。如果同时是三个特殊数的倍数，那么要说FizzBuzzWhizz。</li>
+<li>学生报数时，如果所报数字包含了第一个特殊数，那么也不能说该数字，而是要说相应的单词，比如本例中第一个特殊数是3，那么要报13的同学应该说Fizz。如果数字中包含了第一个特殊数，那么忽略规则3和规则4，比如要报35的同学只报Fizz，不报BuzzWhizz。<br>现在，我们需要你完成一个程序来模拟这个游戏，它首先接受3个特殊数，然后输出100名学生应该报数的数或单词。比如，<br>输入<br>3,5,7<br>输出（片段）<br>1<br>2<br>Fizz<br>4<br>Buzz<br>Fizz<br>Whizz<br>8<br>Fizz<br>Buzz<br>11<br>Fizz<br>Fizz<br>Whizz<br>FizzBuzz<br>16<br>17<br>Fizz<br>19<br>Buzz<br>…<br>一直到100</li>
+</ol>
+</blockquote>
+<p>这里重要的是不要被那句有些人10行就可以搞定迷惑，你不信你交个10行的代码给他试试他让不让你通过。这里的重点当然是考察面相对象和函数式编程的功底，编写出易读、易维护、可重用的代码才是应该考虑的，单元测试应该也是重点，这里主要想说的是职责链，因此没有编写单元测试代码（其实是懒）。</p>
+<h2 id="炮灰写法">炮灰写法</h2><p>那么先来看第一段代码，编写一个全局函数传入全班同学的个数（这里是100）和三个特殊数字以及对应的输出文本，这个函数会返回一个有<code>go()</code>方法的对象，<code>go()</code>方法会返回最后输出的文本的数组。</p>
+<pre><code><span class="comment">// fbw.html</span>
+&lt;script <span class="keyword">type</span>=<span class="string">"text/javascript"</span>&gt;
+    <span class="keyword">window</span>.onload = function() {
+        <span class="keyword">var</span> fbw = createFBW(100, [
+                {number: 3, string: <span class="string">"Fizz"</span>},
+                {number: 5, string: <span class="string">"Buzz"</span>},
+                {number: 7, string: <span class="string">"Whizz"</span>}
+            ]),
+            <span class="keyword">list</span> = fbw.go();
+        console.<span class="literal">log</span>(<span class="keyword">list</span>);
+    };
+&lt;/script&gt;
+
+<span class="comment">// fbw.js</span>
+<span class="keyword">var</span> createFBW = function(max, <span class="keyword">input</span>) {
+    <span class="keyword">var</span> inputNum = [<span class="keyword">input</span>[0].number, <span class="keyword">input</span>[1].number, <span class="keyword">input</span>[2].number],
+        <span class="keyword">list</span> = [],
+        str1 = <span class="keyword">input</span>[0].string || <span class="string">"Fizz"</span>,
+        str2 = <span class="keyword">input</span>[1].string || <span class="string">"Buzz"</span>,
+        str3 = <span class="keyword">input</span>[2].string || <span class="string">"Whizz"</span>,
+        go = function() {
+            <span class="keyword">for</span>(<span class="keyword">var</span> i = 1; i &lt;= max; i++) {
+                <span class="keyword">if</span>(i.<span class="keyword">toString</span>().indexOf(inputNum[0]) &gt;= 0) {
+                    <span class="keyword">list</span>.push(str1);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>((i % inputNum[0] === 0) &amp;&amp; (i % inputNum[1] === 0) &amp;&amp; (i % inputNum[2] === 0)) {
+                    <span class="keyword">list</span>.push(str1 + str2 + str3);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>((i % inputNum[0] === 0) &amp;&amp; (i % inputNum[1] === 0)) {
+                    <span class="keyword">list</span>.push(str1 + str2);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>((i % inputNum[0] === 0) &amp;&amp; (i % inputNum[2] === 0)) {
+                    <span class="keyword">list</span>.push(str1 + str3);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>((i % inputNum[1] === 0) &amp;&amp; (i % inputNum[2] === 0)) {
+                    <span class="keyword">list</span>.push(str2 + str3);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>(i % inputNum[0] === 0) {
+                    <span class="keyword">list</span>.push(str1);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>(i % inputNum[1] === 0) {
+                    <span class="keyword">list</span>.push(str2);
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span>(i % inputNum[2] === 0) {
+                    <span class="keyword">list</span>.push(str3);
+                }
+                <span class="keyword">else</span> {
+                    <span class="keyword">list</span>.push(i);
+                }
+            }
+            <span class="keyword">return</span> <span class="keyword">list</span>;
+        };
+
+    <span class="keyword">return</span> {
+        go: go
+    };
+};
+</code></pre><p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-17/74601689.jpg" alt=""></p>
+<p>执行程序之后，打开控制台就能看见输出的数组，说明代码确实能够正常工作。那么现在把目光转移到代码身上，来看看这样写问题在哪。其实不用说也很明显了，当然是含有巨量<code>if</code>分支的<code>go()</code>函数了，首先有这么多的条件判断会让代码难以阅读，其次<code>go()</code>函数就是个输出数组的函数，让他做这么多的条件判断不太合适，不符合单一职责原则。因此我们的思路应该是将几个不同的规则封装成函数，在函数内部进行逻辑判断。</p>
+<h2 id="OOP职责链">OOP职责链</h2><p>下面用面向对象的职责链模式来重构代码：</p>
+<pre><code><span class="comment">// fbw.js</span>
+var createFBW = (function() {
+    var containsFirst = function(num, inputNum, <span class="built_in">list</span>, str1, str2, str3) {
+        <span class="keyword">if</span>(num.toString().indexOf(inputNum[<span class="number">0</span>]) &gt;= <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str1);
+        }
+        <span class="keyword">return</span> <span class="string">"next"</span>;
+    };
+    var multipleOfThree = function(num, inputNum, <span class="built_in">list</span>, str1, str2, str3) {
+        <span class="keyword">if</span>((num % inputNum[<span class="number">0</span>] === <span class="number">0</span>) &amp;&amp; (num % inputNum[<span class="number">1</span>] === <span class="number">0</span>) &amp;&amp; (num % inputNum[<span class="number">2</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str1 + str2 + str3);
+        }
+        <span class="keyword">return</span> <span class="string">"next"</span>;
+    };
+    var multipleOfTwo = function(num, inputNum, <span class="built_in">list</span>, str1, str2, str3) {
+        <span class="keyword">if</span>((num % inputNum[<span class="number">0</span>] === <span class="number">0</span>) &amp;&amp; (num % inputNum[<span class="number">1</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str1 + str2);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>((num % inputNum[<span class="number">0</span>] === <span class="number">0</span>) &amp;&amp; (num % inputNum[<span class="number">2</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str1 + str3);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>((num % inputNum[<span class="number">1</span>] === <span class="number">0</span>) &amp;&amp; (num % inputNum[<span class="number">2</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str2 + str3);
+        }
+        <span class="keyword">return</span> <span class="string">"next"</span>;
+    };
+    var multipleOfOne = function(num, inputNum, <span class="built_in">list</span>, str1, str2, str3) {
+        <span class="keyword">if</span>((num % inputNum[<span class="number">0</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str1);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>((num % inputNum[<span class="number">1</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str2);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>((num % inputNum[<span class="number">2</span>] === <span class="number">0</span>)) {
+            <span class="keyword">return</span> <span class="built_in">list</span>.push(str3);
+        }
+        <span class="keyword">return</span> <span class="string">"next"</span>;
+    };
+    var noneOfAbove = function(num, inputNum, <span class="built_in">list</span>, str1, str2, str3) {
+        <span class="keyword">return</span> <span class="built_in">list</span>.push(num);
+    };
+
+    <span class="function">function <span class="title">Chain</span><span class="params">(fn)</span> </span>{
+        <span class="keyword">this</span>.next = null;
+        <span class="keyword">this</span>.fn = fn;
+    }
+    Chain.prototype.go = function() {
+        var result = <span class="keyword">this</span>.fn.apply(<span class="keyword">this</span>, arguments);
+        <span class="keyword">if</span>(result === <span class="string">"next"</span>) {
+            <span class="keyword">this</span>.next.go.apply(<span class="keyword">this</span>.next, arguments);
+        }
+    };
+    var rule1 = <span class="keyword">new</span> Chain(containsFirst),
+        rule2 = <span class="keyword">new</span> Chain(multipleOfThree),
+        rule3 = <span class="keyword">new</span> Chain(multipleOfTwo),
+        rule4 = <span class="keyword">new</span> Chain(multipleOfOne),
+        rule5 = <span class="keyword">new</span> Chain(noneOfAbove);
+
+    <span class="comment">// 设定职责链顺序</span>
+    rule1.next = rule2;
+    rule2.next = rule3;
+    rule3.next = rule4;
+    rule4.next = rule5;
+
+    var createFBW = function(max, input) {
+        var inputNum = [input[<span class="number">0</span>].number, input[<span class="number">1</span>].number, input[<span class="number">2</span>].number],
+            <span class="built_in">list</span> = [],
+            str1 = input[<span class="number">0</span>].<span class="built_in">string</span> || <span class="string">"Fizz"</span>,
+            str2 = input[<span class="number">1</span>].<span class="built_in">string</span> || <span class="string">"Buzz"</span>,
+            str3 = input[<span class="number">2</span>].<span class="built_in">string</span> || <span class="string">"Whizz"</span>,
+            go = function() {
+                <span class="keyword">for</span>(var i = <span class="number">1</span>; i &lt;= max; i++) {
+                    rule1.go(i, inputNum, <span class="built_in">list</span>, str1, str2, str3);
+                }
+                <span class="keyword">return</span> <span class="built_in">list</span>;
+            };
+
+        <span class="keyword">return</span> {
+            go: go
+        };
+    };
+
+    <span class="keyword">return</span> createFBW;
+})();
+</code></pre><p>可以看到我们将各个不同的规则封装成了几个函数。然后我们定义了一个<code>Chain()</code>构造函数，用来创建职责链对象，每个职责链对象中存在<code>next</code>和<code>fn</code>属性。<code>next</code>属性用来指定该职责链对象的下一个指向的职责链对象，这样我们可以消除几个规则函数之间的耦合，不用在函数内部指定下一个需要调用的函数。通过<code>next</code>属性我们也能够轻易地添加和修改职责链的结构。<code>fn</code>属性中装的是该职责链对象需要调用的函数，如果该函数返回某种约定的值（这里指定返回字符串“next”），那么说明该职责对象没有处理请求，将交给下一个职责链对象，以此类推直到一个函数不返回约定值时停止。<br>这里职责链的顺序是根据规则的优先级来确定的，根据题目描述，当数中含有第一个特殊数字的时候忽略其他规则显示相应的字符串，因此我们把<code>containsFirst()</code>函数对应的职责链对象<code>rule1</code>放在职责链的第一个，同理可得后面的顺序。这样就能保证函数执行的顺序了，通过执行<code>rule1.go()</code>之后，如果不满足第一个规则，则会传递给下一个职责链对象，直到有一个职责链对象的<code>fn</code>不返回“next”为止，这样就达到了跟第一个例子中的<code>if</code>分句一样的效果。</p>
+<h2 id="AOP职责链">AOP职责链</h2><p>还是那句话javascript中函数是一型对象，可以用对象来处理的问题我们也应该考虑函数式编程的实现，这样才对得起javascript的灵活性，下面来看下用AOP来重构上面的代码：</p>
+<pre><code>var createFBW = <span class="list">(<span class="keyword">function</span><span class="list">()</span> {
+    var containsFirst = function<span class="list">(<span class="keyword">num</span>, inputNum, list, str1, str2, str3)</span> {
+        if<span class="list">(<span class="keyword">num</span>.toString<span class="list">()</span>.indexOf<span class="list">(<span class="keyword">inputNum</span>[<span class="number">0</span>])</span> &gt;= <span class="number">0</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str1</span>)</span><span class="comment">;</span>
+        }
+        return <span class="string">"next"</span><span class="comment">;</span>
+    }<span class="comment">;</span>
+    var multipleOfThree = function<span class="list">(<span class="keyword">num</span>, inputNum, list, str1, str2, str3)</span> {
+        if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">0</span>] === <span class="number">0</span>)</span> <span class="keyword">&amp;&amp;</span> <span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">1</span>] === <span class="number">0</span>)</span> <span class="keyword">&amp;&amp;</span> <span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">2</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str1</span> + str2 + str3)</span><span class="comment">;</span>
+        }
+        return <span class="string">"next"</span><span class="comment">;</span>
+    }<span class="comment">;</span>
+    var multipleOfTwo = function<span class="list">(<span class="keyword">num</span>, inputNum, list, str1, str2, str3)</span> {
+        if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">0</span>] === <span class="number">0</span>)</span> <span class="keyword">&amp;&amp;</span> <span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">1</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str1</span> + str2)</span><span class="comment">;</span>
+        }
+        else if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">0</span>] === <span class="number">0</span>)</span> <span class="keyword">&amp;&amp;</span> <span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">2</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str1</span> + str3)</span><span class="comment">;</span>
+        }
+        else if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">1</span>] === <span class="number">0</span>)</span> <span class="keyword">&amp;&amp;</span> <span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">2</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str2</span> + str3)</span><span class="comment">;</span>
+        }
+        return <span class="string">"next"</span><span class="comment">;</span>
+    }<span class="comment">;</span>
+    var multipleOfOne = function<span class="list">(<span class="keyword">num</span>, inputNum, list, str1, str2, str3)</span> {
+        if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">0</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str1</span>)</span><span class="comment">;</span>
+        }
+        else if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">1</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str2</span>)</span><span class="comment">;</span>
+        }
+        else if<span class="list">(<span class="list">(<span class="keyword">num</span> % inputNum[<span class="number">2</span>] === <span class="number">0</span>)</span>)</span> {
+            return list.push<span class="list">(<span class="keyword">str3</span>)</span><span class="comment">;</span>
+        }
+        return <span class="string">"next"</span><span class="comment">;</span>
+    }<span class="comment">;</span>
+    var noneOfAbove = function<span class="list">(<span class="keyword">num</span>, inputNum, list, str1, str2, str3)</span> {
+        return list.push<span class="list">(<span class="keyword">num</span>)</span><span class="comment">;</span>
+    }<span class="comment">;</span>
+
+    Function.prototype.nextRule = function<span class="list">(<span class="keyword">fn</span>)</span> {
+        var that = this<span class="comment">;</span>
+        return function<span class="list">()</span> {
+            var result = that.apply<span class="list">(<span class="keyword">this</span>, arguments)</span><span class="comment">;</span>
+            if<span class="list">(<span class="keyword">result</span> === <span class="string">"next"</span>)</span> {
+                return fn.apply<span class="list">(<span class="keyword">this</span>, arguments)</span><span class="comment">;</span>
+            }
+        }<span class="comment">;</span>
+    }<span class="comment">;</span>
+    var rule = containsFirst.nextRule<span class="list">(<span class="keyword">multipleOfThree</span>)</span>.nextRule<span class="list">(<span class="keyword">multipleOfTwo</span>)</span>.nextRule<span class="list">(<span class="keyword">multipleOfOne</span>)</span>.nextRule<span class="list">(<span class="keyword">noneOfAbove</span>)</span><span class="comment">;</span>
+
+    var createFBW = function<span class="list">(<span class="keyword">max</span>, input)</span> {
+        var inputNum = [input[<span class="number">0</span>].number, input[<span class="number">1</span>].number, input[<span class="number">2</span>].number],
+            list = [],
+            str1 = input[<span class="number">0</span>].string || <span class="string">"Fizz"</span>,
+            str2 = input[<span class="number">1</span>].string || <span class="string">"Buzz"</span>,
+            str3 = input[<span class="number">2</span>].string || <span class="string">"Whizz"</span>,
+            go = function<span class="list">()</span> {
+                for<span class="list">(<span class="keyword">var</span> i = <span class="number">1</span><span class="comment">; i &lt;= max; i++) {</span>
+                    rule<span class="list">(<span class="keyword">i</span>, inputNum, list, str1, str2, str3)</span><span class="comment">;</span>
+                }
+                return list<span class="comment">;</span>
+            }<span class="comment">;</span>
+
+        return {
+            go: go
+        }<span class="comment">;</span>
+    }<span class="comment">;</span>
+
+    return createFBW<span class="comment">;</span>
+})</span><span class="list">()</span><span class="comment">;</span></span>
+</code></pre><p>看上去那么大一截，实际上根OOP的例子相比，重点变化就是下面这一小部分：</p>
+<pre><code><span class="type">Function</span>.prototype.nextRule = function(fn) {
+    <span class="keyword">var</span> that = this;
+    <span class="keyword">return</span> function() {
+        <span class="keyword">var</span> <span class="literal">result</span> = that.apply(this, arguments);
+        <span class="keyword">if</span>(<span class="literal">result</span> === <span class="string">"next"</span>) {
+            <span class="keyword">return</span> fn.apply(this, arguments);
+        }
+    };
+};
+<span class="keyword">var</span> rule = containsFirst.nextRule(multipleOfThree).nextRule(multipleOfTwo).nextRule(multipleOfOne).nextRule(noneOfAbove);
+</code></pre><p>我们给所有函数对象添加了一个<code>nextRule()</code>方法，这个方法接收一个函数，返回一个函数。接收的函数会作为在本函数返回了约定值之后调用的函数，也就是OOP中职责链对象指向的下一个职责链对象中的<code>fn</code>属性。而返回的函数相当于OOP例子中的<code>rule.go()</code>方法。在这里，因为<code>nextRule()</code>返回的还是一个函数，因此我们可以用链式写法来指定职责链的顺序，就像上面的变量<code>rule</code>一样。变量<code>rule</code>引用的是从职责链中优先级最高的函数开始，经过一系列链式调用<code>nextRule()</code>方法而返回的函数。调用了<code>rule()</code>之后就会顺着职责链往下执行传入的函数，直到有一个函数没有返回约定值为止。</p>
+<h1 id="职责链模式的好处">职责链模式的好处</h1><p>我们可以通过职责链来代替大段大段的<code>if-else</code>语句，同时也能让不同的处理请求的函数之间解耦合。另外，在<code>if-else</code>语句中，我们是不能跳过中间任何的分句的，但是通过职责链模式，我们可以手动指定职责链的结构，可以指定职责链开始的位置等等。</p>
+<h1 id="reference">reference</h1><ul>
+<li><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></li>
+<li><a href="http://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;tn=ubuntuu_dg&amp;wd=fizzbuzzwhizz%E6%8B%89%E5%8B%BE%E7%BD%91&amp;oq=fizzbuzzwhizz&amp;rsv_pq=cfe2d0df0008f160&amp;rsv_t=2161z1oHA5DSn2lKXGG3JJz3siKXBtsC2t0fcRS%2F%2B5kiB0Vr5ugNo6hUwcLS8ZAN%2FQ&amp;rsv_enter=1&amp;rsv_sug3=11&amp;rsv_sug1=1&amp;rsv_sug2=0&amp;rsv_sug7=100&amp;inputT=3802&amp;rsv_sug4=5167&amp;rsv_sug=2" target="_blank" rel="external">FizzBuzzWhizz拉勾网面试题</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/13/pattern-templateMethod/" rel="next" title="javascript设计模式之模板方法模式(template method)">
+                <i class="fa fa-chevron-left"></i> javascript设计模式之模板方法模式(template method)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/01/14/pattern-chain-of-responsibility/"
+     data-title="javascript设计模式之职责链模式(chain of responsibility)"
+     data-content=""
+     data-url="http://kmhaoshuai.com/2016/01/14/pattern-chain-of-responsibility/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/14/pattern-chain-of-responsibility/"
+           data-title="javascript设计模式之职责链模式(chain of responsibility)" data-url="http://kmhaoshuai.com/2016/01/14/pattern-chain-of-responsibility/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="kMchA" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kMchA</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">kmhaoshuai.com</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kmCha" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/2483546133" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#职责链是什么？"><span class="nav-number">1.</span> <span class="nav-text">职责链是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一道编程题(FizzBuzzWhizz)"><span class="nav-number">2.</span> <span class="nav-text">一道编程题(FizzBuzzWhizz)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#炮灰写法"><span class="nav-number">2.1.</span> <span class="nav-text">炮灰写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP职责链"><span class="nav-number">2.2.</span> <span class="nav-text">OOP职责链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP职责链"><span class="nav-number">2.3.</span> <span class="nav-text">AOP职责链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#职责链模式的好处"><span class="nav-number">3.</span> <span class="nav-text">职责链模式的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">reference</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kMchA</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"kmcha"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
