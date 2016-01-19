@@ -55,19 +55,19 @@
 
 
 
-<meta name="description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
-为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
+<meta name="description" content="代理模式代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
+为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript设计模式之代理模式(proxy)">
+<meta property="og:title" content="javascript设计模式之代理模式(proxy)和装饰者模式(decorator)">
 <meta property="og:url" content="http://kmhaoshuai.com/2016/01/09/pattern-proxy/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
-为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
-<meta property="og:updated_time" content="2016-01-12T14:12:09.000Z">
+<meta property="og:description" content="代理模式代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
+为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回">
+<meta property="og:updated_time" content="2016-01-19T23:17:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript设计模式之代理模式(proxy)">
-<meta name="twitter:description" content="代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
-为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问">
+<meta name="twitter:title" content="javascript设计模式之代理模式(proxy)和装饰者模式(decorator)">
+<meta name="twitter:description" content="代理模式代理是什么？代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。
+为什么要用代理？我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回">
 
 
 
@@ -79,7 +79,7 @@
   };
 </script>
 
-  <title> javascript设计模式之代理模式(proxy) | kMchA的博客 </title>
+  <title> javascript设计模式之代理模式(proxy)和装饰者模式(decorator) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +254,7 @@
             
             
               
-                javascript设计模式之代理模式(proxy)
+                javascript设计模式之代理模式(proxy)和装饰者模式(decorator)
               
             
           </h1>
@@ -309,9 +309,9 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="代理是什么？">代理是什么？</h1><p>代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。<br>因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。</p>
-<h1 id="为什么要用代理？">为什么要用代理？</h1><p>我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问题，先来看一个具体的例子——图片预加载。</p>
-<h2 id="代理模式实现图片预加载">代理模式实现图片预加载</h2><p>图片预加载就是加载一个图片的时候，在图片还没有下载完成的那一段空白时期，让一个提前加载好的图片（比如各种loading菊花图）来填充图片元素，当要我们想要加载的图片下载完成后再替换成我们想要的图片。知道了原理那么就来编写代码实现一个图片预加载：</p>
+        <span itemprop="articleBody"><h1 id="代理模式">代理模式</h1><h2 id="代理是什么？">代理是什么？</h2><p>代理比较好理解，生活中处处都是代理。例如房屋交易中介，你只管买房，房主只管卖房，中间的一些繁琐的事务由中介来做，这里可以说中介代理了房主来卖房子。<br>因此，代理在javascript中就可以理解为，要跟一个对象通信，但是由于某种原因需要经过一个中间的代理对象来访问实际想要访问的对象。</p>
+<h2 id="为什么要用代理？">为什么要用代理？</h2><p>我可以访问一个对象为啥偏要在中间加另一个对象？可以保证的是绝不是吃饱了撑着了，要回答这个问题，先来看一个具体的例子——图片预加载。</p>
+<h3 id="代理模式实现图片预加载">代理模式实现图片预加载</h3><p>图片预加载就是加载一个图片的时候，在图片还没有下载完成的那一段空白时期，让一个提前加载好的图片（比如各种loading菊花图）来填充图片元素，当要我们想要加载的图片下载完成后再替换成我们想要的图片。知道了原理那么就来编写代码实现一个图片预加载：</p>
 <p>首先是html文件：</p>
 <pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
@@ -333,7 +333,7 @@
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span>
 </code></pre><p>这里能看到我们需要编写一个<code>createPreloadIamge()</code>函数然后用它来返回一个<code>img</code>对象，通过调用<code>img</code>对象的<code>srtSrc()</code>方法并传入一个<code>url</code>来设置图片的地址。下面来看看这个怎么实现</p>
-<h3 id="普通图片预加载">普通图片预加载</h3><pre><code><span class="comment">// image-preload.js</span>
+<h4 id="普通图片预加载">普通图片预加载</h4><pre><code><span class="comment">// image-preload.js</span>
 <span class="keyword">var</span> createPreloadIamge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
     <span class="keyword">var</span> proxyImg = <span class="keyword">new</span> Image(),
         loadingImg = <span class="keyword">new</span> Image(),
@@ -359,7 +359,7 @@
 <p>单一职责原则指的是，就一个类（通常也包括对象和函数等）而言，应该仅有一个引起它变<br>化的原因。如果一个对象承担了多项职责，就意味着这个对象将变得巨大，引起它变化的原因可<br>能会有多个。面向对象设计鼓励将行为分布到细粒度的对象之中，如果一个对象承担的职责过多，<br>等于把这些职责耦合到了一起，这种耦合会导致脆弱和低内聚的设计。当变化发生时，设计可能<br>会遭到意外的破坏。</p>
 </blockquote>
 <p>那不符合<code>单一职责原则</code>又怎么了？我还不是能实现图片预加载。是的能实现，但是当<code>createPreloadIamge()</code>函数既担任了创建图片的责任，又担任了图片预加载的责任的时候，那如果以后网速飞起不需要再用预加载了，或者由于某些原因不需要用图片预加载了，需要将这个功能删除，那就麻烦了。要想不改动前面的<code>html</code>文件继续实现图片的创建，必须要从<code>createPreloadIamge()</code>函数中分离出图片创建的那部分，删除掉图片预加载的那一部分，并且还要提供一样的<code>setSrc()</code>接口，想想都觉得麻烦。<br>下面用代理模式重构上面的代码。</p>
-<h3 id="文艺图片预加载">文艺图片预加载</h3><pre><code><span class="keyword">var</span> createImage = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+<h4 id="文艺图片预加载">文艺图片预加载</h4><pre><code><span class="keyword">var</span> createImage = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
     <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);
     <span class="built_in">document</span>.body.appendChild(img);
     <span class="keyword">return</span> {
@@ -388,7 +388,7 @@
     };
 };
 </code></pre><p>可以看到我们创建了两个函数，都会返回一个带有<code>setSrc()</code>方法的对象，但实际上要实现预加载用户只会用到<code>createPreloadIamge()</code>函数，这里为了理解方便用了两个全局变量来保存函数，实际可以用命名空间将<code>createImage()</code>函数隐藏起来，只将<code>createPreloadIamge()</code>函数暴露出来。<br>要实现预加载，我们要调用<code>createPreloadIamge()</code>函数，在<code>createPreloadIamge()</code>函数内部，它只管预加载的部分，创建图片的功能通过调用<code>createImage()</code>函数来实现。这样职责分离之后，在我们不再需要图片预加载的时候，就只用将<code>html</code>文件中的函数名从<code>createPreloadIamge</code>改为<code>createImage</code>，就能只实现创建图片的功能了。<br>所以，代理对象（函数）要和本体对象（函数）的接口保持一致，这样就能容易地将本体替换为代理，用户也只用放心地请求代理，只用关心是否能得到想要的结果。</p>
-<h2 id="代理模式实现缓存">代理模式实现缓存</h2><p>javascript中复杂的计算会是一笔开销，如果能将计算结果缓存起来，下次接收到一样的参数的时候就能直接返回结算结果而不用重新麻烦处理器再算一次。下面用乘法运算来模拟复杂的运算：</p>
+<h3 id="代理模式实现缓存">代理模式实现缓存</h3><p>javascript中复杂的计算会是一笔开销，如果能将计算结果缓存起来，下次接收到一样的参数的时候就能直接返回结算结果而不用重新麻烦处理器再算一次。下面用乘法运算来模拟复杂的运算：</p>
 <pre><code><span class="keyword">var</span> multiply = function() {
     <span class="keyword">var</span> <span class="literal">result</span> = <span class="number">1</span>,
         args = arguments;
@@ -398,13 +398,13 @@
     <span class="keyword">return</span> <span class="literal">result</span>;
 };
 
-<span class="keyword">var</span> proxyMul = function() {
+<span class="keyword">var</span> proxyMul = (function() {
     <span class="keyword">var</span> cache = {};
     <span class="keyword">return</span> function() {
         <span class="keyword">var</span> argsStr = <span class="type">Array</span>.prototype.join.call(arguments, <span class="string">","</span>);   // 将传入的参数合为一个字符串作为缓存的键名
         <span class="keyword">return</span> cache[argsStr] || cache[argsStr] = multiply.apply(this, arguments);
     }
-};
+})();
 
 proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); // <span class="number">6</span>
 </code></pre><p>这样通过乘法函数<code>multiply()</code>的代理函数<code>proxyMul()</code>函数就可以用相同的传入参数实现带有缓存功能的乘法运算了。还可以对<code>proxyMul()</code>函数稍加改动编写一个可以根据传入本体运算函数来生成对应的代理函数的函数：</p>
@@ -439,7 +439,70 @@ proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class
 
 proxyMul(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); // <span class="number">6</span>
 proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>); // <span class="number">3</span>
-</code></pre><h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/image-preload" target="_blank" rel="external">image-preload</a></p>
+</code></pre><h1 id="装饰者模式">装饰者模式</h1><h2 id="什么是装饰者模式？">什么是装饰者模式？</h2><p>装饰者模式的核心，是动态地给对象加上某些功能，即装饰。而加了功能之后通常会返回一个内部调用原对象或原函数的对象或者函数，附加的功能在返回的新对象中实现，原对象中的功能不受影响。是的，听起来有点像代理模式，同样是通过另外一个对象包装原对象，在原对象的基础功能之上可以附加一些其他的功能。先不急，后面再说他们有啥区别，先来看看装饰者模式。</p>
+<h2 id="还是举个例子">还是举个例子</h2><p>例如现在我们有一个之前就写好了的函数<code>doSomething()</code>，但是在现在的项目中的某个地方需要给他动态地添加一个新的功能<code>console.log(&quot;blabla&quot;)</code>，并且这个功能需要在执行<code>doSomething()</code>之前执行。这个需求可以很容易的就做到，下面看看怎么来写代码。</p>
+<h3 id="一般写法">一般写法</h3><pre><code><span class="keyword">var</span> _doS = doSomething;
+doSomething = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="built_in">console</span>.log(<span class="string">"blabla"</span>);
+    _doS();
+};
+</code></pre><p>对的，一般情况下就这几行代码就足够了，但是这种写法有两个明显的缺陷</p>
+<ol>
+<li>会创建中间变量（这里的<code>_doS</code>）。这里只有一个，当程序中这种需求多了起来，中间变量也会相应增多，维护起来是个问题。</li>
+<li>存在<code>this劫持</code>的问题。上述代码不会出现这种问题，但是在有些地方会有这个问题，看下面例子。</li>
+</ol>
+<h4 id="this劫持">this劫持</h4><p>如果我们用上面的写法，来给例如<code>document.getElementById()</code>函数增加功能，我们来看看会出现什么问题：</p>
+<pre><code><span class="keyword">var</span> _getElem = <span class="built_in">document</span>.getElementById;
+<span class="built_in">document</span>.getElementById = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>{
+    <span class="built_in">console</span>.log(<span class="string">"blabla"</span>);
+    _getElem(id);
+};
+</code></pre><p>可以看到，<code>document.getElementById</code>引用的函数被引用给了<code>_getElem</code>变量，并且在新的<code>document.getElementById()</code>函数中直接调用了，因此跟之前的作为<code>document</code>对象的方法调用不同，他的<code>this</code>是指向<code>window</code>对象（浏览器中）而不是<code>document</code>对象的，因此上面代码会报错。当然我们也可以通过给中间变量绑定<code>this</code>来解决这个问题：</p>
+<pre><code><span class="keyword">var</span> _getElem = <span class="built_in">document</span>.getElementById;
+<span class="built_in">document</span>.getElementById = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>{
+    <span class="built_in">console</span>.log(<span class="string">"blabla"</span>);
+    _getElem.call(<span class="built_in">document</span>, id);
+};
+</code></pre><p>但是这样的写法还是会存在上面的第一个中间变量的问题，而且这样写也并不优雅。</p>
+<h3 id="装饰者模式写法">装饰者模式写法</h3><p>下面我们来使用装饰者模式来重构上面的例子，在重构之前，我们先要实现两个通用的函数：</p>
+<pre><code><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>{
+    <span class="keyword">var</span> _self = <span class="keyword">this</span>;
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        <span class="keyword">return</span> _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+    };
+};
+
+<span class="built_in">Function</span>.prototype.after = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>{
+    <span class="keyword">var</span> _self = <span class="keyword">this</span>;
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> _ret = _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        <span class="keyword">return</span> _ret;
+    };
+};
+</code></pre><p>上面在<code>Function</code>构造函数的原型对象上定义了两个函数，<code>before</code>和<code>after</code>。任何函数都能够调用他们。如果调用<code>before</code>函数，那么需要传入一个新的函数，<code>before</code>函数返回的函数在执行的时候会先执行当时传入它的那个新函数，然后才会执行当时调用<code>before</code>函数的函数，这样就能动态地给一个函数添加新的功能。<code>after</code>跟<code>before</code>一样，不再赘述。<br>有了这俩函数，我们就可以愉快地重构上面的例子了：</p>
+<pre><code><span class="built_in">document</span>.getElementById.before(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="built_in">console</span>.log(<span class="string">"blabla"</span>);
+});
+</code></pre><p>这样就能很容易地给一个函数动态地添加某些功能，并且不用产生多余的中间变量，也不存在<code>this劫持</code>的问题。这就是装饰者模式的威力。当然，吹毛求疵一点的话，上面的<code>before</code>和<code>after</code>函数是定义在全局构造函数<code>Function</code>上的，可能有些强迫症患者会觉得不舒服，那么把他们抽离出来放在自己的工具函数里也是相当容易的。</p>
+<pre><code>KM.before = <span class="function"><span class="keyword">function</span>(<span class="params">self, fn</span>) </span>{
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        <span class="keyword">return</span> self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+    };
+};
+
+KM.after = <span class="function"><span class="keyword">function</span>(<span class="params">self, fn</span>) </span>{
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> _ret = self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        <span class="keyword">return</span> _ret;
+    };
+};
+</code></pre><p>通过<code>before</code>和<code>after</code>函数可以对原函数进行装饰，形成一条长长的<code>装饰链</code>。</p>
+<h1 id="代理模式和装饰者模式的异同">代理模式和装饰者模式的异同</h1><p>说了这么多，回到之前的一个问题上，代理模式和装饰者模式看上去挺像的，那么区别到底在哪？<br>有一个重要的区别就是意图。在代理模式中，代理对象和原对象的引用关系是静态的，静态的意思就是从编写代码的时候就是确定了的。而在装饰者模式中，装饰链和原函数的引用关系是动态的，就是说之前是不确定的，只有在需要的时候我们才用一些手段（比如<code>before</code>和<code>after</code>函数）来动态地形成装饰链。<br>另一个区别就是，在代理模式中，往往只有代理对象和原对象之间的一层引用，然而在装饰者模式中，装饰链是可以无限延伸的。</p>
+<h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/image-preload" target="_blank" rel="external">image-preload</a></p>
 <h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
 </span>
       
@@ -488,7 +551,7 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
     <div class="post-spread">
       
         <div class="ds-share flat" data-thread-key="2016/01/09/pattern-proxy/"
-     data-title="javascript设计模式之代理模式(proxy)"
+     data-title="javascript设计模式之代理模式(proxy)和装饰者模式(decorator)"
      data-content=""
      data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
   <div class="ds-share-inline">
@@ -519,7 +582,7 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/01/09/pattern-proxy/"
-           data-title="javascript设计模式之代理模式(proxy)" data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
+           data-title="javascript设计模式之代理模式(proxy)和装饰者模式(decorator)" data-url="http://kmhaoshuai.com/2016/01/09/pattern-proxy/">
       </div>
     
   </div>
@@ -563,7 +626,7 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -634,7 +697,7 @@ proxyAdd(<span class="number">1</span>,<span class="number">1</span>,<span class
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代理是什么？"><span class="nav-number">1.</span> <span class="nav-text">代理是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要用代理？"><span class="nav-number">2.</span> <span class="nav-text">为什么要用代理？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式实现图片预加载"><span class="nav-number">2.1.</span> <span class="nav-text">代理模式实现图片预加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通图片预加载"><span class="nav-number">2.1.1.</span> <span class="nav-text">普通图片预加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文艺图片预加载"><span class="nav-number">2.1.2.</span> <span class="nav-text">文艺图片预加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式实现缓存"><span class="nav-number">2.2.</span> <span class="nav-text">代理模式实现缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">3.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代理模式"><span class="nav-number">1.</span> <span class="nav-text">代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">代理是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要用代理？"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要用代理？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代理模式实现图片预加载"><span class="nav-number">1.2.1.</span> <span class="nav-text">代理模式实现图片预加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#普通图片预加载"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">普通图片预加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文艺图片预加载"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">文艺图片预加载</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理模式实现缓存"><span class="nav-number">1.2.2.</span> <span class="nav-text">代理模式实现缓存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#装饰者模式"><span class="nav-number">2.</span> <span class="nav-text">装饰者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是装饰者模式？"><span class="nav-number">2.1.</span> <span class="nav-text">什么是装饰者模式？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还是举个例子"><span class="nav-number">2.2.</span> <span class="nav-text">还是举个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般写法"><span class="nav-number">2.2.1.</span> <span class="nav-text">一般写法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#this劫持"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">this劫持</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰者模式写法"><span class="nav-number">2.2.2.</span> <span class="nav-text">装饰者模式写法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理模式和装饰者模式的异同"><span class="nav-number">3.</span> <span class="nav-text">代理模式和装饰者模式的异同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">4.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
