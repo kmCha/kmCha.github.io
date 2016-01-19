@@ -55,16 +55,17 @@
 
 
 
-<meta name="description" content="什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开">
+<meta name="description" content="观察者模式什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript设计模式之观察者模式(observer)">
+<meta property="og:title" content="javascript设计模式之观察者模式(observer)和中介者模式(mediator)">
 <meta property="og:url" content="http://kmhaoshuai.com/2016/01/10/pattern-observer/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开">
-<meta property="og:updated_time" content="2016-01-12T23:50:23.000Z">
+<meta property="og:description" content="观察者模式什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-27/44946725.jpg">
+<meta property="og:updated_time" content="2016-01-19T04:20:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript设计模式之观察者模式(observer)">
-<meta name="twitter:description" content="什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开">
+<meta name="twitter:title" content="javascript设计模式之观察者模式(observer)和中介者模式(mediator)">
+<meta name="twitter:description" content="观察者模式什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的">
 
 
 
@@ -76,7 +77,7 @@
   };
 </script>
 
-  <title> javascript设计模式之观察者模式(observer) | kMchA的博客 </title>
+  <title> javascript设计模式之观察者模式(observer)和中介者模式(mediator) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +252,7 @@
             
             
               
-                javascript设计模式之观察者模式(observer)
+                javascript设计模式之观察者模式(observer)和中介者模式(mediator)
               
             
           </h1>
@@ -306,10 +307,10 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="什么是观察者模式？">什么是观察者模式？</h1><p>说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做<strong>发布——订阅(publish-subscribe)模式</strong>。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，<strong>发布</strong>和<strong>订阅</strong>。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开销。</p>
-<h1 id="观察者模式的原理">观察者模式的原理</h1><h2 id="事件冒泡">事件冒泡</h2><p>实际上在我之前的文章“<a href="http://www.kmhaoshuai.com/2015/12/23/javascript-event/" target="_blank" rel="external">javascript事件管理与自定义事件解耦</a>”中，就运用了观察者模式。在那篇文章中，用编写的通用事件对象来触发冒泡事件实现了发布对象和订阅对象之间的解耦。简单说来就是通过在<code>DOM</code>元素上绑定一个数据对象，将该元素绑定的事件处理程序都引用到数据对象上，然后定义一个调度函数在事件发生时触发事件处理函数。在通用事件对象上有个<code>trigger()</code>方法可以在一个指定的<code>DOM</code>元素上触发任意冒泡事件，因此我们可以在该元素的任意父元素上捕获（订阅）该事件。<br>上述的方法是通过事件冒泡来削弱发布对象和订阅对象之间的耦合，只要在订阅对象的子元素上发布了一个事件，那么子元素上面所有订阅了该事件的父元素上的事件处理函数都会被调用，跟发布事件的对象显式一个个调用订阅对象的事件处理函数相比，这种用事件回调的方式的实现使得用户并不用关心哪些具体的对象订阅了该事件，只用将事件发布出去，剩下的事件冒泡和事件处理函数的调用会自动实现。</p>
-<h2 id="中介对象">中介对象</h2><p>事件冒泡在类似<code>DOM</code>对象那种层级分明的情况下很好用，但是当发布对象和订阅对象是通用的对象的时候就不能用了。因此需要编写一种能够应用于任何情况下的观察者模式。在普通的对象中没有了事件冒泡应该怎么来联系发布对象和订阅对象呢，要想解除他们之间的耦合，不难想到可以定义一个处在他们中间的对象，这里把它叫做中介对象。有了中介对象之后，不管有多少发布者，他们不在乎谁订阅了，只用无脑在事件发生的时候将该消息发布在中介那里，而订阅者也不用关心是谁发布了他们的订阅信息，他们只在乎收到的消息的正确性。中间的事情就是中介对象需要做的事了。</p>
-<h1 id="模块间的通信">模块间的通信</h1><p>知道了通用的观察者模式的原理——中介对象之后，我们就可以来看一个实际的例子。假如在一个项目中，我负责写一个<code>ajax</code>模块，在该模块执行过后，需要调用来自其他同学的各种模块，比如说插入图片啊、渲染一个组件啊、blablabla。那么我们可（bu）能（yao）这样写：</p>
+        <span itemprop="articleBody"><h1 id="观察者模式">观察者模式</h1><h2 id="什么是观察者模式？">什么是观察者模式？</h2><p>说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做<strong>发布——订阅(publish-subscribe)模式</strong>。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，<strong>发布</strong>和<strong>订阅</strong>。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的不必要的开销。</p>
+<h2 id="观察者模式的原理">观察者模式的原理</h2><h3 id="事件冒泡">事件冒泡</h3><p>实际上在我之前的文章“<a href="http://www.kmhaoshuai.com/2015/12/23/javascript-event/" target="_blank" rel="external">javascript事件管理与自定义事件解耦</a>”中，就运用了观察者模式。在那篇文章中，用编写的通用事件对象来触发冒泡事件实现了发布对象和订阅对象之间的解耦。简单说来就是通过在<code>DOM</code>元素上绑定一个数据对象，将该元素绑定的事件处理程序都引用到数据对象上，然后定义一个调度函数在事件发生时触发事件处理函数。在通用事件对象上有个<code>trigger()</code>方法可以在一个指定的<code>DOM</code>元素上触发任意冒泡事件，因此我们可以在该元素的任意父元素上捕获（订阅）该事件。<br>上述的方法是通过事件冒泡来削弱发布对象和订阅对象之间的耦合，只要在订阅对象的子元素上发布了一个事件，那么子元素上面所有订阅了该事件的父元素上的事件处理函数都会被调用，跟发布事件的对象显式一个个调用订阅对象的事件处理函数相比，这种用事件回调的方式的实现使得用户并不用关心哪些具体的对象订阅了该事件，只用将事件发布出去，剩下的事件冒泡和事件处理函数的调用会自动实现。</p>
+<h3 id="中介对象">中介对象</h3><p>事件冒泡在类似<code>DOM</code>对象那种层级分明的情况下很好用，但是当发布对象和订阅对象是通用的对象的时候就不能用了。因此需要编写一种能够应用于任何情况下的观察者模式。在普通的对象中没有了事件冒泡应该怎么来联系发布对象和订阅对象呢，要想解除他们之间的耦合，不难想到可以定义一个处在他们中间的对象，这里把它叫做中介对象。有了中介对象之后，不管有多少发布者，他们不在乎谁订阅了，只用无脑在事件发生的时候将该消息发布在中介那里，而订阅者也不用关心是谁发布了他们的订阅信息，他们只在乎收到的消息的正确性。中间的事情就是中介对象需要做的事了。</p>
+<h2 id="模块间的通信">模块间的通信</h2><p>知道了通用的观察者模式的原理——中介对象之后，我们就可以来看一个实际的例子。假如在一个项目中，我负责写一个<code>ajax</code>模块，在该模块执行过后，需要调用来自其他同学的各种模块，比如说插入图片啊、渲染一个组件啊、blablabla。那么我们可（bu）能（yao）这样写：</p>
 <pre><code>ajax.success(<span class="function"><span class="keyword">function</span><span class="params">(data)</span></span> {
     appendImg.init(<span class="type">data</span>);
     renderWidget.render(<span class="type">data</span>);
@@ -435,8 +436,7 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
             });
 
             <span class="keyword">var</span> _init = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{
-                <span class="keyword">if</span>(data === <span class="string">"success"</span>)
-                alert(<span class="string">"加载图片"</span>);
+                alert(<span class="string">"加载图片"</span> + data);
             };
             <span class="keyword">return</span> {
                 init: _init
@@ -449,7 +449,160 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
     </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span>
-</code></pre><h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/module-subscribe" target="_blank" rel="external">module-subscribe</a></p>
+</code></pre><h2 id="源码">源码</h2><p>GitHub: <a href="https://github.com/kmCha/module-subscribe" target="_blank" rel="external">module-subscribe</a></p>
+<h1 id="中介者模式">中介者模式</h1><h2 id="什么是中介者模式">什么是中介者模式</h2><p>中介者模式是通过在对象之间定义一个中介者对象来消除对象间紧密耦合的一种模式。听起来像是在说观察者模式，其实我也是这么觉得的，这俩不仔细想想还真的是不太好区分</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-27/44946725.jpg" alt=""></p>
+<h2 id="一个例子">一个例子</h2><p>要想区分这两个模式，先来看个例子。假如我们要写一个订单处理页面，消费者可以选择产品的颜色和数量，在下方会显示消费者所选择的产品颜色和数量，假设我们已经知道产品的库存，那么在产品库存足够的情况下，消费者能够点击“确认订单”来进行购买，否则说明不能点击按钮的原因。因为要在下面显示颜色和数量，那么在选择了颜色和改变了输入的数量之后就需要对显示的元素进行更改，并且进行一些逻辑判断最终确定按钮的状态，所以我们需要在每次选择框元素的<code>onchange</code>事件和输入元素的<code>oninput</code>事件触发之后都需要对<code>DOM</code>元素进行操作。</p>
+<h3 id="观察者模式实现">观察者模式实现</h3><p>下面先看看用观察者模式来实现这个例子：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>stock<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"color"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">""</span>&gt;</span>选择颜色<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"red"</span>&gt;</span>红色<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"black"</span>&gt;</span>黑色<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"number"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span> <span class="attribute">id</span>=<span class="value">"colorInfo"</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span> <span class="attribute">id</span>=<span class="value">"numberInfo"</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"submit"</span> <span class="attribute">disabled</span>=<span class="value">true</span>&gt;</span>选择颜色输入数量<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"stock.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> stock = {
+            <span class="string">"red"</span>: <span class="number">5</span>,
+            <span class="string">"black"</span>: <span class="number">8</span>
+        };
+
+        <span class="built_in">document</span>.querySelector(<span class="string">"#color"</span>).onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            middle.trigger(<span class="string">"colorChange"</span>, <span class="keyword">this</span>);
+        };
+
+        <span class="built_in">document</span>.querySelector(<span class="string">"#number"</span>).oninput = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            middle.trigger(<span class="string">"numberChange"</span>, <span class="keyword">this</span>);
+        };
+
+        <span class="keyword">var</span> handleChange = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>) </span>{
+            <span class="keyword">var</span> colorObj = <span class="built_in">document</span>.querySelector(<span class="string">"#color"</span>),
+                numberObj = <span class="built_in">document</span>.querySelector(<span class="string">"#number"</span>),
+                colorInfo = <span class="built_in">document</span>.querySelector(<span class="string">"#colorInfo"</span>),
+                numberInfo = <span class="built_in">document</span>.querySelector(<span class="string">"#numberInfo"</span>),
+                button = <span class="built_in">document</span>.querySelector(<span class="string">"#submit"</span>);
+
+            <span class="keyword">if</span>(obj === colorObj) {
+                colorInfo.innerHTML = <span class="string">"颜色："</span> + colorObj.value;
+            }
+            <span class="keyword">else</span> <span class="keyword">if</span>(obj === numberObj) {
+                numberInfo.innerHTML = <span class="string">"数量："</span> + numberObj.value;
+            }
+            <span class="keyword">if</span>(!colorObj.value) {
+                button.disabled = <span class="literal">true</span>;
+                button.innerHTML = <span class="string">"请选择颜色"</span>;
+                <span class="keyword">return</span>;
+            }
+            <span class="keyword">if</span>(!numberObj.value || (((numberObj.value - <span class="number">0</span>) | <span class="number">0</span>) !== numberObj.value - <span class="number">0</span>)) {
+                button.disabled = <span class="literal">true</span>;
+                button.innerHTML = <span class="string">"请输入正确的数量"</span>;
+                <span class="keyword">return</span>;
+            }
+            <span class="keyword">if</span>(numberObj.value &gt; stock[colorObj.value]) {
+                button.disabled = <span class="literal">true</span>;
+                button.innerHTML = <span class="string">"库存不足"</span>;
+                <span class="keyword">return</span>;
+            }
+            button.disabled = <span class="literal">false</span>;
+            button.innerHTML = <span class="string">"确认订单"</span>;
+        };
+
+        middle.listen(<span class="string">"colorChange"</span>, handleChange);
+        middle.listen(<span class="string">"numberChange"</span>, handleChange);
+    };
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p>上面的代码中，我们在颜色选择框的<code>onchange</code>事件的回调函数和数量输入框的<code>oninput</code>事件回调函数中通过观察者<code>middle</code>对象分别对事件<code>colorChange</code>和<code>numberChange</code>进行了发布。想要达到例子的要求，订阅这两个事件的函数是一个庞大的函数，它接收一个对象作为参数，通过对对象参数进行判断来确定是哪一个元素进行了变化，进而进行接下来的操作。其实这个例子既是观察者模式也是中介者模式，它是一个用观察者模式来实现中介者模式的例子。我们可以称这个庞大的<code>handleChange()</code>函数为中介者(mediator)。</p>
+<h3 id="中介者模式实现">中介者模式实现</h3><p>中介者模式有两种实现，一种是上面的观察者模式实现，另外一种实现是定义一个中介者对象，暴露一些接口给事件的发出者调用，通过传入参数来在中介者对象中进行下一步的操作。下面看看代码：</p>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>stock<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">select</span> <span class="attribute">id</span>=<span class="value">"color"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">""</span>&gt;</span>选择颜色<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"red"</span>&gt;</span>红色<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"black"</span>&gt;</span>黑色<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"number"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span> <span class="attribute">id</span>=<span class="value">"colorInfo"</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span> <span class="attribute">id</span>=<span class="value">"numberInfo"</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">id</span>=<span class="value">"submit"</span> <span class="attribute">disabled</span>=<span class="value">true</span>&gt;</span>选择颜色输入数量<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> stock = {
+            <span class="string">"red"</span>: <span class="number">5</span>,
+            <span class="string">"black"</span>: <span class="number">8</span>
+        };
+
+        <span class="built_in">document</span>.querySelector(<span class="string">"#color"</span>).onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            mediator.change(<span class="keyword">this</span>);
+        };
+
+        <span class="built_in">document</span>.querySelector(<span class="string">"#number"</span>).oninput = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            mediator.change(<span class="keyword">this</span>);
+        };
+
+        <span class="keyword">var</span> mediator = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            <span class="keyword">var</span> colorObj = <span class="built_in">document</span>.querySelector(<span class="string">"#color"</span>),
+                numberObj = <span class="built_in">document</span>.querySelector(<span class="string">"#number"</span>),
+                colorInfo = <span class="built_in">document</span>.querySelector(<span class="string">"#colorInfo"</span>),
+                numberInfo = <span class="built_in">document</span>.querySelector(<span class="string">"#numberInfo"</span>),
+                button = <span class="built_in">document</span>.querySelector(<span class="string">"#submit"</span>);
+            <span class="keyword">return</span> {
+                change: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>) </span>{
+                    <span class="keyword">if</span>(obj === colorObj) {
+                        colorInfo.innerHTML = <span class="string">"颜色："</span> + colorObj.value;
+                    }
+                    <span class="keyword">else</span> <span class="keyword">if</span>(obj === numberObj) {
+                        numberInfo.innerHTML = <span class="string">"数量："</span> + numberObj.value;
+                    }
+                    <span class="keyword">if</span>(!colorObj.value) {
+                        button.disabled = <span class="literal">true</span>;
+                        button.innerHTML = <span class="string">"请选择颜色"</span>;
+                        <span class="keyword">return</span>;
+                    }
+                    <span class="keyword">if</span>(!numberObj.value || (((numberObj.value - <span class="number">0</span>) | <span class="number">0</span>) !== numberObj.value - <span class="number">0</span>)) {
+                        button.disabled = <span class="literal">true</span>;
+                        button.innerHTML = <span class="string">"请输入正确的数量"</span>;
+                        <span class="keyword">return</span>;
+                    }
+                    <span class="keyword">if</span>(numberObj.value &gt; stock[colorObj.value]) {
+                        button.disabled = <span class="literal">true</span>;
+                        button.innerHTML = <span class="string">"库存不足"</span>;
+                        <span class="keyword">return</span>;
+                    }
+                    button.disabled = <span class="literal">false</span>;
+                    button.innerHTML = <span class="string">"确认订单"</span>;
+                }
+            };
+        })();
+    };
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p>稍加改动之前用观察者模式来实现的代码就能得到用另一种方法实现的中介者模式。在代码中定义了一个<code>mediator</code>中介者对象，定义了一个<code>change()</code>接口来给外部的对象调用。剩下的实现原理就跟上面的<code>handleChange()</code>函数是一样的了。</p>
+<h2 id="中介者模式与观察者模式的异同">中介者模式与观察者模式的异同</h2><p>通过对观察者模式的总结，可以看出来观察者模式就是在消息的发送方和消息的接收方中间定义了一个观察者对象。在消息的发送者对象中，消息是直接发给观察者对象的。在消息的接收方，消息是通过观察者对象订阅的。因此发送方和接收方不必知道对方，只用知道观察者就行，因此实现了解耦。<br>而中介者模式如果用观察者模式来实现的话，就可以看成消息的订阅者是一个庞大的中介者对象，而这个对象可以同时订阅很多的消息，通过传入的参数来进行业务的判断。这样消息的发送者不需要知道消息的接收者是谁，通过订阅不同的消息之后消息的接收者（也就是中介者对象）也可以不需要知道消息的发送者是谁，这样也实现了解耦。<br>如果中介者模式是通过定义中介者对象来实现的话，上面的消息的发送者只需要调用中介者对象暴露出来的接口就行，剩下操作的都在中介者对象中处理。<br>因此，可以看出观察者模式和中介者模式确实比较接近，但是也存在差别，不然也不会以两个不同的设计模式存在对吧。所以我认为，可以从不同角度来判断什么时候应该使用观察者模式，什么时候应该使用中介者模式。</p>
+<ol>
+<li>观察者模式是站在消息的发送者的角度来看的。通常一个消息可以有很多不同的订阅者，当消息发出之后，不同的订阅者各自处理自己的业务。</li>
+<li>中介者模式是站在消息的接收者的角度来看的。通常一个消息的接收者（中介者对象）可以接收许多不同的消息，并且根据触发的事件来判断需要处理的业务。</li>
+</ol>
 <h1 id="reference">reference</h1><ul>
 <li><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></li>
 <li><a href="http://www.kmhaoshuai.com/2015/12/23/javascript-event/" target="_blank" rel="external">javascript事件管理与自定义事件解耦</a></li>
@@ -501,7 +654,7 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
     <div class="post-spread">
       
         <div class="ds-share flat" data-thread-key="2016/01/10/pattern-observer/"
-     data-title="javascript设计模式之观察者模式(observer)"
+     data-title="javascript设计模式之观察者模式(observer)和中介者模式(mediator)"
      data-content=""
      data-url="http://kmhaoshuai.com/2016/01/10/pattern-observer/">
   <div class="ds-share-inline">
@@ -532,7 +685,7 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/01/10/pattern-observer/"
-           data-title="javascript设计模式之观察者模式(observer)" data-url="http://kmhaoshuai.com/2016/01/10/pattern-observer/">
+           data-title="javascript设计模式之观察者模式(observer)和中介者模式(mediator)" data-url="http://kmhaoshuai.com/2016/01/10/pattern-observer/">
       </div>
     
   </div>
@@ -647,7 +800,7 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是观察者模式？"><span class="nav-number">1.</span> <span class="nav-text">什么是观察者模式？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式的原理"><span class="nav-number">2.</span> <span class="nav-text">观察者模式的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件冒泡"><span class="nav-number">2.1.</span> <span class="nav-text">事件冒泡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中介对象"><span class="nav-number">2.2.</span> <span class="nav-text">中介对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块间的通信"><span class="nav-number">3.</span> <span class="nav-text">模块间的通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">4.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式"><span class="nav-number">1.</span> <span class="nav-text">观察者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是观察者模式？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是观察者模式？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者模式的原理"><span class="nav-number">1.2.</span> <span class="nav-text">观察者模式的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件冒泡"><span class="nav-number">1.2.1.</span> <span class="nav-text">事件冒泡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中介对象"><span class="nav-number">1.2.2.</span> <span class="nav-text">中介对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块间的通信"><span class="nav-number">1.3.</span> <span class="nav-text">模块间的通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码"><span class="nav-number">1.4.</span> <span class="nav-text">源码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中介者模式"><span class="nav-number">2.</span> <span class="nav-text">中介者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是中介者模式"><span class="nav-number">2.1.</span> <span class="nav-text">什么是中介者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个例子"><span class="nav-number">2.2.</span> <span class="nav-text">一个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式实现"><span class="nav-number">2.2.1.</span> <span class="nav-text">观察者模式实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中介者模式实现"><span class="nav-number">2.2.2.</span> <span class="nav-text">中介者模式实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中介者模式与观察者模式的异同"><span class="nav-number">2.3.</span> <span class="nav-text">中介者模式与观察者模式的异同</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
