@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="hexo,工具,效率," />
+  <meta name="keywords" content="css,javascript,前端,插件," />
 
 
 
@@ -55,29 +55,22 @@
 
 
 
-<meta name="description" content="关于AlfredAlfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一大把资料能入门-&amp;gt;百度Alfred。
-关于iterm2iterm2是mac上一款能够代替自带t">
+<meta name="description" content="bootstrap模态框bootstrap中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？
+
+虽然bootstrap提供了自定义配色和插件模块分离，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己">
 <meta property="og:type" content="article">
-<meta property="og:title" content="效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传">
-<meta property="og:url" content="http://kmhaoshuai.com/2015/11/20/Alfred+iterm2+hexo/index.html">
+<meta property="og:title" content="KM-Modal:轻量、自适应、可配置的模态框插件">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/01/21/km-modal/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="关于AlfredAlfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一大把资料能入门-&amp;gt;百度Alfred。
-关于iterm2iterm2是mac上一款能够代替自带t">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/2160143.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/4211599.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/37792074.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/59938509.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/41572225.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/16564290.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/34810900.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/1054052.jpg">
-<meta property="og:updated_time" content="2015-12-20T23:49:08.000Z">
+<meta property="og:description" content="bootstrap模态框bootstrap中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？
+
+虽然bootstrap提供了自定义配色和插件模块分离，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己">
+<meta property="og:updated_time" content="2016-01-23T17:50:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传">
-<meta name="twitter:description" content="关于AlfredAlfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一大把资料能入门-&amp;gt;百度Alfred。
-关于iterm2iterm2是mac上一款能够代替自带t">
+<meta name="twitter:title" content="KM-Modal:轻量、自适应、可配置的模态框插件">
+<meta name="twitter:description" content="bootstrap模态框bootstrap中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？
+
+虽然bootstrap提供了自定义配色和插件模块分离，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己">
 
 
 
@@ -89,7 +82,7 @@
   };
 </script>
 
-  <title> 效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传 | kMchA的博客 </title>
+  <title> KM-Modal:轻量、自适应、可配置的模态框插件 | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +257,7 @@
             
             
               
-                效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传
+                KM-Modal:轻量、自适应、可配置的模态框插件
               
             
           </h1>
@@ -273,8 +266,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-20T14:44:12-05:00" content="2015-11-20">
-              2015-11-20
+            <time itemprop="dateCreated" datetime="2016-01-21T11:43:52-05:00" content="2016-01-21">
+              2016-01-21
             </time>
           </span>
 
@@ -283,8 +276,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/造的轮子们/" itemprop="url" rel="index">
+                    <span itemprop="name">造的轮子们</span>
                   </a>
                 </span>
 
@@ -299,8 +292,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/20/Alfred+iterm2+hexo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/20/Alfred+iterm2+hexo/" itemprop="commentsCount"></span>
+                <a href="/2016/01/21/km-modal/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/21/km-modal/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -319,94 +312,20 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="关于Alfred">关于Alfred</h2><p>Alfred是一款mac的效率软件，相信不少程序员对他是爱不释手。对普通用户来说他跟mac自带spotlight并没有什么区别，但是他真正牛逼的是他的收费功能自定义workflow。这里不对workflow做详细解释，如果你还没有听说过或者听说过还没用过这个软件，建议先百度一下，有一大把资料能入门-&gt;<a href="http://www.baidu.com/s?wd=Alfred&amp;rsv_spt=1&amp;rsv_iqid=0xa36cff7400007296&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;inputT=3345&amp;rsv_t=1aedNNcD9t6rrODXPauSl1RUTu99ApZG6qSEAvtSyJEZkwNVP3HM9JzbCQDN4UK4XmOP&amp;oq=%E9%97%AD%E5%8C%85&amp;rsv_pq=815794f100080c6c&amp;rsv_sug3=33&amp;rsv_sug1=14&amp;rsv_sug2=0&amp;rsv_sug4=3671" target="_blank" rel="external">百度Alfred</a>。</p>
-<h2 id="关于iterm2">关于iterm2</h2><p>iterm2是mac上一款能够代替自带terminal的软件，虽然自带的终端功能也比较丰富，但是iterm2用上手了以后会发现有很多能帮助提高效率的地方。同样，本文不对此做过多介绍，<a href="http://www.baidu.com/s?wd=iterm2&amp;rsv_spt=1&amp;rsv_iqid=0xa36cff7400007296&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;inputT=3771&amp;rsv_t=8bb8tRSqKOdnwmKM3ogb7f%2BIHXfTMs5sZNag1Q4uwoRQ2m63Bc%2BRIPCrZJiFliM6c3sR&amp;oq=Alfred&amp;rsv_pq=9733378c00030521&amp;rsv_sug3=45&amp;rsv_sug1=21&amp;rsv_sug2=0&amp;rsv_sug4=4071" target="_blank" rel="external">百度iterm2</a>。<br>另外，配合iterm2的shell建议使用zsh，Github上一个开源项目能帮助你理解和使用-&gt;<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>。</p>
-<h3 id="PS：设置Alfred默认打开终端为iterm2">PS：设置Alfred默认打开终端为iterm2</h3><p>Alfred中默认的终端是系统自带的，因此要手动设置将默认的终端变为iterm2。首先打开Alfred的偏好设置（command+,），然后点选Features-&gt;Terminal/Shell，将Application选项改为Custom，</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/2160143.jpg" alt=""></p>
-<p>接着将下面代码粘贴至上图中的文本域</p>
-<pre><code><span class="function_start"><span class="keyword">on</span></span> is_running(app_name)
-<span class="keyword">tell</span> <span class="type">application</span> <span class="string">"System Events"</span> <span class="keyword">to</span> (<span class="property">name</span> <span class="keyword">of</span> processes) <span class="keyword">contains</span> app_name
-<span class="keyword">end</span> is_running
-
-<span class="comment">-- Please note, if you store the iTerm binary in any other location than the Applications Folder</span>
-<span class="comment">-- please ensure you update the two locations below (in the format of : rather than / for folder dividers)</span>
-<span class="comment">-- this gets around issues with AppleScript not handling things well if you have two iTerm binaries on your system... which can happen :D</span>
-
-<span class="function_start"><span class="keyword">on</span></span> alfred_script(q)
-    <span class="keyword">if</span> is_running(<span class="string">"iTerm"</span>) <span class="keyword">then</span>
-        <span class="command">run script</span> <span class="string">"
-            on run {q}
-                tell application \":Applications:iTerm.app\"
-                    activate
-                    set myterm to (make new terminal)
-                    tell myterm
-                        set mysession to (launch session \"Default Session\")
-                        tell mysession to write text q
-                    end tell
-                end tell
-            end run
-        "</span> <span class="keyword">with</span> parameters {q}
-    <span class="keyword">else</span>
-        <span class="command">run script</span> <span class="string">"
-            on run {q}
-                tell application \":Applications:iTerm.app\"
-                    activate
-                    tell the first terminal
-                        tell the last session to write text q
-                    end tell
-                end tell
-            end run
-        "</span> <span class="keyword">with</span> parameters {q}
-    <span class="keyword">end</span> <span class="keyword">if</span>
-<span class="keyword">end</span> alfred_script
-</code></pre><p>代码出处：<a href="https://github.com/stuartcryan/custom-iterm-applescripts-for-alfred/blob/master/custom_iterm_script_iterm_2.1.1.applescript" target="_blank" rel="external">custom_iterm_script_iterm_2.1.1</a></p>
-<h2 id="回到hexo">回到hexo</h2><h4 id="新建hexo日志">新建hexo日志</h4><p>用hexo搭博客的同学们都知道，如果想新建一个日志，步骤是：</p>
+        <span itemprop="articleBody"><h1 id="bootstrap模态框">bootstrap模态框</h1><p><a href="http://v3.bootcss.com/javascript/#modals" target="_blank" rel="external">bootstrap</a>中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？</p>
 <ol>
-<li>打开终端</li>
-<li>cd到hexo所在的目录</li>
-<li>hexo new (日志名)</li>
-<li>用自己的markdown编辑器（我用的sublime text3）打开新建的.mk文件开始编辑</li>
+<li>虽然bootstrap提供了<a href="http://v3.bootcss.com/customize/" target="_blank" rel="external">自定义配色和插件模块分离</a>，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己网站相匹配的主题很麻烦，同时想要达到bootstrap示例的效果可能还要依赖其他bootstrap的组件，总之就是很混乱。</li>
+<li>bootstrap的模态框虽然有的地方挺好用，比如说开关动画、自适应都是集成在里面的，但是有个地方我始终看着难受，就是bootstrap的模态框的定位，始终是距页面上方一个等距的<code>margin</code>。模态框大了还好，如果是小模态框你又想垂直居中那就得改源代码了。</li>
 </ol>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""></p>
-<p>那么这时候Alfred workflow就派上用场了，下面介绍怎么用Alfred创建一个快速新建hexo日志的懒人workflow</p>
-<p>首先打开Alfred的偏好设置（command+,），然后点击workflow这一栏（收费版本才能使用的功能），你就会看到下面这样的</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/4211599.jpg" alt=""></p>
-<p>接着点击左下角那个加号（＋），选择Templates-&gt;Essentials-&gt;Keyword to Terminal Command，然后填写workflow名字、作者名字等</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/37792074.jpg" alt=""></p>
-<p>点击Create以后，在左边workflow列表里就会出现你刚创建的workfolw，点击你刚创建的workflow</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/59938509.jpg" alt=""></p>
-<p>上面的图片中，左边是设定在Alfred中启动你的workflow所要输入的关键字，右边是执行workflow的终端命令。我们先来设置关键字：</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/41572225.jpg" alt=""></p>
-<p>keyword中填入关键字，因为创建新日志需要给文章取名字，因此还要输入参数，所以勾选了右边的选项。设置好关键字之后我们来设置终端命令：</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/16564290.jpg" alt=""></p>
-<p>这里我用到了如下代码：</p>
-<pre><code>j nodejs-hexo
-hexo <span class="keyword">n</span> {<span class="keyword">query</span>}
-<span class="keyword">cd</span> source/_posts
-<span class="keyword">st</span> {<span class="keyword">query</span>}.md
-</code></pre><p>第一行的j命令是oh-my-zsh中的一个插件叫做autojump，他会根据你输入的参数来跳到最匹配的目录而不用输入路径。进入hexo目录之后调用hexo new (日志名)来创建新日志，后面的{query}就是我们在Alfred中输入的参数，新建完之后cd到hexo的源文件目录，然后调用编辑器进行编辑，这里st就是oh-my-zsh对于快捷使用sublime text3的插件。因此，经过这样的设置，如果你想创建一篇名字叫“我好帅”的日志，你只用在任意地方用快捷键呼出Alfred，然后输入</p>
-<pre><code><span class="title">hexo</span> n 我好帅
-</code></pre><p>剩下的事情Alfred就帮你做了，你就只用等着编辑器自动打开然后输入你有多帅了。下面来看看效果：</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/34810900.jpg" alt=""></p>
-<p>是不是很方便，是不是很high？</p>
-<h4 id="更新修改">更新修改</h4><p>有时候你在修改你的某个日志的时候，你并不想每次修改完就提交给Github，而是先在本地服务器测试，这也是正确的做法。那么想要手动更新，步骤是：</p>
-<ol>
-<li>在编辑器中保存markdown文件</li>
-<li>打开终端，cd到hexo所在目录</li>
-<li>hexo clear</li>
-<li>hexo generate</li>
+<p>以上两点是体验了bootstrap模态框插件之后不太能忍的地方，虽然最后都通过改动他的源代码达到了需求，但是以后总不能每次都改吧。于是自己写一个可复用的模态框插件的想法应运而生。</p>
+<h1 id="KM-Modal模态框">KM-Modal模态框</h1><p>既然要写个模态框插件代替bootstrap，那bootstrap模态框里好用的东西都得有，比如说自适应啦、动画啦……没错，确实有。</p>
+<p>先放<a href="assignmentrecorder.com/demos/km-modal">demo</a></p>
+<h2 id="特性">特性</h2><ol>
+<li>自适应(Adaptive)。始终居中，当页面小于阈值的时候随浏览器窗口的大小改变，可以缩小放大浏览器窗口来测试。</li>
+<li>动画(Animation)。目前支持一种动画效果，点击上方demo链接可查看，动画效果可关闭，具体设置方法后面说明。</li>
+<li>可定制(Customisable)。除了可以配置是否启用动画之外，目前还支持配置是否启用点击遮罩层关闭模态框功能、是否显示模态框右上角叉叉关闭按键功能。</li>
 </ol>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/90166439.jpg" alt=""></p>
-<p>好吧虽然也不是太麻烦，但是为什么不用Alfred和iterm2来简化操作呢。<br>跟新建hexo日志步骤一样，只有终端命令代码不同：</p>
-<pre><code><span class="built_in">j</span> nodejs-hexo
-hexo clean
-hexo generate
-</code></pre><p>比新建hexo日志简单了，但原理是相同的，因此当你保存了markdown文件之后，呼出Alfred输入你设置的关键字，他就会帮你更新，你就只用回到浏览器在你的本地服务器的地址上刷新一下，新内容就呈现在你眼前了。</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-7/1054052.jpg" alt=""></p>
-<h4 id="上传博客">上传博客</h4><p>最后一步就是发布博客了，跟前面也没什么不同，只用在终端命令中加一条</p>
-<pre><code><span class="title">hexo</span> deploy
-</code></pre><p>hexo就回将你的本地静态文件上传给你指定的Github repo了</p>
-<h2 id="总结">总结</h2><p>用Alfred对平时的工作效率提升真不是一星半点，本文只介绍了操作hexo博客的方面，这只是能用Alfred做的事情的冰山一角。更多workflow请参考-&gt;<a href="https://github.com/zenorocha/alfred-workflows" target="_blank" rel="external">Alfred workflows</a>。</p>
+<h2 id="使用方法">使用方法</h2><p>具体使用方法和配置说明见GitHub: <a href="https://github.com/kmCha/KM-modal" target="_blank" rel="external">KM-modal</a></p>
 </span>
       
     </div>
@@ -415,11 +334,13 @@ hexo generate
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag">#hexo</a>
+            <a href="/tags/css/" rel="tag">#css</a>
           
-            <a href="/tags/工具/" rel="tag">#工具</a>
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
           
-            <a href="/tags/效率/" rel="tag">#效率</a>
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/插件/" rel="tag">#插件</a>
           
         </div>
       
@@ -428,17 +349,13 @@ hexo generate
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/15/javascript闭包/" rel="next" title="从原理来看javascript闭包－作用域链">
-                <i class="fa fa-chevron-left"></i> 从原理来看javascript闭包－作用域链
+              <a href="/2016/01/17/pattern-state/" rel="next" title="javascript设计模式之状态模式(state)">
+                <i class="fa fa-chevron-left"></i> javascript设计模式之状态模式(state)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/07/javascript继承/" rel="prev" title="javascript继承">
-                javascript继承 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -453,10 +370,10 @@ hexo generate
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/11/20/Alfred+iterm2+hexo/"
-     data-title="效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传"
+        <div class="ds-share flat" data-thread-key="2016/01/21/km-modal/"
+     data-title="KM-Modal:轻量、自适应、可配置的模态框插件"
      data-content=""
-     data-url="http://kmhaoshuai.com/2015/11/20/Alfred+iterm2+hexo/">
+     data-url="http://kmhaoshuai.com/2016/01/21/km-modal/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -484,8 +401,8 @@ hexo generate
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/20/Alfred+iterm2+hexo/"
-           data-title="效率神器Alfred + 命令行神器iterm2实现hexo博客的快速创建、更新、上传" data-url="http://kmhaoshuai.com/2015/11/20/Alfred+iterm2+hexo/">
+      <div class="ds-thread" data-thread-key="2016/01/21/km-modal/"
+           data-title="KM-Modal:轻量、自适应、可配置的模态框插件" data-url="http://kmhaoshuai.com/2016/01/21/km-modal/">
       </div>
     
   </div>
@@ -600,7 +517,7 @@ hexo generate
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Alfred"><span class="nav-number">1.</span> <span class="nav-text">关于Alfred</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于iterm2"><span class="nav-number">2.</span> <span class="nav-text">关于iterm2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PS：设置Alfred默认打开终端为iterm2"><span class="nav-number">2.1.</span> <span class="nav-text">PS：设置Alfred默认打开终端为iterm2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回到hexo"><span class="nav-number">3.</span> <span class="nav-text">回到hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新建hexo日志"><span class="nav-number">3.0.1.</span> <span class="nav-text">新建hexo日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新修改"><span class="nav-number">3.0.2.</span> <span class="nav-text">更新修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上传博客"><span class="nav-number">3.0.3.</span> <span class="nav-text">上传博客</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bootstrap模态框"><span class="nav-number">1.</span> <span class="nav-text">bootstrap模态框</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KM-Modal模态框"><span class="nav-number">2.</span> <span class="nav-text">KM-Modal模态框</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特性"><span class="nav-number">2.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.2.</span> <span class="nav-text">使用方法</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
