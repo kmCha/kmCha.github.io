@@ -64,7 +64,7 @@
 <meta property="og:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
 &amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg">
-<meta property="og:updated_time" content="2016-01-11T01:34:23.000Z">
+<meta property="og:updated_time" content="2016-01-24T03:08:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript设计模式之策略模式(strategy)">
 <meta name="twitter:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
@@ -412,7 +412,7 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
         <span class="keyword">return</span> <span class="literal">false</span>;                <span class="comment">// 阻止表单提交</span>
     }
 };
-</code></pre><p>上面将验证的过程又包装在了<code>validator()</code>函数中，执行后会根据验证结果返回错误信息。这样可以在应用中存在多个表单需要验证的情况下增强插件的复用性。</p>
+</code></pre><p>上面将验证的过程又包装在了<code>validataFunc()</code>函数中，执行后会根据验证结果返回错误信息。这样可以在应用中存在多个表单需要验证的情况下增强插件的复用性。</p>
 <h1 id="策略模式的缺点">策略模式的缺点</h1><p>说了这么多好话也不是说策略模式没有缺点，缺点还是有的。如上面的例子，作为一个插件，暴露给用户的东西越少当然就越容易使用，这叫做<strong>最小知识原则</strong>，而策略模式看来是违背了这一个原则了。用户在使用的时候必须要知道策略的实现，才能按规定格式正确传入参数，不然插件是不能正常工作的。</p>
 <h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/form-validation" target="_blank" rel="external">form-validation</a></p>
 <h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>

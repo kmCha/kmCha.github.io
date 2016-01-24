@@ -64,7 +64,7 @@
 <meta property="og:description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
 实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/12028706.jpg">
-<meta property="og:updated_time" content="2016-01-11T02:36:33.000Z">
+<meta property="og:updated_time" content="2016-01-24T02:26:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript设计模式之单例模式(singleton)">
 <meta name="twitter:description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
@@ -377,7 +377,8 @@ frameBotton.onclick = <span class="function"><span class="keyword">function</spa
 <span class="keyword">var</span> bindEvent2 = singleton(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
     <span class="built_in">document</span>.getElementById(<span class="string">"div"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
         alert(<span class="string">'click'</span>);
-    }
+    };
+    <span class="keyword">return</span> <span class="literal">true</span>;
 });
 </code></pre><p>上面两个函数的效果是相同的。</p>
 <h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
