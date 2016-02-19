@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="css,javascript,前端,插件," />
+  <meta name="keywords" content="angular,javascript," />
 
 
 
@@ -55,22 +55,28 @@
 
 
 
-<meta name="description" content="bootstrap模态框bootstrap中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？
+<meta name="description" content="最近几门课各种作业各种project真是累死个人，直接导致博客产能持续走低，终于在今天找了点时间出来稍微写点东西，不然我心里难受。如果你身边有读engineering研究生并且一学期选了四门课的留学生，请珍惜他们
 
-虽然bootstrap提供了自定义配色和插件模块分离，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己">
+这篇文章就记录一下当时刚学习angular的时候踩的一个关于作用域的坑吧。
+Angular作用域在用angular搭建的网页应用中，作用域（scope）这个概念是贯穿其中的。在angu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KM-Modal:轻量、自适应、可配置的模态框插件">
-<meta property="og:url" content="http://kmhaoshuai.com/2016/01/21/km-modal/index.html">
+<meta property="og:title" content="Angular中作用域的坑">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/02/18/angular-scope/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="bootstrap模态框bootstrap中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？
+<meta property="og:description" content="最近几门课各种作业各种project真是累死个人，直接导致博客产能持续走低，终于在今天找了点时间出来稍微写点东西，不然我心里难受。如果你身边有读engineering研究生并且一学期选了四门课的留学生，请珍惜他们
 
-虽然bootstrap提供了自定义配色和插件模块分离，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己">
-<meta property="og:updated_time" content="2016-01-23T17:51:42.000Z">
+这篇文章就记录一下当时刚学习angular的时候踩的一个关于作用域的坑吧。
+Angular作用域在用angular搭建的网页应用中，作用域（scope）这个概念是贯穿其中的。在angu">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/17747260.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/50314194.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/70285828.jpg">
+<meta property="og:updated_time" content="2016-02-19T04:48:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KM-Modal:轻量、自适应、可配置的模态框插件">
-<meta name="twitter:description" content="bootstrap模态框bootstrap中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？
+<meta name="twitter:title" content="Angular中作用域的坑">
+<meta name="twitter:description" content="最近几门课各种作业各种project真是累死个人，直接导致博客产能持续走低，终于在今天找了点时间出来稍微写点东西，不然我心里难受。如果你身边有读engineering研究生并且一学期选了四门课的留学生，请珍惜他们
 
-虽然bootstrap提供了自定义配色和插件模块分离，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己">
+这篇文章就记录一下当时刚学习angular的时候踩的一个关于作用域的坑吧。
+Angular作用域在用angular搭建的网页应用中，作用域（scope）这个概念是贯穿其中的。在angu">
 
 
 
@@ -82,7 +88,7 @@
   };
 </script>
 
-  <title> KM-Modal:轻量、自适应、可配置的模态框插件 | kMchA的博客 </title>
+  <title> Angular中作用域的坑 | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -257,7 +263,7 @@
             
             
               
-                KM-Modal:轻量、自适应、可配置的模态框插件
+                Angular中作用域的坑
               
             
           </h1>
@@ -266,8 +272,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-21T11:43:52-05:00" content="2016-01-21">
-              2016-01-21
+            <time itemprop="dateCreated" datetime="2016-02-18T22:11:22-05:00" content="2016-02-18">
+              2016-02-18
             </time>
           </span>
 
@@ -276,8 +282,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/造的轮子们/" itemprop="url" rel="index">
-                    <span itemprop="name">造的轮子们</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -292,8 +298,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/21/km-modal/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/21/km-modal/" itemprop="commentsCount"></span>
+                <a href="/2016/02/18/angular-scope/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/18/angular-scope/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -312,20 +318,59 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="bootstrap模态框">bootstrap模态框</h1><p><a href="http://v3.bootcss.com/javascript/#modals" target="_blank" rel="external">bootstrap</a>中集成了模态框功能，就是按一下就会弹出来一个对话框，背后有个遮罩层。不用说这个东西的应用也很广，几乎没有网站不用模态框的。用boostrap提供的模态框插件是一个办法，我之前在我自己的一个小项目里面也用到了它。那为啥要自己写一个？</p>
-<ol>
-<li>虽然bootstrap提供了<a href="http://v3.bootcss.com/customize/" target="_blank" rel="external">自定义配色和插件模块分离</a>，你只用下载模态框那一部分而不用将整个文件下载下来，但是，配置出跟你自己网站相匹配的主题很麻烦，同时想要达到bootstrap示例的效果可能还要依赖其他bootstrap的组件，总之就是很混乱。</li>
-<li>bootstrap的模态框虽然有的地方挺好用，比如说开关动画、自适应都是集成在里面的，但是有个地方我始终看着难受，就是bootstrap的模态框的定位，始终是距页面上方一个等距的<code>margin</code>。模态框大了还好，如果是小模态框你又想垂直居中那就得改源代码了。</li>
-</ol>
-<p>以上两点是体验了bootstrap模态框插件之后不太能忍的地方，虽然最后都通过改动他的源代码达到了需求，但是以后总不能每次都改吧。于是自己写一个可复用的模态框插件的想法应运而生。</p>
-<h1 id="KM-Modal模态框">KM-Modal模态框</h1><p>既然要写个模态框插件代替bootstrap，那bootstrap模态框里好用的东西都得有，比如说自适应啦、动画啦……没错，确实有。</p>
-<p>先放<a href="http://assignmentrecorder.com/demos/km-modal" target="_blank" rel="external">demo</a></p>
-<h2 id="特性">特性</h2><ol>
-<li>自适应(Adaptive)。始终居中，当页面小于阈值的时候随浏览器窗口的大小改变，可以缩小放大浏览器窗口来测试。</li>
-<li>动画(Animation)。目前支持一种动画效果，点击上方demo链接可查看，动画效果可关闭，具体设置方法后面说明。</li>
-<li>可定制(Customisable)。除了可以配置是否启用动画之外，目前还支持配置是否启用点击遮罩层关闭模态框功能、是否显示模态框右上角叉叉关闭按键功能。</li>
-</ol>
-<h2 id="使用方法">使用方法</h2><p>具体使用方法和配置说明见GitHub: <a href="https://github.com/kmCha/KM-modal" target="_blank" rel="external">KM-modal</a></p>
+        <span itemprop="articleBody"><p>最近几门课各种作业各种project真是累死个人，直接导致博客产能持续走低，终于在今天找了点时间出来稍微写点东西，不然我心里难受。如果你身边有读engineering研究生并且一学期选了四门课的留学生，请珍惜他们</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/17747260.jpg" alt=""></p>
+<p>这篇文章就记录一下当时刚学习angular的时候踩的一个关于作用域的坑吧。</p>
+<h1 id="Angular作用域">Angular作用域</h1><p>在用angular搭建的网页应用中，作用域（scope）这个概念是贯穿其中的。在angular的视图（view）中的很多指令是会创建一个作用域的，例如<code>ng-app</code>，<code>ng-controller</code>等。这个作用域就是我们在写控制器构造函数时注入的<code>$scope</code>（angular1.2之前的版本），他是视图模型（view model）中的一个概念。我们的数据模型（model）就是定义在作用域中的。</p>
+<h1 id="Angular作用域的坑">Angular作用域的坑</h1><p>用过angular的人应该都会经过一个过程，就是刚开始还是小白的时候，刚看见数据双向绑定觉得很牛逼，</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/50314194.jpg" alt=""></p>
+<p>管他三七二十一直接开始用，一顿绑定。绑定完之后，如果你运气好（懂得angular作用域原理的老鸟无视），那么双向绑定就开始如愿工作了，这时候我们也觉得自己好厉害，居然可以这么快就实现“双向绑定”这个才听说不久的新功能了。<br>那么为什么上面说双向绑定是因为运气好才能正常工作呢？因为新手刚开始学angular的时候，无非就是看教程然后改动其中的代码实现自己的业务需求，能刚开始就去学习官方文档的选手就算有也是少数，所以这样，大多数刚学习angular的朋友实际上不太了解其中的原理，但是觉得自己已经会用了。<br>好说了这么多，那我们来看看如果一个新手刚开始给作用域中指定数据模型并且进行双向绑定时，运气不那么好的情况。这种情况下，就会遇到上面说的坑，先来看看代码</p>
+<pre><code>// html
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"OuterCtrl"</span>&gt;</span>
+    <span class="comment"></span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"InnerCtrl"</span>&gt;</span>
+        <span class="comment"></span>
+        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-click</span>=<span class="value">"a=a+1"</span>&gt;</span>递增<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+// javascript
+function OuterCtrl($scope) {
+    $scope.a = 1;
+}
+function InnerCtrl() {}
+</code></pre><p>上面的代码就是一个极其简单的双向绑定的例子。页面加载以后，外部<code>div</code>和内部<code>div</code>中都会显示1。当按了递增按钮之后，会发现只有内部的1变成了2，继续按也是一样，只有内部的数字会递增。那么这时候，新手往往就慌了，说好的神奇的双向绑定呢？</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/70285828.jpg" alt=""></p>
+<p>这个时候宝宝就有点小情绪了，stackoverflow走起，官方文档走起，最后发现确实有解决方法，比如说将<code>a</code>写成一个对象的属性<code>data.a</code>：</p>
+<pre><code>// html
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"OuterCtrl"</span>&gt;</span>
+    <span class="comment"></span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"InnerCtrl"</span>&gt;</span>
+        <span class="comment"></span>
+        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-click</span>=<span class="value">"data.a=data.a+1"</span>&gt;</span>递增<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+// javascript
+function OuterCtrl($scope) {
+    $scope.data = {
+        a: 1
+    };
+}
+function InnerCtrl() {}
+</code></pre><p>然后发现，居然可以工作了，两个数字都跟着递增了，我是双向绑定之王……然后就扔一边也不管具体的原理继续学习下一部分教程了。这其实就是我当初学习angular的心路历程，实在惭愧做了应用部署到生产环境之后才想起来去研究研究内部的原理。</p>
+<h1 id="坑总是要填的">坑总是要填的</h1><p>废话说了那么多，坑也去踩了，下面进入填坑阶段，也就是这个坑是为什么会出现为什么写成对象的属性就能解决。其实知道了原理之后，是很容易理解的。angular的内外层作用域之间是基于javascript的原型链来实现的继承，并且只使用了原型链继承方法，有点JavaScript基础的朋友应该就能瞬间反应过来，子类原型对象中的引用类型值和父类实例对象中的引用类型值是引用的同一个，而基本类型值则会覆盖父类对象中的基本类型值，这其实也是组合继承存在的原因，因为光用原型链继承会带来上诉问题，扯得有点远，关于继承在我之前的一篇文章里有————<a href="http://www.kmhaoshuai.com/2015/12/07/javascript%E7%BB%A7%E6%89%BF/" target="_blank" rel="external">javascript继承</a>。<br>总之这里，我们可以这样来看待第一个例子：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">OuterCtrl</span><span class="params">()</span> </span>{
+    <span class="keyword">this</span>.a = <span class="number">1</span>;
+}
+<span class="function"><span class="keyword">function</span> <span class="title">InnerCtrl</span><span class="params">()</span> </span>{}
+
+<span class="keyword">var</span> outer = <span class="keyword">new</span> OuterCtrl();
+InnerCtrl.prototype = outer;
+<span class="keyword">var</span> inner = <span class="keyword">new</span> InnerCtrl();
+inner.a = inner.a + <span class="number">1</span>;
+</code></pre><p>这里，我们将内部的控制器的构造函数的原型对象设置为外部作用域对象，这样产生的内部作用域对象就继承了外部对象<code>outer</code>中的属性<code>a</code>。这个属性是个基本类型值，对内部对象的属性<code>a</code>进行访问的时候，由于内部对象本身不存在这样的属性，就会从它的原型对象中查找，原型对象<code>outer</code>中存在这样的属性，于是返回值，没有问题，但是如果我们对内部作用域对象的<code>a</code>属性赋值的话，问题就出来了。<code>inner.a = inner.a + 1;</code>这个语句实际上进行了前面说的查找<code>a</code>属性值的过程，然后将返回的值赋值给了内部作用域对象的<code>a</code>属性，由于<code>a</code>属性是不存在的，因此创建了一个<code>a</code>的基本类型值属性，屏蔽了外层作用域对象<code>outer</code>中的<code>a</code>属性，这个坑就这么出来了。<br>因此，如果我们将基本类型值属性换成引用类型值属性的话，问题就能够得到解决，因为他们两个对象对应的属性是引用的同一个引用类型值，不管在哪对它进行修改都会反应在所有引用他的对象上。</p>
+<h1 id="reference">reference</h1><p><a href="https://github.com/xufei/blog" target="_blank" rel="external">xufei-blog</a></p>
 </span>
       
     </div>
@@ -334,13 +379,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css/" rel="tag">#css</a>
+            <a href="/tags/angular/" rel="tag">#angular</a>
           
             <a href="/tags/javascript/" rel="tag">#javascript</a>
-          
-            <a href="/tags/前端/" rel="tag">#前端</a>
-          
-            <a href="/tags/插件/" rel="tag">#插件</a>
           
         </div>
       
@@ -349,17 +390,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/17/pattern-state/" rel="next" title="javascript设计模式之状态模式(state)">
-                <i class="fa fa-chevron-left"></i> javascript设计模式之状态模式(state)
+              <a href="/2016/01/31/aim-at-offer/" rel="next" title="各算法题的javascript实现">
+                <i class="fa fa-chevron-left"></i> 各算法题的javascript实现
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/31/aim-at-offer/" rel="prev" title="各算法题的javascript实现">
-                各算法题的javascript实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -374,10 +411,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/01/21/km-modal/"
-     data-title="KM-Modal:轻量、自适应、可配置的模态框插件"
+        <div class="ds-share flat" data-thread-key="2016/02/18/angular-scope/"
+     data-title="Angular中作用域的坑"
      data-content=""
-     data-url="http://kmhaoshuai.com/2016/01/21/km-modal/">
+     data-url="http://kmhaoshuai.com/2016/02/18/angular-scope/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -405,8 +442,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/21/km-modal/"
-           data-title="KM-Modal:轻量、自适应、可配置的模态框插件" data-url="http://kmhaoshuai.com/2016/01/21/km-modal/">
+      <div class="ds-thread" data-thread-key="2016/02/18/angular-scope/"
+           data-title="Angular中作用域的坑" data-url="http://kmhaoshuai.com/2016/02/18/angular-scope/">
       </div>
     
   </div>
@@ -521,7 +558,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bootstrap模态框"><span class="nav-number">1.</span> <span class="nav-text">bootstrap模态框</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KM-Modal模态框"><span class="nav-number">2.</span> <span class="nav-text">KM-Modal模态框</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特性"><span class="nav-number">2.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.2.</span> <span class="nav-text">使用方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Angular作用域"><span class="nav-number">1.</span> <span class="nav-text">Angular作用域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Angular作用域的坑"><span class="nav-number">2.</span> <span class="nav-text">Angular作用域的坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#坑总是要填的"><span class="nav-number">3.</span> <span class="nav-text">坑总是要填的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
