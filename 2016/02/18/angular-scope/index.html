@@ -70,7 +70,7 @@ Angular作用域在用angular搭建的网页应用中，作用域（scope）这�
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/17747260.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/50314194.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/70285828.jpg">
-<meta property="og:updated_time" content="2016-02-19T04:48:09.000Z">
+<meta property="og:updated_time" content="2016-02-19T04:55:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular中作用域的坑">
 <meta name="twitter:description" content="最近几门课各种作业各种project真是累死个人，直接导致博客产能持续走低，终于在今天找了点时间出来稍微写点东西，不然我心里难受。如果你身边有读engineering研究生并且一学期选了四门课的留学生，请珍惜他们
@@ -326,38 +326,38 @@ Angular作用域在用angular搭建的网页应用中，作用域（scope）这�
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-24/50314194.jpg" alt=""></p>
 <p>管他三七二十一直接开始用，一顿绑定。绑定完之后，如果你运气好（懂得angular作用域原理的老鸟无视），那么双向绑定就开始如愿工作了，这时候我们也觉得自己好厉害，居然可以这么快就实现“双向绑定”这个才听说不久的新功能了。<br>那么为什么上面说双向绑定是因为运气好才能正常工作呢？因为新手刚开始学angular的时候，无非就是看教程然后改动其中的代码实现自己的业务需求，能刚开始就去学习官方文档的选手就算有也是少数，所以这样，大多数刚学习angular的朋友实际上不太了解其中的原理，但是觉得自己已经会用了。<br>好说了这么多，那我们来看看如果一个新手刚开始给作用域中指定数据模型并且进行双向绑定时，运气不那么好的情况。这种情况下，就会遇到上面说的坑，先来看看代码</p>
 <pre><code>// html
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"OuterCtrl"</span>&gt;</span>
-    <span class="comment"></span>
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"InnerCtrl"</span>&gt;</span>
-        <span class="comment"></span>
-        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-click</span>=<span class="value">"a=a+1"</span>&gt;</span>递增<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+&lt;div ng-controller=<span class="string">"OuterCtrl"</span>&gt;
+    &lt;span ng-bind=<span class="string">"a"</span>&gt;&lt;/span&gt;
+    &lt;div ng-controller=<span class="string">"InnerCtrl"</span>&gt;
+        &lt;span ng-bind=<span class="string">"a"</span>&gt;&lt;/span&gt;
+        &lt;button ng-click=<span class="string">"a=a+1"</span>&gt;递增&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 
 // javascript
-function OuterCtrl($scope) {
-    $scope.a = 1;
+<span class="keyword">function</span> OuterCtrl(<span class="variable">$scope</span>) {
+    <span class="variable">$scope</span>.a = <span class="number">1</span>;
 }
-function InnerCtrl() {}
+<span class="keyword">function</span> InnerCtrl() {}
 </code></pre><p>上面的代码就是一个极其简单的双向绑定的例子。页面加载以后，外部<code>div</code>和内部<code>div</code>中都会显示1。当按了递增按钮之后，会发现只有内部的1变成了2，继续按也是一样，只有内部的数字会递增。那么这时候，新手往往就慌了，说好的神奇的双向绑定呢？</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-19/70285828.jpg" alt=""></p>
 <p>这个时候宝宝就有点小情绪了，stackoverflow走起，官方文档走起，最后发现确实有解决方法，比如说将<code>a</code>写成一个对象的属性<code>data.a</code>：</p>
 <pre><code>// html
-<span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"OuterCtrl"</span>&gt;</span>
-    <span class="comment"></span>
-    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"InnerCtrl"</span>&gt;</span>
-        <span class="comment"></span>
-        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-click</span>=<span class="value">"data.a=data.a+1"</span>&gt;</span>递增<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+&lt;div ng-controller=<span class="string">"OuterCtrl"</span>&gt;
+    &lt;span ng-bind=<span class="string">"data.a"</span>&gt;&lt;/span&gt;
+    &lt;div ng-controller=<span class="string">"InnerCtrl"</span>&gt;
+        &lt;span ng-bind=<span class="string">"data.a"</span>&gt;&lt;/span&gt;
+        &lt;button ng-click=<span class="string">"data.a=data.a+1"</span>&gt;递增&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 
 // javascript
-function OuterCtrl($scope) {
-    $scope.data = {
-        a: 1
+<span class="keyword">function</span> OuterCtrl(<span class="variable">$scope</span>) {
+    <span class="variable">$scope</span>.data = {
+        a: <span class="number">1</span>
     };
 }
-function InnerCtrl() {}
+<span class="keyword">function</span> InnerCtrl() {}
 </code></pre><p>然后发现，居然可以工作了，两个数字都跟着递增了，我是双向绑定之王……然后就扔一边也不管具体的原理继续学习下一部分教程了。这其实就是我当初学习angular的心路历程，实在惭愧做了应用部署到生产环境之后才想起来去研究研究内部的原理。</p>
 <h1 id="坑总是要填的">坑总是要填的</h1><p>废话说了那么多，坑也去踩了，下面进入填坑阶段，也就是这个坑是为什么会出现为什么写成对象的属性就能解决。其实知道了原理之后，是很容易理解的。angular的内外层作用域之间是基于javascript的原型链来实现的继承，并且只使用了原型链继承方法，有点JavaScript基础的朋友应该就能瞬间反应过来，子类原型对象中的引用类型值和父类实例对象中的引用类型值是引用的同一个，而基本类型值则会覆盖父类对象中的基本类型值，这其实也是组合继承存在的原因，因为光用原型链继承会带来上诉问题，扯得有点远，关于继承在我之前的一篇文章里有————<a href="http://www.kmhaoshuai.com/2015/12/07/javascript%E7%BB%A7%E6%89%BF/" target="_blank" rel="external">javascript继承</a>。<br>总之这里，我们可以这样来看待第一个例子：</p>
 <pre><code><span class="function"><span class="keyword">function</span> <span class="title">OuterCtrl</span><span class="params">()</span> </span>{
