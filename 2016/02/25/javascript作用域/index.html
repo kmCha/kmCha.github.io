@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript,前端,设计模式," />
+  <meta name="keywords" content="javascript," />
 
 
 
@@ -55,20 +55,25 @@
 
 
 
-<meta name="description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
-&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
+<meta name="description" content="距离上次写博客又有一段时间了，今天趁着assignment写的差不多了又不想搞project的空闲来总结下对JavaScript中的作用域的理解。
+
+作用域是什么东西作用域在我们的代码中处处可见，许多重要的概念也与作用域息息相关，比如说闭包。而说到作用域，每个人都知道他是个什么，有什么用，但是真正要描述的时候，说不清。那么作用域到底specifically是个啥呢？要说明这个问题，就要把JavaS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript设计模式之策略模式(strategy)">
-<meta property="og:url" content="http://kmhaoshuai.com/2016/01/06/pattern-strategy/index.html">
+<meta property="og:title" content="javascript作用域">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/02/25/javascript作用域/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
-&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg">
-<meta property="og:updated_time" content="2016-01-24T03:08:35.000Z">
+<meta property="og:description" content="距离上次写博客又有一段时间了，今天趁着assignment写的差不多了又不想搞project的空闲来总结下对JavaScript中的作用域的理解。
+
+作用域是什么东西作用域在我们的代码中处处可见，许多重要的概念也与作用域息息相关，比如说闭包。而说到作用域，每个人都知道他是个什么，有什么用，但是真正要描述的时候，说不清。那么作用域到底specifically是个啥呢？要说明这个问题，就要把JavaS">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/46641712.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/25530795.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/22338801.jpg">
+<meta property="og:updated_time" content="2016-02-26T03:55:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript设计模式之策略模式(strategy)">
-<meta name="twitter:description" content="先从表单验证说起我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：
-&amp;lt;form action=&quot;#&quot; id=&quot;registerForm&quot;">
+<meta name="twitter:title" content="javascript作用域">
+<meta name="twitter:description" content="距离上次写博客又有一段时间了，今天趁着assignment写的差不多了又不想搞project的空闲来总结下对JavaScript中的作用域的理解。
+
+作用域是什么东西作用域在我们的代码中处处可见，许多重要的概念也与作用域息息相关，比如说闭包。而说到作用域，每个人都知道他是个什么，有什么用，但是真正要描述的时候，说不清。那么作用域到底specifically是个啥呢？要说明这个问题，就要把JavaS">
 
 
 
@@ -80,7 +85,7 @@
   };
 </script>
 
-  <title> javascript设计模式之策略模式(strategy) | kMchA的博客 </title>
+  <title> javascript作用域 | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +260,7 @@
             
             
               
-                javascript设计模式之策略模式(strategy)
+                javascript作用域
               
             
           </h1>
@@ -264,8 +269,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-06T17:33:13-05:00" content="2016-01-06">
-              2016-01-06
+            <time itemprop="dateCreated" datetime="2016-02-25T20:51:41-05:00" content="2016-02-25">
+              2016-02-25
             </time>
           </span>
 
@@ -290,8 +295,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/06/pattern-strategy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/06/pattern-strategy/" itemprop="commentsCount"></span>
+                <a href="/2016/02/25/javascript作用域/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/25/javascript作用域/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -310,114 +315,32 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="先从表单验证说起">先从表单验证说起</h1><p>我认为要理解一个设计模式必须要知道在什么时候适合使用它，因此在介绍策略模式之前（在之后此系列文章中都会采用这个形式），先来说说他能应用的地方之一——表单验证。<br>表单验证对前端们来说是低头不见抬头见的，因此很有必要用一个设计模式来让它变得更统一，更便于使用、维护、复用。在说设计模式之前，假设我们有如下的表单：</p>
-<pre><code>&lt;form action=<span class="string">"#"</span> id=<span class="string">"registerForm"</span> <span class="keyword">method</span>=<span class="string">"post"</span>&gt;
-    用户名：&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> name=<span class="string">"userName"</span>/ &gt;
-    密码：&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> name=<span class="string">"password"</span>/ &gt;
-    &lt;button&gt;提交&lt;/button&gt;
-&lt;/form&gt;
-</code></pre><p>那么这时候如果我们需要在提交表单到后台之前现在前端验证表单的正确性，从而减轻后台的负担的话，我们就需要编写表单验证代码，简单起见假设我们现在只需要验证用户名是否为非空和最大长度是否超过10，那么我们可能会像下面这样写：</p>
-<pre><code><span class="keyword">var</span> validate = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>{
-    <span class="keyword">if</span>(value === <span class="string">""</span>) {
-        <span class="keyword">return</span> <span class="string">"用户名不能为空"</span>;
-    }
-    <span class="keyword">if</span>(value.length &gt; <span class="number">10</span>) {
-        <span class="keyword">return</span> <span class="string">"用户名长度不能超过10"</span>;
-    }
-}
-<span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById(<span class="string">"registerForm"</span>);
-registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> msg = validate(registerForm.userName.value);
-    <span class="keyword">if</span>(msg) {
-        alert(msg);
-        retuen <span class="literal">false</span>;
-    }
-}
-</code></pre><p>实际上上面的代码我写了一半就不太想继续写下去了，但是为了说明它有多烂我还是保存下来了。</p>
-<ul>
-<li>首先，在<code>validate()</code>函数中，用了两个<code>if</code>判断句来实现不同的表单验证策略，这里只有俩看上去没什么，但是实际情况是不可能只有两种验证策略的，给每一个都加上<code>if</code>无疑会使<code>validate()</code>函数变得庞大无比。</li>
-<li>在每个<code>if</code>中<code>return</code>的警告用户的消息直接写在了<code>validate()</code>函数里，如果用户想改动，必须要在<code>validate()</code>函数中来改，想要改动最大长度限制也需要在<code>validate()</code>函数里改动，违反开放－封闭原则。这种需要变化的东西也应该让使用者来决定他的值是什么而不应该事先定义好。</li>
-<li>验证策略的复用性差，如果想在程序其他地方也用到这样的验证策略，那就只有复制粘贴。</li>
-</ul>
-<h1 id="策略模式">策略模式</h1><p>策略模式的核心是，定义一系列不同的算法，将它们包装起来，并且可以相互替换。在传统的面向对象语言中，相互替换由于存在类的限制显得要麻烦许多。在javascript中，函数就是对象，因此不必把每个策略定义成对象，把他们定义成函数就能实现互换。策略模式的目的是把算法的实现和算法的使用分离开来，将不同算法放进一个strategy对象中，并且定义一个context对象来实现他们。需要改动或者添加算法的实现的时候，就只用改动或添加strategy对象的方法，而不关context的事，context对象只关心根据用户传入的信息来调用strategy对象中对应的算法。</p>
-<h2 id="用策略模式重构表单验证代码">用策略模式重构表单验证代码</h2><p>首先定义strategy对象，将所有的算法定义为它的方法：</p>
-<pre><code>var strategies = {
-    notEmpty: <span class="function"><span class="keyword">function</span><span class="params">(value, errMsg)</span> {</span>
-        <span class="keyword">if</span>(value === <span class="string">""</span>) {
-            <span class="keyword">return</span> errMsg;
-        }
-    },
-    maxLength: <span class="function"><span class="keyword">function</span><span class="params">(value, length, errMsg)</span> {</span>
-        <span class="keyword">if</span>(<span class="transposed_variable">value.</span><span class="built_in">length</span> &gt; <span class="built_in">length</span>) {
-            <span class="keyword">return</span> errMsg;
-        }
-    },
-    minLength: <span class="function"><span class="keyword">function</span><span class="params">(value, length, errMsg)</span> {</span>
-        <span class="keyword">if</span>(<span class="transposed_variable">value.</span><span class="built_in">length</span> &lt; <span class="built_in">length</span>) {
-            <span class="keyword">return</span> errMsg;
-        }
-    }
-};
-</code></pre><p>可以看到，这里的每个验证策略比之前的灵活性高了很多，错误提醒消息和长度等需要自定义的参数都能够自定义。由于strategy对象是被context对象调用来实现具体任务的，下面来定义context对象的构造函数：</p>
-<pre><code><span class="keyword">var</span> Validator = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="keyword">this</span>.cache = [];
-};
-
-Validator.prototype.add = <span class="function"><span class="keyword">function</span><span class="params">(elem, rules)</span> </span>{
-    <span class="keyword">var</span> value = elem.value,
-        that = <span class="keyword">this</span>;
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; rules.length; i++) {
-        (<span class="function"><span class="keyword">function</span><span class="params">(strategy)</span> </span>{
-            <span class="keyword">var</span> ruleArr = strategy.strategy.split(<span class="string">":"</span>),
-                errMsg = strategy.errMsg;
-            that.cache.push(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-                <span class="keyword">var</span> rule = ruleArr.shift();
-                ruleArr.unshift(value);
-                ruleArr.push(errMsg);
-                <span class="keyword">return</span> strategies[rule].apply(elem, ruleArr);
-            });
-        })(rules[i]);
-    }
-};
-
-Validator.prototype.start = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="keyword">this</span>.cache.length; i &lt; l; i++) {
-        <span class="keyword">var</span> msg = <span class="keyword">this</span>.cache[i]();
-        <span class="keyword">if</span>(msg) {
-            <span class="keyword">return</span> msg;
-        }
-    }
-};
-</code></pre><p>在构造函数中，我们能看到Validator的每个实例都有一个cache数组属性来保存需要调用的策略。而具体的保存逻辑在Validator的实例对象的<code>add()</code>方法中实现。我们给<code>add()</code>方法传入两个参数，一个是需要验证的表单元素，一个是具体的验证规则，这里规定验证规则的格式为<code>[{strategy: &quot;maxLength:6&quot;, errMsg: &quot;blabla&quot;}, {strategy: &quot;notEmpty&quot;, errMsg: &quot;aaaa&quot;}]</code>，同一个元素可以通过在数组中指定多个对象绑定多个验证策略，每个对象的<code>strategy</code>属性指出了策略的名字，如果该策略需要多余的参数，则用<code>:</code>分开。于是通过传入的rules我们可以将对应的<code>strategy</code>推入<code>Validator</code>的实例的<code>cache</code>数组中。通过<code>Validator</code>的实例的<code>start()</code>方法就可以调用所有的验证策略了。<br>这样我们就将策略的实现和策略的使用分离开来了。<code>strategies</code>对象负责实现，<code>validator</code>对象负责使用。需要添加或者修改策略的时候就只用改动<code>strategies</code>对象。需要绑定和调用验证表单的策略的时候就只用调用<code>validator</code>对象的<code>add()</code>和<code>start()</code>方法。<br>同时这也是一个高度可复用插件，可以用在各种不同的项目中，只要你需要表单验证，都能根据需要使用它，如果怕全局变量名冲突可以自己加上命名空间。添加自定义验证策略也非常简单，这里简单起见只定义了三种。下面是具体使用方法：</p>
-<pre><code><span class="keyword">var</span> registerForm = <span class="built_in">document</span>.getElementById( <span class="string">'registerForm'</span> );
-<span class="keyword">var</span> validataFunc = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-    <span class="keyword">var</span> validator = <span class="keyword">new</span> Validator();
-    validator.add( registerForm.userName, [{
-        strategy: <span class="string">'notEmpty'</span>,
-        errMsg: <span class="string">'用户名不能为空'</span>
-    }, {
-        strategy: <span class="string">'maxLength:10'</span>,
-        errMsg: <span class="string">'用户名长度不能大于10位'</span>
-    }, {
-        strategy: <span class="string">'minLength:6'</span>,
-        errMsg: <span class="string">'用户名长度不能小于6位'</span>
-    }]);
-    <span class="keyword">var</span> errorMsg = validator.start();
-    <span class="keyword">return</span> errorMsg;
-};
-registerForm.onsubmit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-    <span class="keyword">var</span> errorMsg = validataFunc();
-    <span class="keyword">if</span> ( errorMsg ){
-        alert ( errorMsg );
-        <span class="keyword">return</span> <span class="literal">false</span>;                <span class="comment">// 阻止表单提交</span>
-    }
-};
-</code></pre><p>上面将验证的过程又包装在了<code>validataFunc()</code>函数中，执行后会根据验证结果返回错误信息。这样可以在应用中存在多个表单需要验证的情况下增强插件的复用性。</p>
-<h1 id="策略模式的缺点">策略模式的缺点</h1><p>说了这么多好话也不是说策略模式没有缺点，缺点还是有的。如上面的例子，作为一个插件，暴露给用户的东西越少当然就越容易使用，这叫做<strong>最小知识原则</strong>，而策略模式看来是违背了这一个原则了。用户在使用的时候必须要知道策略的实现，才能按规定格式正确传入参数，不然插件是不能正常工作的。</p>
-<h1 id="源码">源码</h1><p>GitHub: <a href="https://github.com/kmCha/form-validation" target="_blank" rel="external">form-validation</a></p>
-<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
-<p>写完这一篇居然没发一张图，不行必须补一张</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/59914932.jpg" alt=""></p>
+        <span itemprop="articleBody"><p>距离上次写博客又有一段时间了，今天趁着assignment写的差不多了又不想搞project的空闲来总结下对JavaScript中的作用域的理解。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/46641712.jpg" alt=""></p>
+<h1 id="作用域是什么东西">作用域是什么东西</h1><p>作用域在我们的代码中处处可见，许多重要的概念也与作用域息息相关，比如说闭包。而说到作用域，每个人都知道他是个什么，有什么用，但是真正要描述的时候，说不清。那么作用域到底specifically是个啥呢？要说明这个问题，就要把<code>JavaScript引擎</code>和<code>编译器</code>一起拖出来讲。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/25530795.jpg" alt=""></p>
+<h1 id="JavaScript引擎、编译器和作用域的关系">JavaScript引擎、编译器和作用域的关系</h1><p>说到JavaScript，出现最多的词可能是“动态类型语言”，人们往往忘了它也是一门“编译型语言”。当然人们不经常提起“编译型语言”也有他自己的原因，他跟一般的编译型语言不太一样。JavaScript的编译发生在代码运行前的一瞬间，也就是说编译之后马上就运行了。虽然编译和运行几乎同时进行，但是实际上还是存在先编译后运行这一事实的。那么要说明JavaScript引擎、编译器和作用域的关系，我们先来看一段代码：</p>
+<pre><code><span class="variable"><span class="keyword">var</span> a</span> = <span class="number">1</span>;
+</code></pre><p>这段代码是一条最简单的变量申明赋值语句，虽然简单，但是联系到了JavaScript引擎、编译器和作用域三个大佬。<br>上面的语句分成了两个步骤，第一个步骤是<code>var a</code>也就是申明<code>a</code>变量，第二个步骤是<code>a = 1</code>也就是将<code>1</code>赋给刚刚申明的<code>a</code>变量。其中，变量申明发生在代码<strong>编译</strong>阶段，代码赋值发生在代码<strong>运行</strong>阶段。这句话就是下面这段代码输出<code>undefined</code>而不是抛出<code>ReferenceError</code>的原因：</p>
+<pre><code>console.<span class="built_in">log</span>(a); <span class="comment">// undefined</span>
+var a = <span class="number">1</span>;
+</code></pre><p>翻译成代码就是：</p>
+<pre><code>var <span class="literal">a</span><span class="comment">;</span>
+console.log(<span class="literal">a</span>)<span class="comment">; // undefined</span>
+<span class="literal">a</span> = <span class="number">1</span><span class="comment">;</span>
+</code></pre><p>知道了变量申请和赋值的机制，下面来看看JavaScript引擎、编译器和作用域是怎么被联系到一块的。<br>首先是变量申请阶段，这时候编译器会询问作用域中是否有<code>a</code>变量存在，如果存在，则忽略这条申请，如果不存在，则在作用域中创建一个<code>a</code>变量。然后编译过程执行完毕以后，进入代码执行阶段。在代码执行阶段中，JavaScript引擎看到<code>a=1</code>赋值语句后，会去查找作用域中是否存在一个<code>a</code>变量，如果存在，则把它的值变更为<code>1</code>，如果不存在，则在全局作用域中创建一个<code>a</code>变量并且赋值为<code>1</code>。<br>因此，可以说作用域是决定怎么和在哪里访问变量的一个机制，它是JavaScript引擎和编译器间的桥梁。</p>
+<h1 id="作用域的种类">作用域的种类</h1><p>通常作用域有<strong>词法作用域</strong>和<strong>动态作用域</strong>两类。然而，在JavaScript中，只存在<strong>词法作用域</strong>。</p>
+<h2 id="动态作用域">动态作用域</h2><p>动态作用域是指，作用域是代码执行阶段建立的作用域，在写代码的时候是不能确定的。虽然JavaScript中没有动态作用域，但是<code>this</code>的行为跟动态作用域就很像，<code>this</code>的值是根据代码运行时函数被调用的位置来决定的，而不是根据写代码时的代码结构决定的。</p>
+<h2 id="词法作用域">词法作用域</h2><p>词法作用域是指，在代码编译的词法分析阶段创建的作用域，是根据写代码时候的代码结构来决定的。跟其他很多编程语言一样，JavaScript中采用的作用域就是词法作用域。词法作用域是闭包这一现象的根本，关于闭包见我之前的文章–<a href="http://www.kmhaoshuai.com/2015/11/15/javascript%E9%97%AD%E5%8C%85/" target="_blank" rel="external">从原理来看javascript闭包－作用域链</a>。</p>
+<h2 id="块作用域">块作用域</h2><p>在JavaScript中，是不存在块作用域的，准确点来说是<strong>ES6</strong>到来前是不存在的，再准确点就是在<strong>ES6</strong>到来前除了利用<code>try catch</code>语句等反人类方法来模拟块作用域之外，是不存在的。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/22338801.jpg" alt=""></p>
+<p>因为JavaScript中，作用域是函数来创建的。除了全局作用域之外，其他作用域基本都是各个函数作用域。而函数作用域一层一层嵌套，就成了作用域链。明明再说块作用域的咋跑作用域链去了。。。没事就提一下，回到块作用域。<br>因为没有块作用域这个实用的东西，那么就相当于挖了许多坑来让新手跳。例如<a href="http://www.kmhaoshuai.com/2015/11/15/javascript%E9%97%AD%E5%8C%85/" target="_blank" rel="external">从原理来看javascript闭包－作用域链</a>中讲的那个新手坑，就是没有块作用域带来的副作用。然而问题并不大，只要掌握了作用域的原理和闭包，这样的坑来一个能填一个。</p>
+<p>ES6中出现了<code>let</code>和<code>const</code>关键字能够创建块作用域，能够帮助喜欢使用块作用域的用户更加顺手地写代码，对那些人算是一定程度上的官方填坑，喜不喜欢还得看习惯，个人认为还是挺实用的。</p>
+<p>思路有点混乱，写得应该也很混乱，先到这里以后想起了再添。</p>
+<h1 id="reference">reference</h1><ol>
+<li><a href="http://www.kmhaoshuai.com/2015/11/15/javascript%E9%97%AD%E5%8C%85/" target="_blank" rel="external">从原理来看javascript闭包－作用域链</a></li>
+<li><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="external">You-Dont-Know-JS</a></li>
+</ol>
 </span>
       
     </div>
@@ -428,10 +351,6 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
           
             <a href="/tags/javascript/" rel="tag">#javascript</a>
           
-            <a href="/tags/前端/" rel="tag">#前端</a>
-          
-            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
-          
         </div>
       
 
@@ -439,17 +358,13 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/04/bad-eval-with/" rel="next" title="邪恶两兄弟：eval()和with">
-                <i class="fa fa-chevron-left"></i> 邪恶两兄弟：eval()和with
+              <a href="/2016/02/18/angular-scope/" rel="next" title="Angular中作用域的坑">
+                <i class="fa fa-chevron-left"></i> Angular中作用域的坑
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/08/pattern-singleton/" rel="prev" title="javascript设计模式之单例模式(singleton)">
-                javascript设计模式之单例模式(singleton) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -464,10 +379,10 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/01/06/pattern-strategy/"
-     data-title="javascript设计模式之策略模式(strategy)"
+        <div class="ds-share flat" data-thread-key="2016/02/25/javascript作用域/"
+     data-title="javascript作用域"
      data-content=""
-     data-url="http://kmhaoshuai.com/2016/01/06/pattern-strategy/">
+     data-url="http://kmhaoshuai.com/2016/02/25/javascript作用域/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -495,8 +410,8 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/06/pattern-strategy/"
-           data-title="javascript设计模式之策略模式(strategy)" data-url="http://kmhaoshuai.com/2016/01/06/pattern-strategy/">
+      <div class="ds-thread" data-thread-key="2016/02/25/javascript作用域/"
+           data-title="javascript作用域" data-url="http://kmhaoshuai.com/2016/02/25/javascript作用域/">
       </div>
     
   </div>
@@ -611,7 +526,7 @@ registerForm.onsubmit = <span class="function"><span class="keyword">function</s
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#先从表单验证说起"><span class="nav-number">1.</span> <span class="nav-text">先从表单验证说起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式"><span class="nav-number">2.</span> <span class="nav-text">策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用策略模式重构表单验证代码"><span class="nav-number">2.1.</span> <span class="nav-text">用策略模式重构表单验证代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式的缺点"><span class="nav-number">3.</span> <span class="nav-text">策略模式的缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">4.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域是什么东西"><span class="nav-number">1.</span> <span class="nav-text">作用域是什么东西</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript引擎、编译器和作用域的关系"><span class="nav-number">2.</span> <span class="nav-text">JavaScript引擎、编译器和作用域的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域的种类"><span class="nav-number">3.</span> <span class="nav-text">作用域的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态作用域"><span class="nav-number">3.1.</span> <span class="nav-text">动态作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词法作用域"><span class="nav-number">3.2.</span> <span class="nav-text">词法作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块作用域"><span class="nav-number">3.3.</span> <span class="nav-text">块作用域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
