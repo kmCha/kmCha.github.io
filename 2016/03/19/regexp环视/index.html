@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript,前端,设计模式," />
+  <meta name="keywords" content="javascript,正则表达式," />
 
 
 
@@ -55,20 +55,23 @@
 
 
 
-<meta name="description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
-实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
+<meta name="description" content="时间为啥过得这么快，距离上篇文章都过了快一个月了，苦也就不诉了，还是忙毕业找工作，忙得已经没觉得忙了。
+
+环视(lookaround)是什么正则表达式不仅是一个强大的工具，还是一门语言，更是一门艺术。在以前的一篇博文里头记录了一点正则在JavaScript里的应用，那时也刚认识到正则表达式的威力，就写了篇String类的replace()方法妙用：正则表达式+函数，算是试了个水。今天就来记录下才认">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript设计模式之单例模式(singleton)">
-<meta property="og:url" content="http://kmhaoshuai.com/2016/01/08/pattern-singleton/index.html">
+<meta property="og:title" content="正则表达式环视(lookaround)">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/03/19/regexp环视/index.html">
 <meta property="og:site_name" content="kMchA的博客">
-<meta property="og:description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
-实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
-<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/12028706.jpg">
-<meta property="og:updated_time" content="2016-02-25T23:58:53.000Z">
+<meta property="og:description" content="时间为啥过得这么快，距离上篇文章都过了快一个月了，苦也就不诉了，还是忙毕业找工作，忙得已经没觉得忙了。
+
+环视(lookaround)是什么正则表达式不仅是一个强大的工具，还是一门语言，更是一门艺术。在以前的一篇博文里头记录了一点正则在JavaScript里的应用，那时也刚认识到正则表达式的威力，就写了篇String类的replace()方法妙用：正则表达式+函数，算是试了个水。今天就来记录下才认">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/46641712.jpg">
+<meta property="og:updated_time" content="2016-03-20T01:23:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript设计模式之单例模式(singleton)">
-<meta name="twitter:description" content="单例？所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。
-实现知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并">
+<meta name="twitter:title" content="正则表达式环视(lookaround)">
+<meta name="twitter:description" content="时间为啥过得这么快，距离上篇文章都过了快一个月了，苦也就不诉了，还是忙毕业找工作，忙得已经没觉得忙了。
+
+环视(lookaround)是什么正则表达式不仅是一个强大的工具，还是一门语言，更是一门艺术。在以前的一篇博文里头记录了一点正则在JavaScript里的应用，那时也刚认识到正则表达式的威力，就写了篇String类的replace()方法妙用：正则表达式+函数，算是试了个水。今天就来记录下才认">
 
 
 
@@ -80,7 +83,7 @@
   };
 </script>
 
-  <title> javascript设计模式之单例模式(singleton) | kMchA的博客 </title>
+  <title> 正则表达式环视(lookaround) | kMchA的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -255,7 +258,7 @@
             
             
               
-                javascript设计模式之单例模式(singleton)
+                正则表达式环视(lookaround)
               
             
           </h1>
@@ -264,8 +267,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-08T19:23:15-05:00" content="2016-01-08">
-              2016-01-08
+            <time itemprop="dateCreated" datetime="2016-03-19T20:03:16-04:00" content="2016-03-19">
+              2016-03-19
             </time>
           </span>
 
@@ -274,8 +277,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
+                  <a href="/categories/正则表达式/" itemprop="url" rel="index">
+                    <span itemprop="name">正则表达式</span>
                   </a>
                 </span>
 
@@ -290,8 +293,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/08/pattern-singleton/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/08/pattern-singleton/" itemprop="commentsCount"></span>
+                <a href="/2016/03/19/regexp环视/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/19/regexp环视/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -310,80 +313,66 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="单例？">单例？</h1><p>所谓单例就是单一实例的意思。在传统面向对象语言中，对象要由类来创建，而单例模式意思就是用那个类只能创建出一个实例，多了没有（多次创建返回的是第一次创建的那个实例）。由于javascript没有类，因此问题又简化了一些，我们可以直接编写函数返回对象来实现单例模式。</p>
-<h1 id="实现">实现</h1><p>知道了单例是个神马意思之后要实现他思路也就清晰了，无非就是定义一个函数，用闭包保存对象创建的状态，如果没有创建过则创建对象，并且保存。如果创建过就直接返回保存的对象。</p>
-<h2 id="普通单例模式">普通单例模式</h2><p>拿创建一个div元素举例，如果我们要创建一个页面中唯一的div，比如说网页的登录框，那么可以这样子写：</p>
-<pre><code><span class="keyword">var</span> createLogin = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> div = <span class="literal">null</span>;
-    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">html</span>) </span>{
-        <span class="keyword">if</span>(!div) {
-            div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);
-            div.innerHTML = html;
-            div.style.display = <span class="string">"none"</span>;
-            <span class="built_in">document</span>.body.appendChild(div);
-        }
-        <span class="keyword">return</span> div;
-    }
-}();
-loginButton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> login = createLogin(<span class="string">"我是登录框"</span>);
-    login.style.display = <span class="string">"block"</span>;
-};
-</code></pre><p>上面的代码可以实现单例模式，每次点击loginButton（假设存在）的时候就只会返回<code>createLogin()</code>函数第一次创建的保存在闭包中的那个<code>div</code>而不会重复创建。但是既然这是第一个例子那么注定是个炮灰，他有啥缺点呢？</p>
-<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-1-11/12028706.jpg" alt=""></p>
-<p>我们看到，<code>createLogin()</code>函数中既处理了创建div元素的事情，又负责了判断div到底存不存在的逻辑，不符合“单一指责原则”。那有些人要说了，别给我扯些啥原则不原则的，你还怕函数累着了怎么的，没有实际的影响吗？<br>不好意思还真有，你想，这里是创建一个唯一的div，那么如果你要继续创建一个唯一的iframe来显示第三方页面，你怎么做？是不是要复制粘贴那段判断的逻辑代码然后放在<code>createIframe()</code>函数中？<br>这就是问题所在，设计模式的核心就是要将会改变的和不会改变的代码分离开来，进而增强代码的复用性。因此，正确的打开方式应该是下面的例子。</p>
-<h2 id="文艺单例模式">文艺单例模式</h2><p>同样如果我们要创建一个登录框：</p>
-<pre><code><span class="keyword">var</span> singleton = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>{
-    <span class="keyword">var</span> instance = <span class="literal">null</span>;
-    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-        <span class="keyword">return</span> instance || instance = fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
-    }
-};
-<span class="keyword">var</span> createLogin = <span class="function"><span class="keyword">function</span>(<span class="params">html</span>) </span>{
-    <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);
-    div.innerHTML = html;
-    div.style.display = <span class="string">"none"</span>;
-    <span class="built_in">document</span>.body.appendChild(div);
-    <span class="keyword">return</span> div;
-};
-
-<span class="keyword">var</span> createSingleLogin = singleton(createLogin);
-
-loginButton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> login = createSingleLogin(<span class="string">"我是登录框"</span>);
-    login.style.display = <span class="string">"block"</span>;
-};
-</code></pre><p>这样，创建元素和判断是否创建过两件事就分离开来了，现在如果我们要想创建一个唯一的iframe元素，就可以像这样：</p>
-<pre><code><span class="keyword">var</span> createIframe = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>{
-    <span class="keyword">var</span> frame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);
-    frame.src = src;
-    frame.style.display = <span class="string">"none"</span>;
-    <span class="built_in">document</span>.body.appendChild(frame);
-    <span class="keyword">return</span> frame;
-};
-
-<span class="keyword">var</span> createSingleIframe = singleton(createIframe);
-
-frameBotton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="keyword">var</span> frame = createSingleIframe(<span class="string">"www.kmhaoshuai.com"</span>);
-    frame.style.display = <span class="string">"block"</span>;
-}
-</code></pre><p>现在想创建任何单一对象都可以用这个方法了。</p>
-<h2 id="单例模式不只能用于创建单例">单例模式不只能用于创建单例</h2><p>在上面实现单例模式的代码中，<code>singleton()</code>函数是关键，他接收一个函数当作参数。在上面的例子中，这个函数是用来创建一个对象并且返回的。返回的对象保存到了闭包中的<code>instance</code>变量中。那么问题来了，what if 传进<code>singleton()</code>函数的函数不是用来创建对象用的？<br>其实这个问题很好回答，看<code>singleton()</code>函数的实现原理就能很容易的发现他是根据<code>instance</code>变量中的值来判断对象是否被创建过了，或者，说得更准确一点，他是根据<code>instance</code>变量中的值来判断传入的函数是否被调用过了。如果没被调用，则让<code>instance</code>的值等于函数的返回值，在上面的例子中，为一个对象。那么要是函数不是返回对象用的，我们只用让他在最后返回一个真值，例如<code>true</code>，就能同样使用<code>singleton()</code>来让函数只能执行一次。拿绑定事件处理函数的操作来说，<code>singleton()</code>实现的效果相当于用jQuery的<code>$().one()</code>函数的效果：</p>
-<pre><code><span class="keyword">var</span> bindEvent1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    $(<span class="string">'#div'</span>).one(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
-        alert(<span class="string">'click'</span>);
-    });
-};
-
-<span class="keyword">var</span> bindEvent2 = singleton(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-    <span class="built_in">document</span>.getElementById(<span class="string">"div"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
-        alert(<span class="string">'click'</span>);
-    };
-    <span class="keyword">return</span> <span class="literal">true</span>;
-});
-</code></pre><p>上面两个函数的效果是相同的。</p>
-<h1 id="reference">reference</h1><p><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></p>
+        <span itemprop="articleBody"><p>时间为啥过得这么快，距离上篇文章都过了快一个月了，苦也就不诉了，还是忙毕业找工作，忙得已经没觉得忙了。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-2-26/46641712.jpg" alt=""></p>
+<h1 id="环视(lookaround)是什么">环视(lookaround)是什么</h1><p>正则表达式不仅是一个强大的工具，还是一门语言，更是一门艺术。在以前的一篇博文里头记录了一点正则在JavaScript里的应用，那时也刚认识到正则表达式的威力，就写了篇<a href="http://www.kmhaoshuai.com/2015/12/20/RegEx-replace/" target="_blank" rel="external">String类的replace()方法妙用：正则表达式+函数</a>，算是试了个水。今天就来记录下才认识的正则表达式的匹配模式之一————环视。</p>
+<p>正如上面所说，我理解的环视是正则表达式的匹配模式之一。而如果要给正则表达式匹配模式不负责任地分个类的话，我觉得会是<strong>字符匹配</strong>和<strong>位置匹配</strong>。</p>
+<h2 id="字符匹配">字符匹配</h2><p>字符匹配是指会匹配到字符的表达式。就比如说一个最简单的：</p>
+<pre><code><span class="keyword">var</span> regex1 = <span class="regexp">/a/</span>;
+</code></pre><p><code>regex1</code>会匹配字符串中的<code>a</code>字符。</p>
+<h2 id="位置匹配">位置匹配</h2><p>位置匹配不会匹配到任何字符，而是匹配字符串中的某个位置。比如说字符串开头：</p>
+<pre><code><span class="keyword">var</span> regex2 = <span class="regexp">/^/</span>;
+</code></pre><p><code>regex2</code>会匹配字符串第一个字符前面的那个位置，不会匹配任何字符。</p>
+<h2 id="环视是位置匹配">环视是位置匹配</h2><p>环视属于上面两种类型中的<strong>位置匹配</strong>。也就是说它并不会匹配某个或某些字符，而是匹配位置用的。</p>
+<h2 id="环视的种类">环视的种类</h2><p>同样，环视也有两种类型，<strong>顺序环视(lookahead)</strong>和<strong>逆向环视(lookbehind)</strong>。在<code>perl</code>中以上两种类型的环视都能被支持，但是在<code>JavaScript</code>中只支持顺序环视，因此以下就只介绍关于顺序环视的两种分类。</p>
+<h3 id="肯定顺序环视(positive_lookahead)">肯定顺序环视(positive lookahead)</h3><p>肯定顺序环视在正则表达式中，用<code>(?=</code>开头，<code>)</code>结尾，类似非捕获分组用<code>(?:</code>开头和<code>)</code>结尾。中间放的是子表达式。肯定顺序环视的意思是，匹配一个位置，在这个位置之后紧跟着能匹配子表达式的字符串。</p>
+<h3 id="否定顺序环视(negative_lookahead)">否定顺序环视(negative lookahead)</h3><p>否定顺序环视的书写方法类似，用<code>(?!</code>开头，<code>)</code>结尾。非定顺序环视的意思是，匹配一个位置，这个位置之后紧跟着的字符串不能匹配子表达式。</p>
+<h1 id="环视的应用">环视的应用</h1><p>基本概念说了这么多，看着有点晕，下面来看一个例子————给数字加上千分符。</p>
+<p>首先假如我们有一个数字字符串<code>&quot;10000000&quot;</code>，我们需要把它变成<code>&quot;10,000,000&quot;</code>。用我们顺序环视的视角来看，就可以理解为，在每一次匹配中，我们需要找到一个位置，这个位置紧跟着的必须是3的倍数个数字。那么我们就开始写代码：</p>
+<pre><code><span class="keyword">var</span> num = <span class="string">"10000000"</span>;
+<span class="keyword">var</span> regex3 = /(?=(?:\<span class="keyword">d</span>{3})+/<span class="keyword">g</span>);
+num.<span class="keyword">replace</span>(regex3,<span class="string">","</span>);
+</code></pre><p>可以看到我们在<code>replace</code>函数的第二个参数中传入了<code>&quot;,&quot;</code>。而前面的正则表达式匹配了一个位置，而不是字符，因此这里的<code>replace</code>与其理解为替换，不如理解为插入。运行上面的代码，会得到下面的结果：</p>
+<pre><code><span class="string">',1,0,0,0,0,000'</span>
+</code></pre><p>尼玛说好的千分符呢，这是个啥。别急，来分析一下问题在哪。上面的<code>regex3</code>可以翻译为：匹配一个位置，这个位置的后面紧跟着能匹配3的倍数个数字的字符串，然后在这个位置上插入<code>&quot;,&quot;</code>。那么程序运行的流程就是：</p>
+<ol>
+<li>看到<code>&#39;10000000&#39;</code>字符串，发现在字符串起始位置后面紧跟着9个数字，是三的倍数，就是他了。于是第一个位置被插入了<code>&quot;,&quot;</code>，也就是我们看到的在<code>1</code>之前那个<code>,</code>。</li>
+<li>看到<code>&#39;,10000000&#39;</code>字符串，从上次匹配完之后的索引开始匹配，相当于看到的是<code>&#39;0000000&#39;</code>字符串，于是发现字符串开头处的位置后面紧跟着6个<code>0</code>（不管最后一个0的事，因为只要能匹配到3的倍数个就算成功），是三的倍数，就是他了！然后又在最前面插入了<code>,</code>。</li>
+<li>以此类推……</li>
+</ol>
+<p>然后就成了我们看到的意料之外的结果。想解决这个问题，我们应该弄清楚正则表达式是怎么匹配的。因为正则表达式匹配的时候是<strong>从左往右</strong>的，而我们期望的是在一个位置上插入<code>,</code>，这个位置到这个数字的<strong>末尾</strong>中间一共有3的倍数个数字。注意前面高亮的<strong>末尾</strong>，问题就出在这。要想在从左往右匹配的过程中，一直匹配到末尾，我们因该对顺序环视的子表达式中匹配到数字的末尾。很容易想到可以用<code>$</code>来匹配表达式的末尾。</p>
+<p>改进后的代码：</p>
+<pre><code><span class="keyword">var</span> num = <span class="string">"10000000"</span>;
+<span class="keyword">var</span> regex4 = /(?=(?:\<span class="keyword">d</span>{3})+$/<span class="keyword">g</span>);
+num.<span class="keyword">replace</span>(regex3,<span class="string">","</span>);
+</code></pre><p>得到的结果为：</p>
+<pre><code><span class="string">'10,000,000'</span>
+</code></pre><p>ok，搜发搜古得。但是，如果我们需要匹配的字符串的末尾不是数字呢？不要说我为了剧情发展故意找茬，<code>&quot;10000000$&quot;</code>明明就很常见好吗。然后我们将<code>num</code>改成它试试，结果为：</p>
+<pre><code><span class="string">'10000000$'</span>
+</code></pre><p>并没有什么卵用。因为我们上面<code>regex4</code>中匹配了结尾的位置，我们永远找不到一个位置和结尾的位置之间夹了3的倍数个数字，因为总会有个非数字<code>$</code>。那这时候怎么办呢，我们总要想个办法匹配到数字的边界而不是字符串的边界。</p>
+<p>这时候否定顺序环视就起作用了，我们可以用否定顺序环视在子表达式中匹配一个位置，在这个位置之后的那个字符不是数字，那么这个位置就是数字的边界。<br>改进后的代码：</p>
+<pre><code><span class="keyword">var</span> num = <span class="string">"10000000$"</span>;
+<span class="keyword">var</span> regex4 = /(?=(?:\<span class="keyword">d</span>{3})+(?!\<span class="keyword">d</span>)/<span class="keyword">g</span>);
+num.<span class="keyword">replace</span>(regex4,<span class="string">","</span>);
+</code></pre><p>我们来翻译一下<code>regex4</code>的意思：找到一个位置，在这个位置之后有3的倍数个数字字符，并且在3的倍数个数字之后紧跟一个后面不是数字字符的位置。<br>运行结果为：</p>
+<pre><code><span class="string">'10,000,000$'</span>
+</code></pre><p>恩看上去万无一失了。但是，这个正则表达式还有一个小问题，先自己思考一下。</p>
+<p>然后搞个小破坏，在<code>num</code>中多加一个<code>0</code>。代码如下：</p>
+<pre><code><span class="keyword">var</span> num = <span class="string">"100000000$"</span>;
+<span class="keyword">var</span> regex4 = /(?=(?:\<span class="keyword">d</span>{3})+(?!\<span class="keyword">d</span>)/<span class="keyword">g</span>);
+num.<span class="keyword">replace</span>(regex4,<span class="string">","</span>);
+</code></pre><p>然后看结果：</p>
+<pre><code><span class="string">',100,000,000$'</span>
+</code></pre><p>我勒个%……*（@￥！@#，怎么前面又多了个<code>,</code>？因为我们实际上只对匹配的位置后面做了约束，which is 顺序环视的作用，而没有对该匹配位置的前面做约束。如果在<code>perl</code>中，我们可以用<code>(?&lt;=)</code>和<code>(?&lt;!)</code>来进行逆向环视匹配对位置前面做约束。但是遗憾的是<code>JavaScript</code>并不支持逆向环视，因此我们只能想其他办法，而这个办法也很容易想到。因为我们希望加<code>,</code>的前面始终是一个数字，我们在顺序环视匹配的位置前面多匹配一个数字字符就行了，需要注意的是在替换字符串也就是<code>replace</code>函数的第二个参数中需要同时反向引用这个匹配的数字，因为<code>replace</code>函数会将匹配到的文本一同替换掉。</p>
+<p>最终版改进后的代码：</p>
+<pre><code><span class="keyword">var</span> num = <span class="string">"100000000$"</span>;
+<span class="keyword">var</span> regex5 = /(\<span class="keyword">d</span>)(?=(?:\<span class="keyword">d</span>{3})+(?!\<span class="keyword">d</span>)/<span class="keyword">g</span>);
+num.<span class="keyword">replace</span>(regex5,<span class="string">"$1,"</span>);
+</code></pre><p>结果：</p>
+<pre><code><span class="string">'100,000,000$'</span>
+</code></pre><h1 id="references">references</h1><ol>
+<li><a href="http://stackoverflow.com/questions/7376238/javascript-regex-look-behind-alternative" target="_blank" rel="external">javascript regex - look behind alternative?</a></li>
+</ol>
 </span>
       
     </div>
@@ -394,9 +383,7 @@ frameBotton.onclick = <span class="function"><span class="keyword">function</spa
           
             <a href="/tags/javascript/" rel="tag">#javascript</a>
           
-            <a href="/tags/前端/" rel="tag">#前端</a>
-          
-            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+            <a href="/tags/正则表达式/" rel="tag">#正则表达式</a>
           
         </div>
       
@@ -405,17 +392,13 @@ frameBotton.onclick = <span class="function"><span class="keyword">function</spa
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/06/pattern-strategy/" rel="next" title="javascript设计模式之策略模式(strategy)">
-                <i class="fa fa-chevron-left"></i> javascript设计模式之策略模式(strategy)
+              <a href="/2016/02/25/javascript作用域/" rel="next" title="javascript作用域">
+                <i class="fa fa-chevron-left"></i> javascript作用域
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/09/pattern-proxy/" rel="prev" title="javascript设计模式之代理模式(proxy)和装饰者模式(decorator)">
-                javascript设计模式之代理模式(proxy)和装饰者模式(decorator) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -430,10 +413,10 @@ frameBotton.onclick = <span class="function"><span class="keyword">function</spa
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/01/08/pattern-singleton/"
-     data-title="javascript设计模式之单例模式(singleton)"
+        <div class="ds-share flat" data-thread-key="2016/03/19/regexp环视/"
+     data-title="正则表达式环视(lookaround)"
      data-content=""
-     data-url="http://kmhaoshuai.com/2016/01/08/pattern-singleton/">
+     data-url="http://kmhaoshuai.com/2016/03/19/regexp环视/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -461,8 +444,8 @@ frameBotton.onclick = <span class="function"><span class="keyword">function</spa
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/08/pattern-singleton/"
-           data-title="javascript设计模式之单例模式(singleton)" data-url="http://kmhaoshuai.com/2016/01/08/pattern-singleton/">
+      <div class="ds-thread" data-thread-key="2016/03/19/regexp环视/"
+           data-title="正则表达式环视(lookaround)" data-url="http://kmhaoshuai.com/2016/03/19/regexp环视/">
       </div>
     
   </div>
@@ -577,7 +560,7 @@ frameBotton.onclick = <span class="function"><span class="keyword">function</spa
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单例？"><span class="nav-number">1.</span> <span class="nav-text">单例？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通单例模式"><span class="nav-number">2.1.</span> <span class="nav-text">普通单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文艺单例模式"><span class="nav-number">2.2.</span> <span class="nav-text">文艺单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式不只能用于创建单例"><span class="nav-number">2.3.</span> <span class="nav-text">单例模式不只能用于创建单例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环视(lookaround)是什么"><span class="nav-number">1.</span> <span class="nav-text">环视(lookaround)是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符匹配"><span class="nav-number">1.1.</span> <span class="nav-text">字符匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位置匹配"><span class="nav-number">1.2.</span> <span class="nav-text">位置匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环视是位置匹配"><span class="nav-number">1.3.</span> <span class="nav-text">环视是位置匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环视的种类"><span class="nav-number">1.4.</span> <span class="nav-text">环视的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#肯定顺序环视(positive_lookahead)"><span class="nav-number">1.4.1.</span> <span class="nav-text">肯定顺序环视(positive lookahead)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#否定顺序环视(negative_lookahead)"><span class="nav-number">1.4.2.</span> <span class="nav-text">否定顺序环视(negative lookahead)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环视的应用"><span class="nav-number">2.</span> <span class="nav-text">环视的应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">3.</span> <span class="nav-text">references</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

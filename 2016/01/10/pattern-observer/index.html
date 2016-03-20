@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="kMchA的博客">
 <meta property="og:description" content="观察者模式什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/15-12-27/44946725.jpg">
-<meta property="og:updated_time" content="2016-01-19T04:20:00.000Z">
+<meta property="og:updated_time" content="2016-03-03T17:02:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript设计模式之观察者模式(observer)和中介者模式(mediator)">
 <meta name="twitter:description" content="观察者模式什么是观察者模式？说起观察者模式，脑袋里浮现出的概念似乎不是特别清晰，那么换一个直观一点的名字，观察者模式又叫做发布——订阅(publish-subscribe)模式。个人认为这个名字要比观察者模式更直观，可以直接描述两个对象的职能，发布和订阅。观察者模式主要目的是消除对象之间的耦合。相对于在一个对象中显式调用另一个对象，观察者模式可以将这两个对象解耦，消除显式调用给维护和修改程序带来的">
@@ -601,7 +601,7 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
 <h2 id="中介者模式与观察者模式的异同">中介者模式与观察者模式的异同</h2><p>通过对观察者模式的总结，可以看出来观察者模式就是在消息的发送方和消息的接收方中间定义了一个观察者对象。在消息的发送者对象中，消息是直接发给观察者对象的。在消息的接收方，消息是通过观察者对象订阅的。因此发送方和接收方不必知道对方，只用知道观察者就行，因此实现了解耦。<br>而中介者模式如果用观察者模式来实现的话，就可以看成消息的订阅者是一个庞大的中介者对象，而这个对象可以同时订阅很多的消息，通过传入的参数来进行业务的判断。这样消息的发送者不需要知道消息的接收者是谁，通过订阅不同的消息之后消息的接收者（也就是中介者对象）也可以不需要知道消息的发送者是谁，这样也实现了解耦。<br>如果中介者模式是通过定义中介者对象来实现的话，上面的消息的发送者只需要调用中介者对象暴露出来的接口就行，剩下操作的都在中介者对象中处理。<br>因此，可以看出观察者模式和中介者模式确实比较接近，但是也存在差别，不然也不会以两个不同的设计模式存在对吧。所以我认为，可以从不同角度来判断什么时候应该使用观察者模式，什么时候应该使用中介者模式。</p>
 <ol>
 <li>观察者模式是站在消息的发送者的角度来看的。通常一个消息可以有很多不同的订阅者，当消息发出之后，不同的订阅者各自处理自己的业务。</li>
-<li>中介者模式是站在消息的接收者的角度来看的。通常一个消息的接收者（中介者对象）可以接收许多不同的消息，并且根据触发的事件来判断需要处理的业务。</li>
+<li>中介者模式是站在消息的接收者的角度来看的。通常一个消息的接收者（中介者对象）可以接收许多不同的消息，并且根据接收到的数据来判断需要处理的业务。</li>
 </ol>
 <h1 id="reference">reference</h1><ul>
 <li><a href="http://www.ituring.com.cn/book/1632" target="_blank" rel="external">JavaScript设计模式与开发实践</a></li>
@@ -729,14 +729,14 @@ ajax.success(<span class="function"><span class="keyword">function</span>(<span 
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
