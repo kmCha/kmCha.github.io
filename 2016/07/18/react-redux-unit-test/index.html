@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="kMchA的博客">
 <meta property="og:description" content="在来阿里实习之前就接触过单元测试的概念，并且在自己做的小项目里也做过一些单元测试的尝试，但现在看来也只是些小打小闹，真正能够深入理解单元测试的过程还是在来到阿里接触了大项目之后。
 刚来到这里的时候就立马投入到了紧张的项目开发中，在忙了将近一个月之后，项目也终于快要上线了，这时候开发任务少了下来，我和师兄琢磨着给项目集成一套单元测试，以后维护和修改项目代码之后能够自动将所有测试跑一遍，这样哪里出错就">
-<meta property="og:updated_time" content="2016-07-30T14:51:12.000Z">
+<meta property="og:updated_time" content="2016-07-30T14:56:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React-Redux项目单元测试实践总结">
 <meta name="twitter:description" content="在来阿里实习之前就接触过单元测试的概念，并且在自己做的小项目里也做过一些单元测试的尝试，但现在看来也只是些小打小闹，真正能够深入理解单元测试的过程还是在来到阿里接触了大项目之后。
@@ -327,74 +327,161 @@
 <p>按照文档配置好<code>karma.conf.js</code>之后，出现不能编译ES6的问题，在社区搜索到了相关的<a href="http://stackoverflow.com/questions/32170176/getting-karma-code-coverage-for-pre-transpilation-souce-code/32176723#32176723" target="_blank" rel="external">正确配置</a>，发现还是出现同样的问题。一番思索无果之后去求助前辈发现前辈使用的正是那个deprecated的<a href="https://www.npmjs.com/package/isparta-instrumenter-loader" target="_blank" rel="external">isparta-instrumenter-loader</a>。我抱着这个也不会有用的心态试了试发现错误解决了。</p>
 <p>所以，deprecated≠不靠谱。</p>
 <h5 id="babel-plugin-rewire报错">babel-plugin-rewire报错</h5><p>使用该插件的时候遇到了<code>TypeError: undefined is not a constructor</code>的错误，在issue里找到了<a href="https://github.com/speedskater/babel-plugin-rewire/issues/125" target="_blank" rel="external">解决方法</a>，但问题并没有得到解决。后来发现是因为我把<code>plugins</code>字段写到了.babelrc文件里，应该是写在<code>karma.conf.js</code>的<code>isparta-instrumenter-loader</code>中，这样才能在webpack编译之前读取文件的时候转移依赖，以下是<code>karma.conf.js</code>中相关部分：</p>
-<p>  webpack: {<br>    devtool: ‘inline-source-map’,<br>    module: {<br>      preLoaders: [<br>        {<br>          test: /.js$/,<br>          loader: ‘isparta-instrumenter’,<br>          include: [<br>            path.resolve(<strong>dirname, ‘./src/actions’),<br>            path.resolve(</strong>dirname, ‘./src/components’),<br>            path.resolve(<strong>dirname, ‘./src/containers’),<br>            path.resolve(</strong>dirname, ‘./src/reducers’)<br>          ],<br>          query: {<br>            babel: {<br>              presets: [‘es2015’, ‘stage-0’, ‘react’],<br>              plugins: [“rewire”]<br>            }<br>          }<br>        }<br>      ],<br>      //…<br>    },<br>    //…<br>  }</p>
-<h5 id="PhantomJS_+_enzyme_=_山路十八坑">PhantomJS + enzyme = 山路十八坑</h5><p>这里的问题始于，karma默认在<code>package.json</code>中将<code>npm test</code>设置为<code>./node_modules/karma/bin/karma start --single-run --browsers PhantomJS</code>，也就说默认测试是跑在PhantomJS中而不是浏览器中的。这样一般情况下是没有问题的，但是一旦测试代码中用到enzyme的<code>render()</code>API就会报错：</p>
+<pre><code>webpack: {
+  devtool: <span class="string">'inline-source-map'</span>,
+  module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        loader: <span class="string">'isparta-instrumenter'</span>,
+        <span class="built_in">include</span>: [
+          path.<span class="built_in">resolve</span>(__dirname, <span class="string">'./src/actions'</span>),
+          path.<span class="built_in">resolve</span>(__dirname, <span class="string">'./src/components'</span>),
+          path.<span class="built_in">resolve</span>(__dirname, <span class="string">'./src/containers'</span>),
+          path.<span class="built_in">resolve</span>(__dirname, <span class="string">'./src/reducers'</span>)
+        ],
+        query: {
+          babel: {
+            presets: [<span class="string">'es2015'</span>, <span class="string">'stage-0'</span>, <span class="string">'react'</span>],
+            plugins: [<span class="string">"rewire"</span>]
+          }
+        }
+      }
+    ],
+   <span class="comment"> //...</span>
+  },
+ <span class="comment"> //...</span>
+}
+</code></pre><h5 id="PhantomJS_+_enzyme_=_山路十八坑">PhantomJS + enzyme = 山路十八坑</h5><p>这里的问题始于，karma默认在<code>package.json</code>中将<code>npm test</code>设置为<code>./node_modules/karma/bin/karma start --single-run --browsers PhantomJS</code>，也就说默认测试是跑在PhantomJS中而不是浏览器中的。这样一般情况下是没有问题的，但是一旦测试代码中用到enzyme的<code>render()</code>API就会报错：</p>
 <p><code>TypeError: undefined is not a constructor (evaluating &#39;_cheerio2[&#39;default&#39;].load(html)&#39;)</code></p>
 <p>这是因为enzyme中的<code>render()</code>部分是包装的<a href="https://github.com/cheeriojs/cheerio" target="_blank" rel="external">cheerio</a>库，而<code>cheerio</code>又跟PhantomJS不兼容的缘故。因此对于这个问题，将<code>PhantomJS</code>改成<code>chrome</code>即可解决，但是改了之后又出现新的错误：</p>
 <p><code>_cheerio2.default.load is not a function</code></p>
 <p>根据在enzyme’s issue中找到的<a href="https://github.com/airbnb/enzyme/issues/309#issuecomment-224243898" target="_blank" rel="external">解决方法</a>，又会出现新错误：</p>
 <p><code>target.dispatchEvent is not a function</code></p>
 <p>根据stackoverflow中的<a href="http://stackoverflow.com/questions/31994873/typeerror-on-target-dispatchevent-when-console-log-variable" target="_blank" rel="external">解决方法</a>，发现是<code>console.log()</code>和enzyme的<code>render()</code>(也就是cheerio库)联合使用时才会出现。解决方法就是用node的<code>util</code>模块将要log出来的部分包裹一层。比如说：</p>
-<p>  import {render} from ‘enzyme’;<br>  import reactComponent from ‘xxx’;<br>  let container = render(reactComponent);<br>  // true<br>  console.log(require(‘util’).inspect(container, { depth: null }));<br>  // false<br>  console.log(container);</p>
-<p>这里的小标题虽然是吐槽<code>PhantomJS</code>和<code>enzyme</code>的，但其实罪魁祸首是暗藏在他们身后的<code>cheerio</code>库，之所以这样写标题是因为发现并且解决问题的过程，是从<code>PhantomJS</code>和<code>enzyme</code>入手的，在这个过程中不断往深挖，最后社区会把我们引向问题的根源。另外，为了简洁的API代价也挺大的，在不断从坑中爬出来的过程中一度有放弃enzyme使用官方测试库的想法，好在没有放弃才能有这样一段填坑的经历分享出来。</p>
+<pre><code><span class="keyword">import</span> {render} <span class="keyword">from</span> <span class="string">'enzyme'</span>;
+<span class="keyword">import</span> reactComponent <span class="keyword">from</span> <span class="string">'xxx'</span>;
+<span class="keyword">let</span> container = render(reactComponent);
+<span class="comment">// true</span>
+<span class="built_in">console</span>.log(<span class="built_in">require</span>(<span class="string">'util'</span>).inspect(container, { depth: <span class="literal">null</span> }));
+<span class="comment">// false</span>
+<span class="built_in">console</span>.log(container);
+</code></pre><p>这里的小标题虽然是吐槽<code>PhantomJS</code>和<code>enzyme</code>的，但其实罪魁祸首是暗藏在他们身后的<code>cheerio</code>库，之所以这样写标题是因为发现并且解决问题的过程，是从<code>PhantomJS</code>和<code>enzyme</code>入手的，在这个过程中不断往深挖，最后社区会把我们引向问题的根源。另外，为了简洁的API代价也挺大的，在不断从坑中爬出来的过程中一度有放弃enzyme使用官方测试库的想法，好在没有放弃才能有这样一段填坑的经历分享出来。</p>
 <h2 id="写测试">写测试</h2><h4 id="reducer">reducer</h4><p>reducer的测试代码是各个部分最简单的，跟测试普通函数没有太大区别，在前辈的文章中也讲得很清楚了，这里就不废话了。</p>
 <h4 id="action">action</h4><p>在action这个部分，对于普通的action creator来说，就只是测试一下返回的action对象是不是我们期望的就行，跟测试普通函数也是一个道理。</p>
 <p>相比起来，异步action creator更加值得一提。对于测试异步函数，这里先推荐一篇不错的文章：<a href="http://martinfowler.com/articles/asyncJS.html" target="_blank" rel="external">Testing Asynchronous JavaScript</a>。与文章不同的是，我在测试中用jasmine官方的<code>jasmine-ajax</code>库来mock被测代码里的ajax请求，而不是像文章中那样直接修改请求函数（$.ajax()），因为这样就不用再在测试代码里写一些多余的代码了。</p>
 <p>通常，我们的异步action creator长这样：</p>
-<p>  import {fetchData, redirect} from ‘xxx’;<br>  export function actionCreator(params) {<br>    return (dispatch) =&gt; {<br>      dispatch({type: ‘LOADING’});<br>      return fetchData(‘/url’, params).then((res) =&gt; {<br>        if (res.code &gt;= 10000 &amp;&amp; res.code &lt; 20000) {<br>          redirect(window.location.origin + “/syserror.htm”);<br>          return;<br>        } else if (res.code == 0 &amp;&amp; res.data) {<br>          dispatch({<br>            type: ‘SUCCESS’,<br>            data: res.data<br>          })<br>        }<br>      }).catch(rejection =&gt; {<br>        dispatch({<br>          type: ‘ERROR’,<br>          data: {<br>            msg: rejection.reason || ‘’<br>          }<br>        })<br>      })<br>    }<br>  }</p>
-<p>那么针对这样的函数该怎么测？我的理解是，覆盖函数的所有可能性，也就是说我们写的测试代码能够让函数的每一行都跑一遍。那么我们怎么才能通过单元测试框架提供给我们的断言库来判断函数的每一行是不是跑过了呢？拿上面的被测代码例子来说，最内层的函数体会返回一个Promise对象，在该对象的<code>then()</code>方法中，有条件语句。我们想要100%覆盖的话，就必须依次进入到两种条件中，也就是根据我们mock的ajax响应来让函数执行不同的条件分支。在每个条件分支中，找到一个被调用的函数，例如例子中的<code>redirect()</code>和<code>dispatch()</code>，然后在测试代码中将他们初始化为spy，监控他们是否被调用或者被调用时传入的参数来确定测试是否通过。</p>
-<p>异步action creator测试代码：</p>
-<p>  import * as Action from “xxx/action”;<br>  import {} from ‘jasmine-ajax’;<br>  describe(“actionCreator()”, () =&gt; {<br>    let dispatch = jasmine.createSpy(‘dispatch’);<br>    let redirect = jasmine.createSpy(‘redirect’);<br>    let creator = actionCreator();<br>    beforeEach(() =&gt; {<br>      jasmine.Ajax.install();<br>    });<br>    afterEach(() =&gt; {<br>      jasmine.Ajax.uninstall();<br>      dispatch.calls.reset();<br>      redirect.calls.reset();<br>    });<br>    Action.<strong>Rewire</strong>(“redirect”, redirect);<br>    it(“returns an action whose type is ‘ERROR’ when the response has no data”, (done) =&gt; {<br>      let mockRes = {<br>        code: 0,<br>        data: ‘’<br>      };<br>      let promise = creator(dispatch);<br>      expect(jasmine.Ajax.requests.mostRecent().url).toBe(‘/url’);<br>      expect(dispatch).not.toHaveBeenCalled();<br>      jasmine.Ajax.requests.mostRecent().respondWith({<br>        “status”: 200,<br>        “contentType”: ‘application/json;charset=UTF-8’,<br>        “responseText”: JSON.stringify(mockRes)<br>      });<br>      promise.then(() =&gt; {<br>        expect(dispatch).toHaveBeenCalled();<br>        expect(dispatch.calls.argsFor(0)[0].type).toEqual(‘ERROR’);<br>        done();<br>      })<br>    });</p>
-<pre><code>it<span class="list">(<span class="string">"returns an action whose type is 'SUCCESS' when the response code is outside the range of 10000~20000"</span>, <span class="list">(<span class="keyword">done</span>)</span> =&gt; {
-  let mockRes = {
-    code: <span class="number">0</span>,
-    data: {
-      content: [
-        {
-          info: <span class="quoted">'dose</span> not matter'
-        }
-      ],
-      context: {
-        icon: <span class="quoted">'http</span><span class="keyword">://www</span>.taobao.com'
+<pre><code><span class="keyword">import</span> {fetchData, redirect} from <span class="string">'xxx'</span>;
+export function actionCreat<span class="subst">or</span>(<span class="keyword">params</span>) {
+  <span class="keyword">return</span> (dispatch) =&gt; {
+    dispatch({<span class="keyword">type</span>: <span class="string">'LOADING'</span>});
+    <span class="keyword">return</span> fetchData(<span class="string">'/url'</span>, <span class="keyword">params</span>)<span class="built_in">.</span>then((res) =&gt; {
+      <span class="keyword">if</span> (res<span class="built_in">.</span>code &gt;= <span class="number">10000</span> <span class="subst">&amp;&amp;</span> res<span class="built_in">.</span>code &lt; <span class="number">20000</span>) {
+        redirect(window<span class="built_in">.</span>location<span class="built_in">.</span>origin + <span class="string">"/syserror.htm"</span>);
+        <span class="keyword">return</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (res<span class="built_in">.</span>code == <span class="number">0</span> <span class="subst">&amp;&amp;</span> res<span class="built_in">.</span><span class="built_in">data</span>) {
+        dispatch({
+          <span class="keyword">type</span>: <span class="string">'SUCCESS'</span>,
+          <span class="built_in">data</span>: res<span class="built_in">.</span><span class="built_in">data</span>
+        })
       }
-    }
-  }<span class="comment">;</span>
-  let promise = creator<span class="list">(<span class="keyword">dispatch</span>)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">jasmine</span>.Ajax.requests.mostRecent<span class="list">()</span>.url)</span>.toBe<span class="list">(<span class="quoted">'/url</span>')</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">dispatch</span>)</span>.not.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-  jasmine.Ajax.requests.mostRecent<span class="list">()</span>.respondWith<span class="list">({
-    <span class="string">"status"</span>: <span class="number">200</span>,
-    <span class="string">"contentType"</span>: <span class="quoted">'application/json</span><span class="comment">;charset=UTF-8',</span>
-    <span class="string">"responseText"</span>: JSON.stringify<span class="list">(<span class="keyword">mockRes</span>)</span>
-  })</span><span class="comment">;</span>
-  promise.then<span class="list">(<span class="list">()</span> =&gt; {
-    expect<span class="list">(<span class="keyword">dispatch</span>)</span>.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-    expect<span class="list">(<span class="keyword">dispatch</span>.calls.argsFor<span class="list">(<span class="number">0</span>)</span>[<span class="number">0</span>].type)</span>.toEqual<span class="list">(<span class="quoted">'SUCCESS</span>')</span><span class="comment">;</span>
-    done<span class="list">()</span><span class="comment">;</span>
-  })</span>
-})</span><span class="comment">;</span>
+    })<span class="built_in">.</span>catch(rejection =&gt; {
+      dispatch({
+        <span class="keyword">type</span>: <span class="string">'ERROR'</span>,
+        <span class="built_in">data</span>: {
+          msg: rejection<span class="built_in">.</span>reason <span class="subst">||</span> <span class="string">''</span>
+        }
+      })
+    })
+  }
+}
+</code></pre><p>那么针对这样的函数该怎么测？我的理解是，覆盖函数的所有可能性，也就是说我们写的测试代码能够让函数的每一行都跑一遍。那么我们怎么才能通过单元测试框架提供给我们的断言库来判断函数的每一行是不是跑过了呢？拿上面的被测代码例子来说，最内层的函数体会返回一个Promise对象，在该对象的<code>then()</code>方法中，有条件语句。我们想要100%覆盖的话，就必须依次进入到两种条件中，也就是根据我们mock的ajax响应来让函数执行不同的条件分支。在每个条件分支中，找到一个被调用的函数，例如例子中的<code>redirect()</code>和<code>dispatch()</code>，然后在测试代码中将他们初始化为spy，监控他们是否被调用或者被调用时传入的参数来确定测试是否通过。</p>
+<p>异步action creator测试代码：</p>
+<pre><code>import * as Action from <span class="string">"xxx/action"</span>;
+import {} from <span class="string">'jasmine-ajax'</span>;
+describe(<span class="string">"actionCreator()"</span>, <span class="function"><span class="params">()</span> =&gt;</span> {
+  let dispatch = jasmine.createSpy(<span class="string">'dispatch'</span>);
+  let redirect = jasmine.createSpy(<span class="string">'redirect'</span>);
+  let creator = actionCreator();
+  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> {
+    jasmine.Ajax.install();
+  });
+  afterEach(<span class="function"><span class="params">()</span> =&gt;</span> {
+    jasmine.Ajax.uninstall();
+    dispatch.calls.reset();
+    redirect.calls.reset();
+  });
+  Action.__Rewire__(<span class="string">"redirect"</span>, redirect);
+  it(<span class="string">"returns an action whose type is 'ERROR' when the response has no data"</span>, <span class="function"><span class="params">(done)</span> =&gt;</span> {
+    let mockRes = {
+      <span class="attribute">code</span>: <span class="number">0</span>,
+      <span class="attribute">data</span>: <span class="string">''</span>
+    };
+    let promise = creator(dispatch);
+    expect(jasmine.Ajax.requests.mostRecent().url).toBe(<span class="string">'/url'</span>);
+    expect(dispatch).<span class="keyword">not</span>.toHaveBeenCalled();
+    jasmine.Ajax.requests.mostRecent().respondWith({
+      <span class="string">"status"</span>: <span class="number">200</span>,
+      <span class="string">"contentType"</span>: <span class="string">'application/json;charset=UTF-8'</span>,
+      <span class="string">"responseText"</span>: JSON.stringify(mockRes)
+    });
+    promise.<span class="keyword">then</span>(<span class="function"><span class="params">()</span> =&gt;</span> {
+      expect(dispatch).toHaveBeenCalled();
+      expect(dispatch.calls.argsFor(<span class="number">0</span>)[<span class="number">0</span>].type).toEqual(<span class="string">'ERROR'</span>);
+      done();
+    })
+  });
 
-it<span class="list">(<span class="string">"won't dispatch actions but redirect when server return code inside the range of 10000~20000"</span>, <span class="list">(<span class="keyword">done</span>)</span> =&gt; {
-  let mockRes = {
-    code: <span class="number">15000</span>
-  }<span class="comment">;</span>
-  let promise = creator<span class="list">(<span class="keyword">dispatch</span>)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">jasmine</span>.Ajax.requests.mostRecent<span class="list">()</span>.url)</span>.toBe<span class="list">(<span class="quoted">'/url</span>')</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">dispatch</span>)</span>.not.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">redirect</span>)</span>.not.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-  jasmine.Ajax.requests.mostRecent<span class="list">()</span>.respondWith<span class="list">({
-    <span class="string">"status"</span>: <span class="number">200</span>,
-    <span class="string">"contentType"</span>: <span class="quoted">'application/json</span><span class="comment">;charset=UTF-8',</span>
-    <span class="string">"responseText"</span>: JSON.stringify<span class="list">(<span class="keyword">mockRes</span>)</span>
-  })</span><span class="comment">;</span>
-  promise.then<span class="list">(<span class="list">()</span> =&gt; {
-    expect<span class="list">(<span class="keyword">redirect</span>)</span>.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-    expect<span class="list">(<span class="keyword">dispatch</span>)</span>.not.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-    done<span class="list">()</span><span class="comment">;</span>
-  })</span>
-})</span>
-</code></pre><p>  })</p>
-<p>这样这个异步action creator就会有100%的覆盖率了。</p>
+  it(<span class="string">"returns an action whose type is 'SUCCESS' when the response code is outside the range of 10000~20000"</span>, <span class="function"><span class="params">(done)</span> =&gt;</span> {
+    let mockRes = {
+      <span class="attribute">code</span>: <span class="number">0</span>,
+      <span class="attribute">data</span>: {
+        <span class="attribute">content</span>: [
+          {
+            <span class="attribute">info</span>: <span class="string">'dose not matter'</span>
+          }
+        ],
+        <span class="attribute">context</span>: {
+          <span class="attribute">icon</span>: <span class="string">'http://www.taobao.com'</span>
+        }
+      }
+    };
+    let promise = creator(dispatch);
+    expect(jasmine.Ajax.requests.mostRecent().url).toBe(<span class="string">'/url'</span>);
+    expect(dispatch).<span class="keyword">not</span>.toHaveBeenCalled();
+    jasmine.Ajax.requests.mostRecent().respondWith({
+      <span class="string">"status"</span>: <span class="number">200</span>,
+      <span class="string">"contentType"</span>: <span class="string">'application/json;charset=UTF-8'</span>,
+      <span class="string">"responseText"</span>: JSON.stringify(mockRes)
+    });
+    promise.<span class="keyword">then</span>(<span class="function"><span class="params">()</span> =&gt;</span> {
+      expect(dispatch).toHaveBeenCalled();
+      expect(dispatch.calls.argsFor(<span class="number">0</span>)[<span class="number">0</span>].type).toEqual(<span class="string">'SUCCESS'</span>);
+      done();
+    })
+  });
+
+  it(<span class="string">"won't dispatch actions but redirect when server return code inside the range of 10000~20000"</span>, <span class="function"><span class="params">(done)</span> =&gt;</span> {
+    let mockRes = {
+      <span class="attribute">code</span>: <span class="number">15000</span>
+    };
+    let promise = creator(dispatch);
+    expect(jasmine.Ajax.requests.mostRecent().url).toBe(<span class="string">'/url'</span>);
+    expect(dispatch).<span class="keyword">not</span>.toHaveBeenCalled();
+    expect(redirect).<span class="keyword">not</span>.toHaveBeenCalled();
+    jasmine.Ajax.requests.mostRecent().respondWith({
+      <span class="string">"status"</span>: <span class="number">200</span>,
+      <span class="string">"contentType"</span>: <span class="string">'application/json;charset=UTF-8'</span>,
+      <span class="string">"responseText"</span>: JSON.stringify(mockRes)
+    });
+    promise.<span class="keyword">then</span>(<span class="function"><span class="params">()</span> =&gt;</span> {
+      expect(redirect).toHaveBeenCalled();
+      expect(dispatch).<span class="keyword">not</span>.toHaveBeenCalled();
+      done();
+    })
+  })
+})
+</code></pre><p>这样这个异步action creator就会有100%的覆盖率了。</p>
 <h4 id="component">component</h4><p>在测试“高阶”(与state有connection的)component这里，我用的方法和前辈不同。同样这里先推荐一篇文章：<a href="http://mz026.logdown.com/posts/313379-hello-redux-3-3-unit-test" target="_blank" rel="external">Hello Redux 3/3 Unit Test</a>。我测试“高阶”component的方式就是文中指出的：</p>
 <blockquote>
 <p>在測試 smart component 的時候，根據 Redux document 上面的建議是，繞過 connect 的行為，直接測 component 的部份。</p>
@@ -406,83 +493,117 @@ it<span class="list">(<span class="string">"won't dispatch actions but redirect 
 <li>另一方面，我们需要模拟视图中绑定的事件来触发相应的事件处理函数，如果事件处理函数中对state有做修改（大部分情况都有，这里有个疑问，留在后面说），那么我们就需要在断言中判断state来决定测试用例的pass与否。</li>
 </ul>
 <p>被测component：</p>
-<p>  import React from “react”;<br>  import {connect} from “react-redux”;<br>  import cx from “classnames”;<br>  import Layout from “xxx”;<br>  import * as Action from “xxx”;<br>  import “./index.less”;</p>
-<p>  class Component extends React.Component {<br>    static defaultProps = {<br>      user: {},<br>      common: {}<br>    }</p>
-<pre><code>constructor(props, context) {
-  super(props, context);
-  this.<span class="keyword">state</span> = {toggled: false};
-}
+<pre><code>import React <span class="keyword">from</span> <span class="string">"react"</span>;
+import {connect} <span class="keyword">from</span> <span class="string">"react-redux"</span>;
+import cx <span class="keyword">from</span> <span class="string">"classnames"</span>;
+import Layout <span class="keyword">from</span> <span class="string">"xxx"</span>;
+import * as Action <span class="keyword">from</span> <span class="string">"xxx"</span>;
+import <span class="string">"./index.less"</span>;
 
-componentDidMount() {
-  dispatch(Action.getInitialData());
-}
+class Component extends React.Component {
+  static <span class="keyword">default</span>Props = {
+    <span class="keyword">user</span>: {},
+    common: {}
+  }
 
-componentWillReceiveProps(nextProps) {
-  this.<span class="built_in">set</span>State({
-    <span class="keyword">user</span>: nextProps.<span class="keyword">user</span>,
-    common: nextProps.common
+  constructor(props, context) {
+    super(props, context);
+    this.<span class="keyword">state</span> = {toggled: false};
+  }
+
+  componentDidMount() {
+    dispatch(Action.getInitialData());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.<span class="built_in">set</span>State({
+      <span class="keyword">user</span>: nextProps.<span class="keyword">user</span>,
+      common: nextProps.common
+    });
+    this.forceUpdate();
+  }
+  _handleClick() {
+    this.<span class="built_in">set</span>State({
+      toggled: !this.<span class="keyword">state</span>.toggled
+    })
+  }
+  render() {
+    let {toggled} = this.<span class="keyword">state</span>;
+    let customClass = cx('left-nav-section', {toggled: toggled});
+    return (
+      <span class="variable">&lt;Layout {...this.props}&gt;</span>
+        <span class="variable">&lt;div className="toggle" onClick={this._handleClick.bind(this)}&gt;</span><span class="variable">&lt;/div&gt;</span>
+        <span class="variable">&lt;div className={customClass}&gt;</span><span class="variable">&lt;/div&gt;</span>
+      <span class="variable">&lt;/Layout&gt;</span>
+    )
+  }
+}
+export { Component };
+export <span class="keyword">default</span> connect((<span class="keyword">state</span>)=&gt; {
+  return {
+    <span class="keyword">user</span>: <span class="keyword">state</span>.component.<span class="keyword">user</span>,
+    common: <span class="keyword">state</span>.component.common
+  }
+})(component);
+</code></pre><p>测试代码：</p>
+<pre><code>import <span class="type">React</span> from <span class="symbol">'react'</span>;
+import { shallow, mount, render } from <span class="symbol">'enzyme'</span>;
+import <span class="type">Container</span>, { <span class="type">Component</span> } from <span class="symbol">'xxx</span>/component';
+
+describe(<span class="string">"&lt;Component /&gt;"</span>, function<span class="literal">()</span> {
+  <span class="keyword">let</span> props, <span class="type">Layout</span>;
+  beforeEach(<span class="literal">()</span> =&gt; {
+    props = {
+      dispatch: jasmine.createSpy(<span class="symbol">'dispatch'</span>)
+    };
+    <span class="type">Layout</span> = <span class="type">React</span>.createClass({
+      render <span class="literal">()</span> {
+        return (&lt;div&gt;mock <span class="type">Layout</span>&lt;/div&gt;)
+      }
+    });
+    <span class="type">Container</span>.__Rewire__(<span class="symbol">'Layout'</span>, <span class="type">Layout</span>);
   });
-  this.forceUpdate();
-}
-_handleClick() {
-  this.<span class="built_in">set</span>State({
-    toggled: !this.<span class="keyword">state</span>.toggled
-  })
-}
-render() {
-  let {toggled} = this.<span class="keyword">state</span>;
-  let customClass = cx('left-nav-section', {toggled: toggled});
-  return (
-    <span class="variable">&lt;Layout {...this.props}&gt;</span>
-      <span class="variable">&lt;div className="toggle" onClick={this._handleClick.bind(this)}&gt;</span><span class="variable">&lt;/div&gt;</span>
-      <span class="variable">&lt;div className={customClass}&gt;</span><span class="variable">&lt;/div&gt;</span>
-    <span class="variable">&lt;/Layout&gt;</span>
-  )
-}
-</code></pre><p>  }<br>  export { Component };<br>  export default connect((state)=&gt; {<br>    return {<br>      user: state.component.user,<br>      common: state.component.common<br>    }<br>  })(component);</p>
-<p>测试代码：</p>
-<p>  import React from ‘react’;<br>  import { shallow, mount, render } from ‘enzyme’;<br>  import Container, { Component } from ‘xxx/component’;</p>
-<p>  describe(“<component>“, function() {<br>    let props, Layout;<br>    beforeEach(() =&gt; {<br>      props = {<br>        dispatch: jasmine.createSpy(‘dispatch’)<br>      };<br>      Layout = React.createClass({<br>        render () {<br>          return (<div>mock Layout</div>)<br>        }<br>      });<br>      Container.<strong>Rewire</strong>(‘Layout’, Layout);<br>    });</component></p>
-<pre><code>it<span class="list">(<span class="string">"contains &lt;Layout /&gt;"</span>, <span class="list">()</span> =&gt; {
-  expect<span class="list">(<span class="keyword">shallow</span><span class="list">(<span class="keyword">&lt;Component</span> /&gt;)</span>.find<span class="list">(<span class="quoted">'Layout</span>')</span>.length)</span>.toEqual<span class="list">(<span class="number">1</span>)</span><span class="comment">;</span>
-})</span><span class="comment">;</span>
 
-it<span class="list">(<span class="string">"invokes componentDidMount() after mounted"</span>, <span class="list">()</span> =&gt; {
-  spyOn<span class="list">(<span class="keyword">Component</span>.prototype, <span class="quoted">'componentDidMount</span>')</span>.and.callThrough<span class="list">()</span><span class="comment">;</span>
-  let container = mount<span class="list">(<span class="keyword">&lt;Component</span> {...props}/&gt;)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">Component</span>.prototype.componentDidMount)</span>.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-})</span><span class="comment">;</span>
+  it(<span class="string">"contains &lt;Layout /&gt;"</span>, <span class="literal">()</span> =&gt; {
+    expect(shallow(&lt;<span class="type">Component</span> /&gt;).find(<span class="symbol">'Layout'</span>).length).toEqual(<span class="number">1</span>);
+  });
 
-it<span class="list">(<span class="string">"invokes componentWillReceiveProps() after props changed"</span>, <span class="list">()</span> =&gt; {
-  spyOn<span class="list">(<span class="keyword">Component</span>.prototype, <span class="quoted">'componentWillReceiveProps</span>')</span>.and.callThrough<span class="list">()</span><span class="comment">;</span>
-  let container = mount<span class="list">(<span class="keyword">&lt;Component</span> {...props}/&gt;)</span><span class="comment">;</span>
-  container.setProps<span class="list">({
-    ...props,
-    dispatch: <span class="list">()</span> =&gt; <span class="quoted">'aa</span>'
-  })</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">Component</span>.prototype.componentWillReceiveProps)</span>.toHaveBeenCalled<span class="list">()</span><span class="comment">;</span>
-})</span><span class="comment">;</span>
+  it(<span class="string">"invokes componentDidMount() after mounted"</span>, <span class="literal">()</span> =&gt; {
+    spyOn(<span class="type">Component</span>.prototype, <span class="symbol">'componentDidMount'</span>).<span class="keyword">and</span>.callThrough<span class="literal">()</span>;
+    <span class="keyword">let</span> container = mount(&lt;<span class="type">Component</span> {...props}/&gt;);
+    expect(<span class="type">Component</span>.prototype.componentDidMount).toHaveBeenCalled<span class="literal">()</span>;
+  });
 
-it<span class="list">(<span class="string">"will toggle the state toggled if .toggle element is clicked"</span>, <span class="list">()</span> =&gt; {
-  let container = shallow<span class="list">(<span class="keyword">&lt;Component</span> {...props}/&gt;)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">container</span>.state<span class="list">(<span class="quoted">'toggled</span>')</span>)</span>.toBe<span class="list">(<span class="keyword">false</span>)</span><span class="comment">;</span>
-  let element = container.find<span class="list">(<span class="string">".toggle"</span>)</span>.at<span class="list">(<span class="number">0</span>)</span><span class="comment">;</span>
-  element.simulate<span class="list">(<span class="quoted">'click</span>')</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">container</span>.state<span class="list">(<span class="quoted">'toggled</span>')</span>)</span>.toBe<span class="list">(<span class="keyword">true</span>)</span><span class="comment">;</span>
-})</span><span class="comment">;</span>
+  it(<span class="string">"invokes componentWillReceiveProps() after props changed"</span>, <span class="literal">()</span> =&gt; {
+    spyOn(<span class="type">Component</span>.prototype, <span class="symbol">'componentWillReceiveProps'</span>).<span class="keyword">and</span>.callThrough<span class="literal">()</span>;
+    <span class="keyword">let</span> container = mount(&lt;<span class="type">Component</span> {...props}/&gt;);
+    container.setProps({
+      ...props,
+      dispatch: <span class="literal">()</span> =&gt; <span class="symbol">'aa'</span>
+    });
+    expect(<span class="type">Component</span>.prototype.componentWillReceiveProps).toHaveBeenCalled<span class="literal">()</span>;
+  });
 
-it<span class="list">(<span class="string">"renders .left-nav-section element with or without class 'toggled' according to the state toggled"</span>, <span class="list">()</span> =&gt; {
-  let container = shallow<span class="list">(<span class="keyword">&lt;Component</span> /&gt;)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">container</span>.find<span class="list">('.left-nav-section')</span>.length)</span>.toBe<span class="list">(<span class="number">1</span>)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">container</span>.find<span class="list">('.toggled')</span>.length)</span>.toBe<span class="list">(<span class="number">0</span>)</span><span class="comment">;</span>
-  container.setState<span class="list">({
-    toggled: true
-  })</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">container</span>.find<span class="list">('.left-nav-section')</span>.length)</span>.toBe<span class="list">(<span class="number">1</span>)</span><span class="comment">;</span>
-  expect<span class="list">(<span class="keyword">container</span>.find<span class="list">('.toggled')</span>.length)</span>.toBe<span class="list">(<span class="number">1</span>)</span><span class="comment">;</span>
-})</span><span class="comment">;</span>
-</code></pre><p>  });</p>
-<h5 id="测试component的疑问">测试component的疑问</h5><p>经过以上研究和总结，在测试component的部分还存在两点疑问没能解开，希望遇到的前辈大神们能够不吝赐教，在这里先谢谢了:)</p>
+  it(<span class="string">"will toggle the state toggled if .toggle element is clicked"</span>, <span class="literal">()</span> =&gt; {
+    <span class="keyword">let</span> container = shallow(&lt;<span class="type">Component</span> {...props}/&gt;);
+    expect(container.state(<span class="symbol">'toggled'</span>)).toBe(<span class="literal">false</span>);
+    <span class="keyword">let</span> element = container.find(<span class="string">".toggle"</span>).at(<span class="number">0</span>);
+    element.simulate(<span class="symbol">'click'</span>);
+    expect(container.state(<span class="symbol">'toggled'</span>)).toBe(<span class="literal">true</span>);
+  });
+
+  it(<span class="string">"renders .left-nav-section element with or without class 'toggled' according to the state toggled"</span>, <span class="literal">()</span> =&gt; {
+    <span class="keyword">let</span> container = shallow(&lt;<span class="type">Component</span> /&gt;);
+    expect(container.find(<span class="char">'.left-nav-section'</span>).length).toBe(<span class="number">1</span>);
+    expect(container.find(<span class="char">'.toggled'</span>).length).toBe(<span class="number">0</span>);
+    container.setState({
+      toggled: <span class="literal">true</span>
+    });
+    expect(container.find(<span class="char">'.left-nav-section'</span>).length).toBe(<span class="number">1</span>);
+    expect(container.find(<span class="char">'.toggled'</span>).length).toBe(<span class="number">1</span>);
+  });
+});
+</code></pre><h5 id="测试component的疑问">测试component的疑问</h5><p>经过以上研究和总结，在测试component的部分还存在两点疑问没能解开，希望遇到的前辈大神们能够不吝赐教，在这里先谢谢了:)</p>
 <p>第一个疑问：也是我在前文中提到过的疑问，就是在组件内部,除了<code>constructor</code>和<code>componentWillReceiveProps</code>等跟生命周期相关的方法之外，还有许多我们自定义的用于绑定到元素时间或者传给子组件的方法，这些方法是不能通过在组件的<code>prototype</code>上创建spy来监控是否被调用了，因为就算被调用了在断言里也会被当做没有调用的来处理。对于这种情况，如果该方法中修改了组件的state还好处理，在测试代码中读取修改之后的state就能判断该方法是否被调用。如果方法中没有改变state，也可以处理，那就是将该方法中的表达式提取出来，作为依赖引入该组件，再在测试代码中rewire这个依赖，就能够创建spy监控调用情况。我的疑问就是，除了这样麻烦的方法之外，还有什么方法呢？或者是我的思路本身就不对？</p>
 <p>第二个疑问：对于引用的外部组件库，比如集团内部的<code>react-sui</code>库。引用<code>Dropdown</code>组件之后，会给组件传入一个特性，值为<code>Menu</code>组件，在<code>Menu</code>组件内部又是若干<code>Menu.Item</code>组件，每一个都绑定了<code>onclick</code>事件。问题就在，<code>Dropdown</code>组件是<code>惰性加载</code>的，只有当鼠标hover到组件身上才会第一次渲染内部的<code>Menu</code>。因此如果在测试代码中什么都不做的话，<code>Menu</code>中的子元素是根本获取不到的，从而也就不能使测试代码覆盖到绑定的事件处理函数上。要想获取到内部的子组件，还必须考虑一个事情，就是测试库针对react的<code>浅渲染</code>(enzyme中是shallow()函数)是不能够触发惰性加载的，因为子组件要真正插入到页面中，必须是以DOM的形式存在的，因此要想获得子组件就必须要用<code>“深”渲染</code>(enzyme中是mount()函数)来将react组件渲染为DOM之后才能获取。那么问题就来了，我们引入的外部组件在<code>.js(x)</code>文件中是以react组件的形式而不是DOM的形式写入的，我们要获取实际渲染出来的DOM的形式就必须翻阅源码或者在浏览器中用devtool来定位到对应的DOM，而且就算找到了对应的DOM，也不能从DOM中读取到react组件上绑定的事件处理函数，那么测试代码就没法覆盖那一部分代码了。我的疑问是有没有什么好办法能在这种情况下获取react组件上绑定的事件处理函数。</p>
 <h4 id="其他部分的测试">其他部分的测试</h4><p>针对react-redux项目的其他部分的单元测试方法在前辈的文章中已经说得很清楚了，我也没有其他好的心得要补充，这里就不废话了。</p>
