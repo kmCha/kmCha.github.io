@@ -1,0 +1,1090 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,vue,vuex,weex," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="kMchA的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="背景weex刚开源不久，作为一名前端，当然是抑制不住自己的好奇心想要尝尝鲜。虽然weex的最大亮点在于对于电商类应用场景能够提供快速动态部署的功能，但是用js就能写跑在native端的页面更加吸引我。于是在空余时间就开始捣腾着weex，想做一个native app看看weex有什么“能耐”。
+在开发过程中，在体会到weex周边工具带来的效率提升的同时，也发现了不少问题。除了weex本身刚开源肯定会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weex中使用数据流工具Vuex实践">
+<meta property="og:url" content="http://kmhaoshuai.com/2016/07/30/use-vuex-in-weex/index.html">
+<meta property="og:site_name" content="kMchA的博客">
+<meta property="og:description" content="背景weex刚开源不久，作为一名前端，当然是抑制不住自己的好奇心想要尝尝鲜。虽然weex的最大亮点在于对于电商类应用场景能够提供快速动态部署的功能，但是用js就能写跑在native端的页面更加吸引我。于是在空余时间就开始捣腾着weex，想做一个native app看看weex有什么“能耐”。
+在开发过程中，在体会到weex周边工具带来的效率提升的同时，也发现了不少问题。除了weex本身刚开源肯定会">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/20434178.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/92645066.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/59518304.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/43089126.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/7590442.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/57291503.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/57968504.jpg">
+<meta property="og:updated_time" content="2016-07-31T14:22:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="weex中使用数据流工具Vuex实践">
+<meta name="twitter:description" content="背景weex刚开源不久，作为一名前端，当然是抑制不住自己的好奇心想要尝尝鲜。虽然weex的最大亮点在于对于电商类应用场景能够提供快速动态部署的功能，但是用js就能写跑在native端的页面更加吸引我。于是在空余时间就开始捣腾着weex，想做一个native app看看weex有什么“能耐”。
+在开发过程中，在体会到weex周边工具带来的效率提升的同时，也发现了不少问题。除了weex本身刚开源肯定会">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> weex中使用数据流工具Vuex实践 | kMchA的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-71275047-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?de501561394cbbb3abc142c4c786a527";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">kMchA的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">前端小菜鸡</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search icon-next-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'hdvJctNov5dTzHp_Syn9','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                weex中使用数据流工具Vuex实践
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-07-30T23:10:25+08:00" content="2016-07-30">
+              2016-07-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/30/use-vuex-in-weex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/30/use-vuex-in-weex/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="背景">背景</h1><p>weex刚开源不久，作为一名前端，当然是抑制不住自己的好奇心想要尝尝鲜。虽然weex的最大亮点在于对于电商类应用场景能够提供快速动态部署的功能，但是用js就能写跑在native端的页面更加吸引我。于是在空余时间就开始捣腾着weex，想做一个native app看看weex有什么“能耐”。</p>
+<p>在开发过程中，在体会到weex周边工具带来的效率提升的同时，也发现了不少问题。除了weex本身刚开源肯定会存在各种问题之外，还有一些开发体验的问题。weex相关的问题都在GitHub上提了issue，而开发体验的问题只能自己来解决了。</p>
+<p>本文主要记录的就是在用weex开发app过程中遇到的一个最大的问题——数据流管理问题。当然这个问题从某种程度上来说也是我“自找的”，毕竟现在weex大多数的应用场景（电商活动页面）的复杂度是不会有这个问题的。但是有想法就去试试也未尝不是一件好事，所以，接下来都是围绕着用weex来写单页app的情景来讨论的。</p>
+<p>在写app的过程中，一旦复杂度稍微上升一点，管理应用状态就是个非常痛苦的事情。在没有引入数据流工具之前，在weex里只能通过组件间的通信和传props来控制数据的流动，页面和交互少一点还好，一旦应用的状态多起来，散落在各处的应用状态就是一团乱麻。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/20434178.jpg" alt=""></p>
+<p>现在前端比较火的框架都有配套的数据流工具，比如react的redux、vue的vuex、angular的自己……可见，现在开源社区有很多可用的数据流方案。于是我就琢磨着给weex引入一套数据流工具。由于weex和vue的渊源，在工具选型方面也没怎么纠结，就vue的亲儿子vuex吧。</p>
+<h1 id="vuex简介">vuex简介</h1><p><a href="https://github.com/vuejs/vuex" target="_blank" rel="external">Vuex</a>是<a href="https://github.com/vuejs/vue" target="_blank" rel="external">Vue</a>的作者<a href="https://github.com/yyx990803" target="_blank" rel="external">尤小右</a>开发的为<code>Vue</code>服务的数据流工具。其大致思想跟<a href="https://github.com/reactjs/redux" target="_blank" rel="external">Redux</a>相近，但在API调用和数据流动方式方面还是有一点区别。例如，<code>vuex</code>中，想要改变<code>state</code>的值需要调用<code>store.dispatch(&#39;some action&#39;)</code>来调用<code>action</code>，这个<code>action</code>跟<code>Redux</code>中的<code>action</code>概念差不多，可以进行异步操作，然后在<code>action</code>中来调用<code>store.commit(&#39;some mutation&#39;)</code>触发<code>mutation</code>，<code>mutation</code>跟<code>redux</code>的<code>reducer</code>相似，对<code>state</code>直接进行操作，不能做异步操作。(从<code>vuex-v2.0.0</code>开始vuex外部也能调用<code>store.commit()</code>来调用<code>mutation</code>)。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/92645066.jpg" alt=""></p>
+<h1 id="引入过程">引入过程</h1><h2 id="了解weex从*-we文件到native页面的过程">了解weex从*.we文件到native页面的过程</h2><p><a href="https://github.com/alibaba/weex" target="_blank" rel="external">Weex</a>的<a href="http://alibaba.github.io/weex/doc/advanced/how-it-works.html" target="_blank" rel="external">相关文档</a>里已经很清楚的解释了这一过程：</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/59518304.jpg" alt=""></p>
+<p>作为(不会native的)前端，我们写的<code>.we</code>文件经过<code>webpack</code>的<code>weex-loader</code>编译以后，变成了native上JS Framework能够识别的JS Bundle，然后之后的生成<code>weex instance</code>和<code>Virtual DOM</code>就已经脱离我们的管辖范围了。也就是说，在前端<code>deploy</code>之前能做的就只有搞搞字符串的“把戏”。这一点很重要，在下面分析<code>vuex</code>的时候会说到。</p>
+<h2 id="分析主角vuex">分析主角vuex</h2><p>记得之前在GitHub上看到<code>vuex</code>的issue里有人问能不能把vuex用在别的框架里，作者的答复是</p>
+<blockquote>
+<p>Vuex is not coupled with what rendering platform you use.</p>
+</blockquote>
+<p>于是我就天真的安装了<code>vuex</code>并且引入到了<code>weex</code>项目中，直到报错信息中提到没有找到<code>Vue</code>实例才把我打回现实。看来是要改源码了。</p>
+<p>在vuex源码中，进行了一个初始化Vue实例的操作（说好的不依赖呢）：</p>
+<pre><code><span class="comment">// ...</span>
+function initStoreState (store, state, getters) {
+  <span class="comment">// bind getters</span>
+  store.getters = {}
+  <span class="keyword">const</span> computed = {}
+  <span class="keyword">Object</span>.keys(getters).forEach(<span class="variable">key</span> =&gt; {
+    <span class="keyword">const</span> fn = getters[<span class="variable">key</span>]
+    <span class="comment">// use computed to leverage its lazy-caching mechanism</span>
+    computed[<span class="variable">key</span>] = () =&gt; fn(store)
+    <span class="keyword">Object</span>.defineProperty(store.getters, <span class="variable">key</span>, {
+      <span class="built_in">get</span>: () =&gt; store._vm[<span class="variable">key</span>]
+    })
+  })
+
+  <span class="comment">// use a Vue instance to store the state tree</span>
+  <span class="comment">// suppress warnings just in case the user has added</span>
+  <span class="comment">// some funky global mixins</span>
+  <span class="keyword">const</span> silent = Vue.config.silent
+  Vue.config.silent = <span class="keyword">true</span>
+  store._vm = <span class="keyword">new</span> Vue({
+    data: { state },
+    computed
+  })
+  Vue.config.silent = silent
+}
+<span class="comment">// ...</span>
+</code></pre><p>报错的来源就是这里，从注释得知，作者用了个<code>Vue</code>实例来存储vuex的state tree，当用户直接访问<code>store.state.someState</code>的时候返回这个<code>Vue</code>实例中保存在<code>data</code>属性里的<code>state</code>，当用户直接访问<code>store.getters.someGetter</code>的时候返回这个<code>Vue</code>实例中保存在<code>computed</code>属性里的<code>getter</code>，仅此而已。吗？</p>
+<p>其实作者在这里用到<code>Vue</code>实例是“别有居心”的，因为这样就能复用<code>Vue</code>中的<code>watch</code>机制，当data改变，依赖该data的computed函数就会自动重新计算，因此，在store中的state改变之后，getters就会自动被计算了。</p>
+<p>既然说要和<code>Vue</code>解耦，那这个watch机制咋办？好在weex也在组件内部复用了<code>Vue</code>的那套watch，所以理论上这个问题是可以解决的。但是正如之前提到的，weex的实例是在native端的JS Framework生成的，我们在前端是访问不到的。但访问不到weex实例不代表我们不能把state和getters引入到weex实例中，因为实例是会根据我们写的<code>.we</code>文件来生成的，所以思路很清晰，我们在<code>.we</code>文件里引入store不就能在组件内访问state和getters了。（vuex源码的改动不仅限于替换Vue实例为普通对象）</p>
+<pre><code>// vuex源码
+// ...
+  store._vm = {
+    <span class="keyword">state</span>,
+    getters
+  }
+// ...
+// component.we
+<span class="variable">&lt;script&gt;</span>
+  var store = require('xxx/vuex/store');
+  module.exports = {
+    data: {
+      <span class="keyword">state</span>: store.<span class="keyword">state</span>
+    },
+    computed: {
+      getter: function() {
+        return store.getters.getter;
+      }
+    }
+  }
+<span class="variable">&lt;/script&gt;</span>
+
+// store.js
+var Vuex = require('vuex');
+var <span class="keyword">state</span> = {
+  getter: 'getter'
+};
+var getters = {
+  getter: function(store) {
+    return store.<span class="keyword">state</span>.getter;
+  }
+};
+module.exports = new Vuex.Store({
+  <span class="keyword">state</span>: <span class="keyword">state</span>,
+  getters: getters
+})
+</code></pre><p>我们将<code>store.state</code>和<code>getter</code>分别注入到了weex组件的<code>data</code>和<code>computed</code>中，这样我们相当于就利用了weex内部的watch机制，跟之前用<code>Vue</code>实例效果是一样的。虽然能够正常工作，但是我们想要在weex组件中用到vuex的store，那每次我们都需要手动引入<code>store.js</code>文件来访问store。这样显然是不太优雅的，我们来看看Vue是怎么做的，以下代码来自Vuex<a href="http://vuex.vuejs.org/zh-cn/tutorial.html" target="_blank" rel="external">官方文档</a></p>
+<pre><code><span class="literal">import</span> Vue from <span class="string">'vue'</span>
+<span class="literal">import</span> Vuex from <span class="string">'vuex'</span>
+
+<span class="comment">// 告诉 vue “使用” vuex</span>
+Vue.use(Vuex)
+
+<span class="comment">// 创建一个对象来保存应用启动时的初始状态</span>
+<span class="keyword">const</span> state = {
+  <span class="comment">// <span class="doctag">TODO:</span> 放置初始状态</span>
+}
+
+<span class="comment">// 创建一个对象存储一系列我们接下来要写的 mutation 函数</span>
+<span class="keyword">const</span> mutations = {
+  <span class="comment">// <span class="doctag">TODO:</span> 放置我们的状态变更函数</span>
+}
+
+<span class="comment">// 整合初始状态和变更函数，我们就得到了我们所需的 store</span>
+<span class="comment">// 至此，这个 store 就可以连接到我们的应用中</span>
+<span class="literal">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store({
+  state,
+  mutations
+})
+</code></pre><p>简单一句<code>Vue.use(Vuex)</code>然后在根组件内部引入<code>store</code>属性就能将store引入到vue的子组件里，通过在vue组件内部调用<code>this.$store</code>就能访问到store，而不是每个子组件引入一次store。但是由于weex没有提供这样的接口，因此又只能自己想办法了。</p>
+<h2 id="weex_transformer分析">weex transformer分析</h2><p>在前端，我们编写的是<code>.we</code>文件，native的JS Framework拿到的是JS Bundle，那从<code>.we</code>到JS Bundle的过程中发生了什么？这就要看transformer做了什么事情了。先看看以下<code>.we</code>文件和它对应的JS Bundle是什么样子的：</p>
+<pre><code><span class="comment">// main.we</span>
+&lt;template&gt;
+  &lt;div <span class="class"><span class="keyword">class</span>="<span class="title">ct</span>" <span class="title">style</span>="<span class="title">height</span>: "&gt;
+    &lt;<span class="title">image</span> <span class="title">class</span>="<span class="title">img</span>" <span class="title">style</span>="<span class="title">width</span>: 400<span class="title">px</span>; <span class="title">height</span>: 400<span class="title">px</span>;" <span class="title">src</span>="" <span class="title">onclick</span>="<span class="title">handleClick</span>"&gt;&lt;/<span class="title">image</span>&gt;
+  &lt;/<span class="title">div</span>&gt;
+&lt;/<span class="title">template</span>&gt;
+
+&lt;<span class="title">style</span>&gt;
+  .<span class="title">ct</span> </span>{
+    width: <span class="number">750</span>;
+    align-items: center;
+    justify-content: center;
+  }
+  .img {
+    margin-bottom: <span class="number">20</span>px;
+  }
+&lt;/style&gt;
+
+&lt;script&gt;
+  module.exports = {
+    data: {
+      ctHeight: <span class="number">800</span>,
+      img: <span class="string">'//gw.alicdn.com/tps/i2/TB1DpsmMpXXXXabaXXX20ySQVXX-512-512.png_400x400.jpg'</span>
+    },
+    methods: {
+      handleClick: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="comment">// do something</span>
+      }
+    },
+    created: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+      <span class="comment">// do something</span>
+    },
+    ready: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+      <span class="keyword">this</span>.ctHeight = <span class="keyword">this</span>.$getConfig().env.deviceHeight
+    }
+  }
+&lt;/script&gt;
+
+<span class="comment">// main.js</span>
+  <span class="comment">//...</span>
+  __weex_module__.exports = {
+        data: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{<span class="keyword">return</span> {
+          ctHeight: <span class="number">800</span>,
+          img: <span class="string">'//gw.alicdn.com/tps/i2/TB1DpsmMpXXXXabaXXX20ySQVXX-512-512.png_400x400.jpg'</span>
+        }},
+        methods: {
+          dispa: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+            <span class="comment">// do something</span>
+          }
+        },
+        created: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+          <span class="comment">// do something</span>
+        },
+        ready: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+          <span class="keyword">this</span>.ctHeight = <span class="keyword">this</span>.$getConfig().env.deviceHeight
+        }
+      }
+
+    ;__weex_module__.exports.template = __weex_module__.exports.template || {}
+    ;Object.assign(__weex_module__.exports.template, {
+      <span class="string">"type"</span>: <span class="string">"div"</span>,
+      <span class="string">"classList"</span>: [
+        <span class="string">"ct"</span>
+      ],
+      <span class="string">"style"</span>: {
+        <span class="string">"height"</span>: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{<span class="keyword">return</span> <span class="keyword">this</span>.ctHeight}
+      },
+      <span class="string">"children"</span>: [
+        {
+          <span class="string">"type"</span>: <span class="string">"image"</span>,
+          <span class="string">"classList"</span>: [
+            <span class="string">"img"</span>
+          ],
+          <span class="string">"style"</span>: {
+            <span class="string">"width"</span>: <span class="number">400</span>,
+            <span class="string">"height"</span>: <span class="number">400</span>
+          },
+          <span class="string">"attr"</span>: {
+            <span class="string">"src"</span>: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{<span class="keyword">return</span> <span class="keyword">this</span>.img}
+          },
+          <span class="string">"events"</span>: {
+            <span class="string">"click"</span>: <span class="string">"dispa"</span>
+          }
+        }
+      ]
+    })
+    ;__weex_module__.exports.style = __weex_module__.exports.style || {}
+    ;Object.assign(__weex_module__.exports.style, {
+      <span class="string">"ct"</span>: {
+        <span class="string">"width"</span>: <span class="number">750</span>,
+        <span class="string">"alignItems"</span>: <span class="string">"center"</span>,
+        <span class="string">"justifyContent"</span>: <span class="string">"center"</span>
+      },
+      <span class="string">"img"</span>: {
+        <span class="string">"marginBottom"</span>: <span class="number">20</span>
+      }
+    })
+  <span class="comment">// ...</span>
+</code></pre><p>可以看出，从<code>.we</code>文件转换到到JS Bundle的过程中，实际上就是对<code>.we</code>文件进行了编译，将他转换成JS Framework能够识别的格式。所以可以理解为，JS Bundle就是格式不同的<code>.we</code>文件，只要<code>.we</code>文件的格式是符合transformer要求的，那么transformer就可以输出符合JS Framework要求的JS Bundle。所以，只要保证在每次转换前的文件格式符合转换器的要求，我们对转换前的文件做怎样的修改都可以。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/43089126.jpg" alt=""></p>
+<p>因此，为了解决需要在每个weex组件内部<code>require(xxx/store)</code>的问题，我们可以写一个loader，在transformer之前将<code>require</code>语句引入到每个<code>.we</code>文件中，这样就解决了这个问题。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/7590442.jpg" alt=""></p>
+<p>另外，要用weex组件的watch机制，就需要在组件的data中引入<code>store.state</code>，所以loader也需要做这个事情。</p>
+<h1 id="weex+vuex使用方法">weex+vuex使用方法</h1><h2 id="安装weex-vuex-loader">安装weex-vuex-loader</h2><p><a href="https://github.com/kmCha/weex-vuex-loader" target="_blank" rel="external">weex-vuex-loader</a>是上面提到的在weex transformer之前处理<code>.we</code>文件的webpack loader。</p>
+<p>首先在项目下安装weex-vuex-loader：</p>
+<pre><code>npm <span class="operator"><span class="keyword">install</span> <span class="comment">--save weex-vuex-loader</span></span>
+</code></pre><p>然后打开<code>webpack.config.js</code>，在weex-loader之后添加weex-vuex-loader：</p>
+<pre><code>// ...
+<span class="atom">module</span>: {
+  <span class="atom">loaders</span>: [
+    {
+      <span class="atom">test</span>: /\.<span class="atom">we</span>(\?[^?]+)?$/,
+      <span class="atom">loaders</span>: [<span class="string">'weex-loader'</span>, <span class="string">'weex-vuex-loader?store'</span>]
+    }
+  ]
+}
+// ...
+</code></pre><p>后面<code>?</code>之后的<code>store</code>是用户能够自定义的，你可以替换成你想要的变量，这个变量就是在weex组件中通过<code>this</code>访问到的vuex的<code>store</code>。例如上面的例子中，<code>?</code>之后是<code>store</code>，那么在weex组件中就可以通过<code>this.store</code>访问vuex的<code>store</code>。</p>
+<p>这样做的原因是，本来想像<code>Vue</code>一样，通过<code>this.$store</code>来访问，但是JS Framework的规则不允许weex组件中的data里有<code>$</code>开头的变量，因为这些变量是事先定义好的weex组件的vm的属性。</p>
+<p>所以，这里只能将默认的访问方式改为<code>this._store</code>，也就是在<code>weex-vuex-loader</code>后面不指定变量名的默认情况。考虑到不是人人都喜欢这样的访问方式，干脆就改成能够自定义了。</p>
+<h2 id="安装vuex-weex">安装vuex-weex</h2><pre><code>npm <span class="operator"><span class="keyword">install</span> <span class="comment">--save vuex-weex</span></span>
+</code></pre><p><a href="https://github.com/kmCha/vuex-weex" target="_blank" rel="external">vuex-weex</a>是为了让Vuex适配Weex，更改了源码之后的Vuex。然后在项目根目录下<code>src/vuex/</code>中添加<code>store.js</code>文件，写法参考<a href="https://github.com/vuejs/vuex/releases/tag/v2.0.0-rc.1" target="_blank" rel="external">vuex-v2.0.0-rc.1</a>。由于现在weex还不支持ES6语法，因此<code>store.js</code>中还是用ES5来写吧：</p>
+<pre><code>// src/vuex/store.js
+var Vuex = require('vuex-weex');
+var <span class="keyword">state</span> = {your <span class="keyword">state</span> object};
+var mutations = {
+  someMutation: function(<span class="keyword">state</span>, payload) {
+    // modify some <span class="keyword">state</span>
+  }
+};
+var actions = {
+  someAction: function(store, payload) {
+    var commit = store.commit;
+    // async operations
+    commit('someMutation', payload);
+  }
+};
+var getters = {
+  someComputedState: function(store) {
+    return compute(store.<span class="keyword">state</span>.someState);
+  }
+};
+module.exports = new Vuex.Store({
+  <span class="keyword">state</span>: <span class="keyword">state</span>,
+  mutations: mutations,
+  actions: actions,
+  getters: getters
+});
+</code></pre><p>需要注意的是，这里getter的第一个参数是<code>store</code>，并不是Vuex中原本的<code>state</code>。</p>
+<h2 id="编写-we文件">编写.we文件</h2><p>完成了上面两个步骤之后，就能愉快地在.we文件中使用vuex了：</p>
+<pre><code>// webpack.config.js
+//...
+module: {
+  loaders: [
+    {
+      test: /\.we(\?[^?]+)?$/,
+      loaders: ['weex-loader', 'weex-vuex-loader?store']
+    }
+  ]
+}
+//...
+
+// store.js
+var Vuex = require('vuex-weex');
+var <span class="keyword">state</span> = {
+  count: <span class="number">0</span>
+};
+var mutations = {
+  inc: function(<span class="keyword">state</span>) {
+    <span class="keyword">state</span>.count++;
+  }
+};
+var getters = {
+  wrappedCount: function(store) {
+    return store.<span class="keyword">state</span>.count + '次';
+  }
+};
+module.exports = new Vuex.Store({
+  <span class="keyword">state</span>: <span class="keyword">state</span>,
+  mutations: mutations,
+  getters: getters
+});
+
+// component.we
+<span class="variable">&lt;template&gt;</span>
+  <span class="variable">&lt;text&gt;</span><span class="variable"></span><span class="variable">&lt;/text&gt;</span>
+  <span class="variable">&lt;div onclick="inc"&gt;</span>递增<span class="variable">&lt;/div&gt;</span>
+<span class="variable">&lt;/template&gt;</span>
+
+<span class="variable">&lt;script&gt;</span>
+  module.exports = {
+    computed: {
+      count: function() {
+        return this._store.getters.wrappedCount;
+      }
+    },
+    methods: {
+      inc: function() {
+        this._store.commit('inc');
+      }
+    }
+  }
+<span class="variable">&lt;script&gt;</span>
+</code></pre><h1 id="还存在的问题">还存在的问题</h1><p>Vue中的action是支持异步操作的，返回Promise即可，weex也在native端支持了Promise，看起来不应该有什么问题。但是我在使用过程中发现，在action中加入异步操作之后，在<code>then()</code>中调用了<code>commit()</code>来触发某个mutation之后，虽然mutation会执行(例如改变某个state)，并且weex组件中调用了依赖这个state的getter的computed函数也会执行，但是视图是不会更新的，除非你再触发一个事件(比如click事件)，之后视图才会更新。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/57291503.jpg" alt=""></p>
+<p>所以，为了避免这个问题，建议将异步操作放在weex组件内部，官方也提供了<a href="http://alibaba.github.io/weex/doc/modules/stream.html" target="_blank" rel="external">stream</a>API来支持异步操作。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/57968504.jpg" alt=""></p>
+<p>这样就能如丝般顺滑地体验weex+vuex了。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+            <a href="/tags/vue/" rel="tag">#vue</a>
+          
+            <a href="/tags/vuex/" rel="tag">#vuex</a>
+          
+            <a href="/tags/weex/" rel="tag">#weex</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/18/react-redux-unit-test/" rel="next" title="React-Redux项目单元测试实践总结">
+                <i class="fa fa-chevron-left"></i> React-Redux项目单元测试实践总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/30/use-vuex-in-weex/"
+     data-title="weex中使用数据流工具Vuex实践"
+     data-content=""
+     data-url="http://kmhaoshuai.com/2016/07/30/use-vuex-in-weex/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/30/use-vuex-in-weex/"
+           data-title="weex中使用数据流工具Vuex实践" data-url="http://kmhaoshuai.com/2016/07/30/use-vuex-in-weex/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="kMchA" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">kMchA</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">kmhaoshuai.com | assignmentrecorder.com</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kmCha" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> github
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/2483546133" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vuex简介"><span class="nav-number">2.</span> <span class="nav-text">vuex简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引入过程"><span class="nav-number">3.</span> <span class="nav-text">引入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解weex从*-we文件到native页面的过程"><span class="nav-number">3.1.</span> <span class="nav-text">了解weex从*.we文件到native页面的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析主角vuex"><span class="nav-number">3.2.</span> <span class="nav-text">分析主角vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#weex_transformer分析"><span class="nav-number">3.3.</span> <span class="nav-text">weex transformer分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#weex+vuex使用方法"><span class="nav-number">4.</span> <span class="nav-text">weex+vuex使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装weex-vuex-loader"><span class="nav-number">4.1.</span> <span class="nav-text">安装weex-vuex-loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装vuex-weex"><span class="nav-number">4.2.</span> <span class="nav-text">安装vuex-weex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写-we文件"><span class="nav-number">4.3.</span> <span class="nav-text">编写.we文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#还存在的问题"><span class="nav-number">5.</span> <span class="nav-text">还存在的问题</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kMchA</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"kmcha"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
