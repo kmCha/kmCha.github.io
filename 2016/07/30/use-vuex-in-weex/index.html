@@ -70,7 +70,13 @@
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/7590442.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/96401976.jpg">
 <meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/101127.jpg">
-<meta property="og:updated_time" content="2016-07-31T15:23:01.000Z">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/41350200.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/35551405.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/81777468.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/56631687.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/59714704.jpg">
+<meta property="og:image" content="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/37379465.jpg">
+<meta property="og:updated_time" content="2016-08-01T09:37:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="weex中使用数据流工具Vuex实践">
 <meta name="twitter:description" content="背景weex刚开源不久，作为一名前端，当然是抑制不住自己的好奇心想要尝尝鲜。虽然weex的最大亮点在于对于电商类应用场景能够提供快速动态部署的功能，但是用js就能写跑在native端的页面更加吸引我。于是在空余时间就开始捣腾着weex，想做一个native app看看weex有什么“能耐”。
@@ -528,7 +534,7 @@ Vue.use(Vuex)
 <p>另外，要用weex组件的watch机制，就需要在组件的data中引入<code>store.state</code>，所以loader也需要做这个事情。</p>
 <h1 id="weex+vuex使用方法">weex+vuex使用方法</h1><h2 id="安装weex-vuex-loader">安装weex-vuex-loader</h2><p><a href="https://github.com/kmCha/weex-vuex-loader" target="_blank" rel="external">weex-vuex-loader</a>是上面提到的在weex transformer之前处理<code>.we</code>文件的webpack loader。</p>
 <p>首先在项目下安装weex-vuex-loader：</p>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> <span class="comment">--save weex-vuex-loader</span></span>
+<pre><code>npm install --<span class="built_in">save</span>-<span class="built_in">dev</span> weex-vuex-loader
 </code></pre><p>然后打开<code>webpack.config.js</code>，在weex-loader之后添加weex-vuex-loader：</p>
 <pre><code>// ...
 <span class="atom">module</span>: {
@@ -630,7 +636,15 @@ module.exports = new Vuex.Store({
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/96401976.jpg" alt=""></p>
 <p>所以，为了避免这个问题，建议将异步操作放在weex组件内部，官方也提供了<a href="http://alibaba.github.io/weex/doc/modules/stream.html" target="_blank" rel="external">stream</a>API来支持异步操作。</p>
 <p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-7-31/101127.jpg" alt=""></p>
+<p>说到stream模块，在目前的weex-v0.6.1中，在ios端传给回调函数的<code>response</code>的类型是<code>string</code>而不是<code>object</code>，所以在处理之前需要先<code>JSON.parse(response)</code>。这个BUG将会在下个版本被修复。</p>
 <p>这样就能如丝般顺滑地体验weex+vuex了。</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/41350200.jpg" alt=""></p>
+<p>下面gif中就是这几天用weex+vuex写的模仿“口袋记账APP”的单页应用，跑在IOS Playground上</p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/35551405.jpg" alt=""></p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/81777468.jpg" alt=""></p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/56631687.jpg" alt=""></p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/59714704.jpg" alt=""></p>
+<p><img src="http://7xoxzw.com1.z0.glb.clouddn.com/16-8-1/37379465.jpg" alt=""></p>
 </span>
       
     </div>
