@@ -1,8 +1,10 @@
 <template>
   <div class="navigator">
     <!-- 使用指令 v-link 进行导航。 -->
-    <a v-link="{ path: '/foo' }">Go to Foo</a>
-    <a v-link="{ path: '/bar' }">Go to Bar</a>
+    <a v-link="{ path: '/articles' }">文章</a>
+    <a v-link="{ path: '/categories' }">分类</a>
+    <a v-link="{ path: '/achieves' }">归档</a>
+    <a v-link="{ path: '/tags' }">标签</a>
   </div>
 </template>
 

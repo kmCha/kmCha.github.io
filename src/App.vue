@@ -7,12 +7,14 @@
 
 <script>
 import Navigator from './components/Navigator'
+import store from './store'
 
 export default {
   components: {
     Navigator
   },
-  replace: false
+  replace: false,
+  store: store
 }
 </script>
 
