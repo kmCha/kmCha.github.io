@@ -32,7 +32,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+$primary-color: #0dc7e3;
+$secondary-color: #e30d8b;
+$font-color: #444;
 html {
   font-size: 16px;
 }
@@ -42,7 +45,14 @@ body {
   justify-content: center;
   padding-top: 50px;
 }
-
+.container {
+  padding: 2rem 20rem;
+  @media (max-width: 1140px) {
+    max-width: calc(1140px - 40rem);
+    padding: 2rem 0;
+    margin: 0 auto;
+  }
+}
 #app {
   color: #444;
   font-family: Source Sans Pro, Helvetica, sans-serif;

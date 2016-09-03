@@ -26,6 +26,7 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
