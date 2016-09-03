@@ -1,6 +1,8 @@
 <template>
-  <div class="hello">
-    <h1 v-if="!$loadingRouteData">{{ count }}</h1>
+  <div class="articles">
+    <div v-for="article in articles">
+      {{article.title}}
+    </div>
     <button type="button" name="button" @click="inc"></button>
   </div>
 </template>
@@ -9,16 +11,12 @@
 export default {
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
       msg: 'Hello World!'
     }
   },
   computed: {
-    count () {
-      return this.$store.getters.count
+    articles () {
+      return this.$store.state.articles
     }
   },
   methods: {
@@ -28,9 +26,9 @@ export default {
   },
   route: {
     data ({next}) {
-      setTimeout(() => {
-        next()
-      }, 1000)
+      return this.$store.dispatch('getArticles').catch(res => {
+        console.log('提示网络问题')
+      })
     }
   }
 }
@@ -40,5 +38,11 @@ export default {
 <style scoped>
 h1 {
   color: #42b983;
+}
+.articles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

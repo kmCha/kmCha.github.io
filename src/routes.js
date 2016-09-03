@@ -1,16 +1,19 @@
-import Hello from './components/Hello'
+import Articles from './components/Articles'
+import Categories from './components/Categories'
+import Achieves from './components/Achieves'
+import Tags from './components/Tags'
 
 export default {
   '/articles': {
-    component: Hello
+    component: Articles
   },
   '/categories': {
-    component: Hello
+    component: Categories
   },
   '/achieves': {
-    component: Hello
+    component: Achieves
   },
   '/tags': {
-    component: Hello
+    component: Tags
   }
 }

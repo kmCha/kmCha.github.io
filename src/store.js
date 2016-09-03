@@ -1,18 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { getArticles } from './api'
 
 Vue.use(Vuex)
 
 var state = {
-  count: 1
+  articles: {}
 }
 
 var mutations = {
-  inc: state => state.count++
+  setArticles: (state, articles) => {
+    state.articles = articles
+  }
 }
 
 var actions = {
-
+  getArticles: ({commit}) => {
+    return getArticles().then(res => {
+      commit('setArticles', res.json())
+    })
+  }
 }
 
 var getters = {
