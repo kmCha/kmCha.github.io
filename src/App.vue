@@ -27,13 +27,13 @@ body {
 }
 
 #app {
-  color: #2c3e50;
+  color: #444;
   font-family: Source Sans Pro, Helvetica, sans-serif;
   width: 100%;
 }
 
-#app a {
-  color: #42b983;
+a {
+  color: #0dc7e3;
   text-decoration: none;
 }
 </style>
