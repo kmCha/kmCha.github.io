@@ -5,7 +5,7 @@ import { getArticles } from './api'
 Vue.use(Vuex)
 
 var state = {
-  articles: {}
+  articles: ''
 }
 
 var mutations = {

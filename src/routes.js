@@ -2,6 +2,7 @@ import Articles from './components/Articles'
 import Categories from './components/Categories'
 import Achieves from './components/Achieves'
 import Tags from './components/Tags'
+import Article from './components/Article'
 
 export default {
   '/articles': {
@@ -15,5 +16,8 @@ export default {
   },
   '/tags': {
     component: Tags
+  },
+  '/articles/:key': {
+    component: Article
   }
 }

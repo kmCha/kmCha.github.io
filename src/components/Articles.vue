@@ -1,9 +1,8 @@
 <template>
   <div class="articles">
     <div v-for="article in articles">
-      {{article.title}}
+      <a v-link="{ path: '/articles/' + $key }">{{article.title}}</a>
     </div>
-    <button type="button" name="button" @click="inc"></button>
   </div>
 </template>
 

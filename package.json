@@ -16,9 +16,7 @@
     "vue": "^1.0.21",
     "vue-resource": "^0.9.3",
     "vue-router": "^0.7.13",
-    "vuex": "^2.0.0-rc.5",
-    "wilddog": "^2.0.0",
-    "wildvue": "^1.0.4"
+    "vuex": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
