@@ -66,6 +66,11 @@ h1 {
   align-items: center;
   flex-direction: column;*/
   padding: 10rem 20rem;
+  @media (max-width: 1140px) {
+    max-width: calc(1140px - 40rem);
+    padding: 10rem 0;
+    margin: 0 auto;
+  }
   .title {
     text-align: center;
     margin-bottom: 5rem;

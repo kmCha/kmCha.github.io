@@ -14,12 +14,27 @@ export default {
     Navigator
   },
   replace: false,
-  store: store
+  store: store,
+  ready () {
+    let defaultWidth = 1527
+    let defaultSize = 16
+    setFontSize()
+    window.addEventListener('resize', e => {
+      setFontSize()
+    })
+    function setFontSize () {
+      let windowWidth = window.innerWidth
+      let size = windowWidth / defaultWidth * defaultSize
+      document.documentElement.style.fontSize = size + 'px'
+    }
+  }
 }
 </script>
 
 <style>
-
+html {
+  font-size: 16px;
+}
 body {
   display: flex;
   align-items: center;
