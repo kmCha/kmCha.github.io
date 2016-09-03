@@ -2,7 +2,6 @@
   <div class="article" v-if="!$loadingRouteData">
     <h1>{{ article.title }}</h1>
     {{{ article.body }}}
-    <button type="button" name="button" @click="inc"></button>
   </div>
 </template>
 
@@ -26,13 +25,14 @@ export default {
   route: {
     data ({next, to}) {
       this.articleKey = to.params.key
-      if (!this.$store.state.articles) {
-        return this.$store.dispatch('getArticles').catch(res => {
-          console.log('提示网络问题')
-        })
-      } else {
-        next()
-      }
+      next()
+    //   if (!this.$store.state.articles) {
+    //     return this.$store.dispatch('getArticles').catch(res => {
+    //       console.log('提示网络问题')
+    //     })
+    //   } else {
+    //     next()
+    //   }
     }
   }
 }

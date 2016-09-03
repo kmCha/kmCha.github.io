@@ -3,6 +3,7 @@ import App from './App'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import WildVue from 'wildvue'
+import store from './store'
 
 var VueResource = require('vue-resource')
 
@@ -19,5 +20,18 @@ var router = new VueRouter()
 // })
 
 router.map(routes)
+
+router.beforeEach(({ to, next }) => {
+  if (store.state.articles && store.state.categories) {
+    next()
+  } else {
+    return Promise.all([
+      store.dispatch('getArticles'),
+      store.dispatch('getCategories')
+    ]).catch(res => {
+      console.log('提示网络问题')
+    })
+  }
+})
 
 router.start(App, 'body')

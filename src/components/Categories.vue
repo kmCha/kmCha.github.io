@@ -1,6 +1,8 @@
 <template>
-  <div class="categories">
-    <h1>{{ msg }}</h1>
+  <div class="categories" v-if="!$loadingRouteData">
+    <div v-for="category in categories">
+      <a v-link="{ path: '/categories/' + $key }">{{$key}}({{category.length || '1'}})</a>
+    </div>
   </div>
 </template>
 
@@ -12,8 +14,8 @@ export default {
     }
   },
   computed: {
-    count () {
-      return this.$store.getters.count
+    categories () {
+      return this.$store.state.categories
     }
   },
   methods: {
@@ -22,11 +24,11 @@ export default {
     }
   },
   route: {
-    data ({next}) {
-      setTimeout(() => {
-        next()
-      }, 1000)
-    }
+    // data ({next}) {
+    //   return this.$store.dispatch('getCategories').catch(res => {
+    //     console.log('提示网络问题')
+    //   })
+    // }
   }
 }
 </script>

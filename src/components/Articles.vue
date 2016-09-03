@@ -24,11 +24,11 @@ export default {
     }
   },
   route: {
-    data ({next}) {
-      return this.$store.dispatch('getArticles').catch(res => {
-        console.log('提示网络问题')
-      })
-    }
+    // data ({next}) {
+    //   return this.$store.dispatch('getArticles').catch(res => {
+    //     console.log('提示网络问题')
+    //   })
+    // }
   }
 }
 </script>
