@@ -22,6 +22,7 @@ export default {
     window.addEventListener('resize', e => {
       setFontSize()
     })
+    // 根据窗口大小设置html字体大小，rem响应式
     function setFontSize () {
       let windowWidth = window.innerWidth
       let size = windowWidth / defaultWidth * defaultSize
