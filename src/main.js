@@ -27,7 +27,8 @@ router.beforeEach(({ to, next }) => {
   } else {
     return Promise.all([
       store.dispatch('getArticles'),
-      store.dispatch('getCategories')
+      store.dispatch('getCategories'),
+      store.dispatch('getTags')
     ]).catch(res => {
       console.log('提示网络问题')
     })

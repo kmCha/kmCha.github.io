@@ -68,6 +68,9 @@ h1 {
   .title {
     text-align: center;
     margin-bottom: 5rem;
+    h1 {
+      color: #ef70bb;
+    }
   }
   .body {
     img {

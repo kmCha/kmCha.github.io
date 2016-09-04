@@ -34,10 +34,11 @@ export default {
 
 <style lang="scss">
 $primary-color: #0dc7e3;
-$secondary-color: #e30d8b;
+$secondary-color: #ef70bb;
 $font-color: #444;
 html {
   font-size: 16px;
+  font-family: "Arial","LiHei Pro Medium","Microsoft YaHei","黑体","宋体",sans-serif;
 }
 body {
   display: flex;
@@ -55,7 +56,6 @@ body {
 }
 #app {
   color: #444;
-  font-family: Source Sans Pro, Helvetica, sans-serif;
   width: 100%;
 }
 

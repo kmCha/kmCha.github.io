@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getArticles, getCategories } from './api'
+import { getArticles, getCategories, getTags } from './api'
 
 Vue.use(Vuex)
 
 var state = {
   articles: '',
-  categories: ''
+  categories: '',
+  tags: ''
 }
 
 var mutations = {
@@ -15,6 +16,9 @@ var mutations = {
   },
   setCategories: (state, categories) => {
     state.categories = categories
+  },
+  setTags: (state, tags) => {
+    state.tags = tags
   }
 }
 
@@ -34,6 +38,12 @@ var actions = {
         }
       }
       commit('setCategories', categories)
+    })
+  },
+  getTags: ({commit}) => {
+    return getTags().then(res => {
+      let tags = res.json()
+      commit('setTags', tags)
     })
   }
 }

@@ -42,7 +42,7 @@ export default {
       transition: 0.2s ease all;
       color: #fff;
       &:hover {
-        background-color: #e30d8b;
+        background-color: #ef70bb;
         padding: 0.5rem 2.2rem;
         // transform: scale(1.5);
       }

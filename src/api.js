@@ -11,3 +11,6 @@ export function getArticles () {
 export function getCategories () {
   return Vue.http.get('https://chamajiuxi.wilddogio.com/blog/categories.json')
 }
+export function getTags () {
+  return Vue.http.get('https://chamajiuxi.wilddogio.com/blog/tags.json')
+}

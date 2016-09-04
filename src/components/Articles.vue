@@ -4,17 +4,20 @@
       <h1>全部文章</h1>
     </div>
     <div v-for="article in articles">
-      <a class="title-wrapper" v-link="{ path: '/articles/' + $key }">
+      <article-list-item :article="article" :key="$key"></article-list-item>
+      <!-- <a class="title-wrapper" v-link="{ path: '/articles/' + $key }">
         <div class="title">
           <span>{{article.title}}</span>
         </div>
         <span class="date">{{article.date.substr(0, 10)}}</span>
-      </a>
+      </a> -->
     </div>
   </div>
 </template>
 
 <script>
+import ArticleListItem from './ArticleListItem.vue'
+
 export default {
   data () {
     return {
@@ -30,6 +33,9 @@ export default {
     inc () {
       this.$store.commit('inc')
     }
+  },
+  components: {
+    ArticleListItem
   },
   route: {
     // data ({next}) {
@@ -53,6 +59,7 @@ export default {
     text-align: center;
     h1 {
       color: #444;
+      margin-bottom: 50px;
     }
   }
   .title-wrapper {
@@ -77,7 +84,7 @@ export default {
       transition: .2s linear all;
       span {
         white-space: nowrap;
-        color: #e30d8b;
+        color: #ef70bb;
       }
     }
     .date {
