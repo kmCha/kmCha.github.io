@@ -110,7 +110,7 @@
       dataYOffset: option.dataYOffset || 0, // 获取画布data的y偏移值
       dataWidth: option.dataWidth || this.canvasWidth, // 获取画布data的宽度
       dataHeight: option.dataHeight || this.canvasHeight, // 获取画布data的高度
-      cols: option.cols || option.dataWidth /  || this.canvasWidth,  // 采样列数
+      cols: option.cols || option.dataWidth || this.canvasWidth,  // 采样列数
       rows: option.rows || option.dataHeight || this.canvasHeight,  // 采样行数
       initialX: option.initialX || this.canvasWidth / 2 + Math.round((Math.random() - 0.5) * 10), // 动画起始x坐标
       initialY: option.initialY || Math.floor(this.canvasHeight / 2) + Math.round((Math.random() - 0.5) * 10), // 动画起始y坐标
