@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>particle</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="1500" height="800" style="float: left;">不支持</canvas>
+    <button type="button" id="draw">画图</button>
+    <button type="button" id="animate">粒子动画</button>
+    <button type="button" id="clear">清空画布</button>
+    <script type="text/javascript" src="./partimation.js"></script>
+    <script type="text/javascript">
+      window.onload = function () {
+        var particle = new Partimate('#myCanvas')
+        var canvas = document.querySelector('#myCanvas')
+        document.querySelector('#draw').onclick = function () {
+          particle.draw().then(function () {
+            console.log('draw finished')
+          })
+        }
+        document.querySelector('#animate').onclick = function () {
+          particle.animate().then(function () {
+            console.log('animation finished')
+          })
+        }
+        document.querySelector('#clear').onclick = function () {
+          particle.clearCtx()
+        }
+        // particle.textConfig({
+        //   text: '哈哈哈哈哈哈',
+        //   font: '50px sans-serif',
+        //   fontColor: '#000',
+        //   textX: 200,
+        //   textY: 200
+        // })
+        particle.imageConfig({ // 同canvas.context.drawImage() API的9个参数
+          imgUrl: '/public/blog-title.png',
+          // sx: option.sx || 0,
+          // sy: option.sy || 0,
+          // sWidth: option.sWidth || image.width,
+          // sHeight: option.sHeight || image.height,
+          // dx: option.dx || 0,
+          // dy: option.dy || 0,
+          // dWidth: option.sWidth || image.width,
+          // dHeight: option.sHeight || image.height
+          // contain: true,
+          cover: true
+        })
+        particle.animationConfig({
+          // dataXOffset: canvas.width * 0.2, // 画布data的x偏移值
+          // dataYOffset: 0, // 画布data的y偏移值
+          // dataWidth: canvas.width * 0.5, // 画布data的宽度, 默认canvas宽度
+          // dataHeight: 200, // 画布data的高度, 默认canvas高度
+          // cols: option.cols || option.dataWidth / 2 || this.canvasWidth / 2,  // 采样列数，默认canvas宽度
+          // rows: option.rows || option.dataHeight / 2 || this.canvasHeight / 2,  // 采样行数，默认canvas高度
+          cols: 500,
+          rows: 500,
+          // initialX: option.initialX || this.canvasWidth / 2 + parseInt((Math.random() - 0.5) * 10), // 动画起始x坐标，默认canvas宽度一半加一个随机偏移值
+          // initialY: option.initialY || Math.floor(this.canvasHeight / 2) + parseInt((Math.random() - 0.5) * 10), // 动画起始y坐标，默认canvas高度一半加一个随机偏移值
+          // totalFrame: 100, // 动画总时间，默认500帧
+          // animationType: option.animationType || 'easeInOutExpo', // 动画曲线类型，默认easeOutExpo, http://easings.net/zh-cn#
+          animationType: 'easeOutElastic',
+          blur: function(r, g, b, a) {
+            if (r < 20 && g < 20 && b < 20 && a > 0) {
+              return 0
+            }
+            return 10
+          },
+          filter: function (r, g, b, a) { // 像素filter，滤出rgba满足条件的像素
+            // return ((r < 20 && g < 20 && b < 20) || r > 200) && a > 0
+            return (g > 180 || r > 200 || b > 200) && a > 0
+            // return (r > 140 || g > 140 || b > 140) &&
+            // a === 255
+          },
+          delay: function (index) { // particle动画执行延时，输入参数为该粒子在particles数组里的index
+            return parseInt(Math.random() * 500)
+          }
+        })
+      }
+    </script>
+  </body>
+</html>
