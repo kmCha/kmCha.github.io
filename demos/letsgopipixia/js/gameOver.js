@@ -1,6 +1,6 @@
 var gameOverState = {
     preload: function() {
-        game.load.spritesheet('button', 'assets/button_sprite_sheet.png', 193, 71);
+        game.load.spritesheet('button', '../assets/button_sprite_sheet.png', 193, 71);
     },
     create: function() {
         var overText = game.add.text(WIDTH/2, HEIGHT/2, '死的好惨😭', { fontSize: '32px', fill: '#fff' });
