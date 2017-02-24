@@ -9,10 +9,10 @@ var killed = false;
 var playState = {
     preload: function() {
         game.load.spritesheet('player', 'assets/player.png', 108, 100);
-        game.load.tilemap('floor', '../assets/map.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('tiles', '../assets/brick.png');
-        game.load.image('sky', '../assets/sky.png');
-        game.load.spritesheet('enemy', '../assets/enemy.png', 57, 50);
+        game.load.tilemap('floor', 'assets/map.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('tiles', 'assets/brick.png');
+        game.load.image('sky', 'assets/sky.png');
+        game.load.spritesheet('enemy', 'assets/enemy.png', 57, 50);
     },
     create: function() {
         // 重置killed状态
