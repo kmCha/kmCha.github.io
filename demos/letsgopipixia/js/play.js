@@ -2,6 +2,7 @@ var map;
 var ground;
 var sky;
 var player;
+var xiaoqian;
 var timeText;
 var enemyGroup;
 var killed = false;
@@ -9,10 +10,10 @@ var killed = false;
 var playState = {
     preload: function() {
         game.load.spritesheet('player', 'assets/player.png', 108, 100);
-        game.load.tilemap('floor', 'assets/map.json', null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('tiles', 'assets/brick.png');
-        game.load.image('sky', 'assets/sky.png');
-        game.load.spritesheet('enemy', 'assets/enemy.png', 57, 50);
+        game.load.tilemap('floor', 'assets/map1.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('tiles-floor', 'assets/floor.png');
+        game.load.spritesheet('enemy', 'assets/enemy.png', 46, 30);
+        game.load.spritesheet('xiaoqian', 'assets/xiaoqian.png', 42, 100);
     },
     create: function() {
         // 重置killed状态
@@ -23,16 +24,16 @@ var playState = {
 
         //  地图
         map = game.add.tilemap('floor');
-        map.addTilesetImage('brick', 'tiles');
-        map.addTilesetImage('sky', 'sky');
+        map.addTilesetImage('floor', 'tiles-floor');
 
-        ground = map.createLayer('brick-tiles');
+        ground = map.createLayer('collide');
         ground.resizeWorld();
-        sky = map.createLayer('background');
-        sky.resizeWorld();
+        groundStyle = map.createLayer('floor');
+        groundStyle.resizeWorld();
 
-        map.setCollisionBetween(0, 100, true, ground);
+        map.setCollisionBetween(0, 10000);
 
+        // console.log(game.world.width, game.world.height)
         // 玩家
         player = game.add.sprite(32, 50, 'player');
 
@@ -46,7 +47,7 @@ var playState = {
         player.animations.add('right', [0, 1], 10, true);
 
         // 镜头跟随
-        game.camera.follow(player);
+        game.camera.follow(player, Phaser.Camera.STYLE_LOCKON, 1, 1);
 
         // 计时文字
         timeText = game.add.text(16, 16, '时间: 0s', { fontSize: '32px', fill: '#fff' });
@@ -56,9 +57,17 @@ var playState = {
         enemyGroup = game.add.group();
         enemyGroup.enableBody = true;
         var enemy1 = enemyGroup.create(500, 100, 'enemy');
-        enemy1.body.gravity.y = 300;
-        var enemy2 = enemyGroup.create(1600, 100, 'enemy');
-        enemy2.body.gravity.y = 300;
+        var enemy2 = enemyGroup.create(1550, 100, 'enemy');
+        enemyGroup.forEach(function(enemy) {
+            enemy.anchor.setTo(.5,.5);
+            enemy.body.gravity.y = 300;
+            enemy.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+        });
+
+        // 终点小倩
+        xiaoqian = game.add.sprite(game.world.width - 42, 100, 'xiaoqian');
+        game.physics.arcade.enable(xiaoqian);
+        xiaoqian.body.gravity.y = 1000;
     },
     update: function() {
         var volume = meter ? meter.volume * 1000 : 0,
@@ -68,7 +77,7 @@ var playState = {
         player.body.velocity.x = 0;
 
         // 下落死亡逻辑
-        if (player.position.y >= 540) {
+        if (player.position.y >= game.world.height - 105) {
             this.gameOver();
         }
 
@@ -86,11 +95,19 @@ var playState = {
         var int = parseInt(time / 4);
         if (int % 2 === 0) {
             enemyGroup.forEach(function(enemy) {
-                enemy.body.velocity.x = 50;
+                enemy.body.velocity.x = 80;
+                enemy.animations.play('right');
+                if (enemy.scale.x > 0) {
+                    enemy.scale.x *= -1;
+                }
             }, this);
         } else {
             enemyGroup.forEach(function(enemy) {
-                enemy.body.velocity.x = -50;
+                enemy.body.velocity.x = -80;
+                enemy.animations.play('right');
+                if (enemy.scale.x < 0) {
+                    enemy.scale.x *= -1;
+                }
             }, this);
         }
 
@@ -99,6 +116,7 @@ var playState = {
             collideWithFloor = true;
         });
         game.physics.arcade.collide(enemyGroup, ground);
+        game.physics.arcade.collide(xiaoqian, ground);
 
         // 玩家和怪物重叠
         game.physics.arcade.overlap(player, enemyGroup, this.killed, null, this);
@@ -114,6 +132,7 @@ var playState = {
         } else {
             player.body.velocity.x = 0;
             player.animations.stop();
+            player.frame = 0;
         }
 
         // 玩家跳跃
@@ -122,9 +141,15 @@ var playState = {
         }
 
         // 完成游戏逻辑
-        if (player.position.x >= game.world.width - 200) {
-            this.gameComplete();
-        }
+        game.physics.arcade.overlap(player, xiaoqian, this.gameComplete, null, this);
+        // if (player.position.x >= game.world.width - 200) {
+        //     this.gameComplete();
+        // }
+
+        // 更新游戏背景位置，凸显层次感
+        $('.bg-img').css({
+            'transform': 'translateX(' + -game.camera.x * 0.2 + 'px)'
+        });
     },
     render: function() {
         if (!timeSinceLastGame) timeSinceLastGame = game.time.now;

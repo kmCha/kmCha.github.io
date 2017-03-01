@@ -1,6 +1,9 @@
 
 window.onload = function() {
 
+    WIDTH = window.innerWidth;
+    HEIGHT = window.innerHeight;
+
     // monkeypatch Web Audio
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -34,8 +37,8 @@ window.onload = function() {
 
 }
 
-function didntGetStream() {
-    alert('Stream generation failed.');
+function didntGetStream(e) {
+    alert(e.name);
 }
 
 
@@ -52,10 +55,11 @@ function gotStream(stream) {
 }
 
 function initPhaser() {
-    game = new Phaser.Game(WIDTH, HEIGHT, Phaser.AUTO, '');
+    game = new Phaser.Game(WIDTH, HEIGHT, Phaser.AUTO, '', null, true);
+    game.state.add('video', videoState);
     game.state.add('play', playState);
     game.state.add('gameOver', gameOverState);
     game.state.add('gameComplete', gameCompleteState);
 
-    game.state.start('play');
+    game.state.start('video');
 }
