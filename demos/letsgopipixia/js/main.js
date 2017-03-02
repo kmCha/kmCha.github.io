@@ -34,7 +34,7 @@ window.onload = function() {
     } catch (e) {
         alert('你使用的浏览器不支持该游戏');
     }
-
+    initPhaser();
 }
 
 function didntGetStream(e) {
@@ -51,13 +51,14 @@ function gotStream(stream) {
     mediaStreamSource.connect(meter);
 
     // kick off the visual updating
-    initPhaser();
+    // initPhaser();
 }
 
 function initPhaser() {
     game = new Phaser.Game(WIDTH, HEIGHT, Phaser.AUTO, '', null, true);
     game.state.add('video', videoState);
     game.state.add('play', playState);
+    game.state.add('menu', menuState);
     game.state.add('gameOver', gameOverState);
     game.state.add('gameComplete', gameCompleteState);
 

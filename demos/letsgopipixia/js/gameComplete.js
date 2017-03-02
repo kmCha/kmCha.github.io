@@ -1,15 +1,53 @@
-var gameCompleteState = {
-    preload: function (){
-        game.load.spritesheet('button', 'assets/button_sprite_sheet.png', 193, 71);
-    },
-    create: function() {
-        var overText = game.add.text(WIDTH/2, HEIGHT/2, '完成时间：' + time + 's', { fontSize: '32px', fill: '#fff' });
-        overText.anchor.setTo(0.5, 0.5);
+var gameCompleteState = (function() {
+    var mask,
+        againBtn,
+        shareBtn,
+        timeCost,
+        timeText,
+        word;
 
-        var button = game.add.button(WIDTH/2, HEIGHT/2 + 80, 'button', this.restartGame, this, 2, 1, 0);
-        button.anchor.setTo(0.5, 0.5);
-    },
-    update: function() {
+    return {
+        preload: function (){
+            $('.play-state-wrap').show();
+            game.load.image('again', 'assets/again.png');
+            game.load.image('share', 'assets/share.png');
+            game.load.image('mask', 'assets/mask.png');
+            game.load.image('timeWord', 'assets/time-cost.png');
+            game.load.image('word', 'assets/again-word.png');
+        },
+        create: function() {
+            mask = game.add.image(WIDTH/2, HEIGHT/2, 'mask');
 
+            var scaleX = WIDTH / mask.width,
+                scaleY = HEIGHT / mask.height;
+
+            mask.anchor.setTo(0.5, 0.5);
+            mask.scale.set(scaleX, scaleY);
+
+            againBtn = game.add.button(WIDTH/2 - 120, HEIGHT/2 + 80, 'again', this.restartGame, this);
+            againBtn.anchor.setTo(0.5, 0.5);
+            againBtn.scale.set(scaleX, scaleY);
+
+            shareBtn = game.add.button(WIDTH/2 + 120, HEIGHT/2 + 115, 'share', this.share, this);
+            shareBtn.anchor.setTo(0.5, 0.5);
+            shareBtn.scale.set(scaleX, scaleY);
+
+            word = game.add.image(WIDTH/2 - 40, HEIGHT/2 + 60, 'word');
+            word.anchor.setTo(0.5, 0.5);
+            word.scale.set(scaleX, scaleY);
+
+            timeCost = game.add.image(WIDTH/2, HEIGHT/2 - 60, 'timeWord');
+            timeCost.anchor.setTo(0.5, 0.5);
+            timeCost.scale.set(scaleX, scaleY);
+
+            timeText = game.add.text(WIDTH/2 - 30, HEIGHT/2 - 55, time + 's', { fontSize: '42px', fill: '#da8546' });
+        },
+        update: function() {
+
+        },
+        restartGame: function() {
+            timeSinceLastGame = game.time.now;
+            game.state.start('menu');
+        }
     }
-}
+}());
