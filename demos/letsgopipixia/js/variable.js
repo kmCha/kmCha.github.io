@@ -2,6 +2,7 @@ var audioContext = null;
 var meter = null;
 var WIDTH = 800;
 var HEIGHT = 640;
+var support = false;
 
 var game;
 var time = 0; // 游戏时长

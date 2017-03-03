@@ -8,7 +8,6 @@ var gameCompleteState = (function() {
 
     return {
         preload: function (){
-            $('.play-state-wrap').show();
             game.load.image('again', 'assets/again.png');
             game.load.image('share', 'assets/share.png');
             game.load.image('mask', 'assets/mask.png');
@@ -18,18 +17,18 @@ var gameCompleteState = (function() {
         create: function() {
             mask = game.add.image(WIDTH/2, HEIGHT/2, 'mask');
 
-            var scaleX = WIDTH / mask.width,
+            var scaleX = HEIGHT / mask.height,
                 scaleY = HEIGHT / mask.height;
 
             mask.anchor.setTo(0.5, 0.5);
-            mask.scale.set(scaleX, scaleY);
+            mask.scale.set(WIDTH / mask.width, HEIGHT / mask.height);
 
-            againBtn = game.add.button(WIDTH/2 - 120, HEIGHT/2 + 80, 'again', this.restartGame, this);
-            againBtn.anchor.setTo(0.5, 0.5);
+            againBtn = game.add.button(WIDTH/2 - 120, HEIGHT/2 + 140, 'again', this.restartGame, this);
+            againBtn.anchor.setTo(0.5, 1);
             againBtn.scale.set(scaleX, scaleY);
 
-            shareBtn = game.add.button(WIDTH/2 + 120, HEIGHT/2 + 115, 'share', this.share, this);
-            shareBtn.anchor.setTo(0.5, 0.5);
+            shareBtn = game.add.button(WIDTH/2 + 120, HEIGHT/2 + 140, 'share', this.share, this);
+            shareBtn.anchor.setTo(0.5, 1);
             shareBtn.scale.set(scaleX, scaleY);
 
             word = game.add.image(WIDTH/2 - 40, HEIGHT/2 + 60, 'word');

@@ -32,7 +32,7 @@ window.onload = function() {
             },
         }, gotStream, didntGetStream);
     } catch (e) {
-        alert('你使用的浏览器不支持该游戏');
+        alert('你使用的浏览器不支持麦克风，请用按钮操作');
     }
     initPhaser();
 }
@@ -49,6 +49,7 @@ function gotStream(stream) {
     // Create a new volume meter and connect it.
     meter = createAudioMeter(audioContext);
     mediaStreamSource.connect(meter);
+    support = true;
 
     // kick off the visual updating
     // initPhaser();

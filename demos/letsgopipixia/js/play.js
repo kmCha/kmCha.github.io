@@ -9,21 +9,26 @@ var playState = (function() {
         killed = false,
         talk,
         tip1,
-        tip2;
+        tip2,
+        runBtn,
+        jumpBtn;
 
     return {
         preload: function() {
-            $('.play-state-wrap').show();
             game.load.spritesheet('player', 'assets/player.png', 108, 100);
             game.load.tilemap('floor', 'assets/map1.json', null, Phaser.Tilemap.TILED_JSON);
             game.load.image('tiles-floor', 'assets/floor.png');
             game.load.image('talk', 'assets/talk.png');
             game.load.image('tip1', 'assets/tip1.png');
             game.load.image('tip2', 'assets/tip2.png');
+            game.load.spritesheet('run', 'assets/run.png', 100, 100);
+            game.load.spritesheet('jump', 'assets/jump.png', 100, 100);
             game.load.spritesheet('enemy', 'assets/enemy.png', 46, 30);
             game.load.spritesheet('xiaoqian', 'assets/xiaoqian.png', 42, 100);
         },
         create: function() {
+            game.load.onLoadComplete.add(resetTime, this);
+
             // 重置killed状态
             killed = false;
 
@@ -50,16 +55,12 @@ var playState = (function() {
             player.body.gravity.y = 1000;
             player.body.collideWorldBounds = true;
 
-            player.inputEnabled = true;
-            player.events.onInputDown.add(function() {
-                player.position.x += 80;
-            });
-
             //  玩家动画
             player.animations.add('right', [0, 1], 10, true);
 
             // 镜头跟随
-            game.camera.follow(player, Phaser.Camera.STYLE_LOCKON, 1, 1);
+            // game.camera.follow(player, Phaser.Camera.STYLE_LOCKON, 1, 1);
+            game.camera.y = HEIGHT - 80
 
             // 对话框
             talk = game.add.image(32 + 40, 50 - 60, 'talk');
@@ -86,17 +87,30 @@ var playState = (function() {
             xiaoqian.body.gravity.y = 1000;
 
             // 地图上方小倩对话框
-            tip1 = game.add.image(WIDTH / 2, HEIGHT / 2 - 100, 'tip1');
+            tip1 = game.add.image(WIDTH / 2, 120, 'tip1');
             tip1.anchor.setTo(0.5, 0.5);
             tip1.scale.set(0.4);
             tip1.fixedToCamera = true;
             tip1.visible = false;
 
-            tip2 = game.add.image(WIDTH / 2, HEIGHT / 2 - 100, 'tip2');
+            tip2 = game.add.image(WIDTH / 2, 120, 'tip2');
             tip2.anchor.setTo(0.5, 0.5);
             tip2.scale.set(0.4);
             tip2.fixedToCamera = true;
             tip2.visible = false;
+
+            if (!support) {
+                runBtn = game.add.button(60, HEIGHT - 50, 'run', null, this, 0, 0, 1);
+                runBtn.anchor.setTo(0.5, 0.5);
+                runBtn.scale.set(0.5);
+                runBtn.fixedToCamera = true;
+
+
+                jumpBtn = game.add.button(WIDTH - 60, HEIGHT - 50, 'jump', null, this, 0, 0, 1);
+                jumpBtn.anchor.setTo(0.5, 0.5);
+                jumpBtn.scale.set(0.5);
+                jumpBtn.fixedToCamera = true;
+            }
         },
         update: function() {
             var volume = meter ? meter.volume * 1000 : 0,
@@ -104,6 +118,8 @@ var playState = (function() {
 
             //  重置速度
             player.body.velocity.x = 0;
+
+            game.camera.x = player.position.x - 50;
 
             // 下落死亡逻辑
             if (player.position.y >= game.world.height - 105) {
@@ -127,7 +143,7 @@ var playState = (function() {
                 talk.position.x = player.position.x + 40;
                 talk.position.y = player.position.y - 60;
             } else {
-                talk.visible = false;
+                talk.kill();
             }
 
             // 小倩对话框
@@ -173,22 +189,37 @@ var playState = (function() {
             game.physics.arcade.overlap(player, enemyGroup, this.killed, null, this);
 
             // 更新玩家速度
-            if (volume > 20) {
-                if (volume > MAX_SPEED) {
-                    player.body.velocity.x = MAX_SPEED;
+            if (support) {
+                if (volume > 20) {
+                    if (volume > MAX_SPEED) {
+                        player.body.velocity.x = MAX_SPEED;
+                    } else {
+                        player.body.velocity.x = volume;
+                    }
+                    player.animations.play('right');
                 } else {
-                    player.body.velocity.x = volume;
+                    player.body.velocity.x = 0;
+                    player.animations.stop();
+                    player.frame = 0;
                 }
-                player.animations.play('right');
             } else {
-                player.body.velocity.x = 0;
-                player.animations.stop();
-                player.frame = 0;
+                if (runBtn.frame == 1) {
+                    player.body.velocity.x = MAX_SPEED;
+                    player.animations.play('right');
+                } else {
+                    player.animations.stop();
+                }
             }
 
             // 玩家跳跃
-            if (volume > JUMP_SPEED && (player.body.touching.down || collideWithFloor) && player.position.y < 440) {
-                player.body.velocity.y = -550;
+            if (support) {
+                if (volume > JUMP_SPEED && (player.body.touching.down || collideWithFloor) && player.position.y < 440) {
+                    player.body.velocity.y = -550;
+                }
+            } else {
+                if (jumpBtn.frame == 1 && (player.body.touching.down || collideWithFloor) && player.position.y < 440) {
+                    player.body.velocity.y = -550;
+                }
             }
 
             // 完成游戏逻辑
@@ -198,12 +229,9 @@ var playState = (function() {
             // }
 
             // 更新游戏背景位置，凸显层次感
-            $('.bg-img').css({
-                'transform': 'translateX(' + -game.camera.x * 0.2 + 'px)'
-            });
-        },
-        render: function() {
-            if (!timeSinceLastGame) timeSinceLastGame = game.time.now;
+            // $('.bg-img').css({
+            //     'transform': 'translateX(' + -game.camera.x * 0.2 + 'px)'
+            // });
         },
 
         killed: function(player, enemy) {
@@ -219,4 +247,8 @@ var playState = (function() {
         }
     }
 
-}())
+    function resetTime() {
+        timeSinceLastGame = game.time.now;
+    }
+
+}());
