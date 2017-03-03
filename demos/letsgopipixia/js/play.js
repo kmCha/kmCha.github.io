@@ -245,7 +245,6 @@ var playState = (function() {
                 tip2.visible = false;
             }
 
-            console.log(player.position.x)
             // 怪物左右移动逻辑
             var int = parseInt(time / 2);
             if (int % 2 === 0) {
