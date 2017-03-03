@@ -134,7 +134,7 @@ var playState = (function() {
 
             //  启动玩家物理
             game.physics.arcade.enable(player);
-            player.body.bounce.y = 0.2;
+            // player.body.bounce.y = 0.2;
             player.body.gravity.y = 1000;
             player.body.collideWorldBounds = true;
 

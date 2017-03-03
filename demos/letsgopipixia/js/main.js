@@ -7,7 +7,8 @@ window.onload = function() {
     if (openedVertically) {
         forhorview.show();
         $(window).bind("orientationchange", function() {
-            window.location.reload();
+            // window.location.reload();
+            location = location + '?' + Math.random();
         });
     } else {
         $(window).bind("orientationchange", function() {
