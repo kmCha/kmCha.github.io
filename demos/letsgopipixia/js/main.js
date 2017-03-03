@@ -84,6 +84,7 @@ window.onload = function() {
         game = new Phaser.Game(WIDTH, HEIGHT, Phaser.AUTO, '', null, true);
         game.state.add('video', videoState);
         game.state.add('play', playState);
+        game.state.add('volume', volumeState);
         game.state.add('menu', menuState);
         game.state.add('gameOver', gameOverState);
         game.state.add('gameComplete', gameCompleteState);

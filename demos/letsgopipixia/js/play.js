@@ -200,7 +200,7 @@ var playState = (function() {
                 timeSinceLastGame = game.time.now;
                 loadingText.kill();
             }
-            var volume = meter ? meter.volume * 1000 : 0,
+            var volume = meter ? meter.volume * 1000 * volumeRatio : 0,
             collideWithFloor = false;
 
             //  重置速度
@@ -222,7 +222,7 @@ var playState = (function() {
             // 更新时间
             time = (game.time.now - timeSinceLastGame) / 1000;
             timeText.text = '时间: ' + time + 's';
-
+            
             // 对话框跟随player和销毁逻辑
             if (time < 5) {
                 // console.log

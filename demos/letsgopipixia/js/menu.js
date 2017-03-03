@@ -30,7 +30,11 @@ var menuState = (function() {
 
     function startGame() {
         timeSinceLastGame = game.time.now;
-        game.state.start('play');
+        if (support) {
+            game.state.start('volume');
+        } else {
+            game.state.start('play');
+        }
     }
     return {
         preload: function() {
