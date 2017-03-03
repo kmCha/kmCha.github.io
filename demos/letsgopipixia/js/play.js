@@ -12,15 +12,22 @@ var playState = (function() {
         tip2,
         runBtn,
         jumpBtn,
-        loadingText;
+        loadingText,
+        groundCollide;
 
     return {
         preload: function() {
             loadingText = game.add.text(WIDTH / 2, HEIGHT / 2, "加载中...", { font: "35px Arial", fill: "#000000" });
             loadingText.anchor.set(0.5, 0.5);
+            loadingText.fixedToCamera = true;
             game.load.spritesheet('player', 'assets/player.png', 108, 100);
-            game.load.tilemap('floor', 'assets/map1.json', null, Phaser.Tilemap.TILED_JSON);
-            game.load.image('tiles-floor', 'assets/floor.png');
+            // game.load.tilemap('floor', 'assets/map1.json', null, Phaser.Tilemap.TILED_JSON);
+            game.load.image('floor1', 'assets/floor1.png');
+            game.load.image('floor2', 'assets/floor2.png');
+            game.load.image('floor3', 'assets/floor3.png');
+            game.load.image('floor4', 'assets/floor4.png');
+            game.load.image('floor5', 'assets/floor5.png');
+            game.load.image('black', 'assets/black.png');
             game.load.image('talk', 'assets/talk.png');
             game.load.image('tip1', 'assets/tip1.png');
             game.load.image('tip2', 'assets/tip2.png');
@@ -38,19 +45,92 @@ var playState = (function() {
             //  启动物理引擎
             game.physics.startSystem(Phaser.Physics.ARCADE);
 
+            game.world.resize(WORLD_WIDTH, WORLD_HEIGHT);
             //  地图
-            map = game.add.tilemap('floor');
-            map.addTilesetImage('floor', 'tiles-floor');
+            ground = game.add.group();
+            ground.enableBody = true;
 
-            ground = map.createLayer('collide');
-            ground.resizeWorld();
-            groundStyle = map.createLayer('floor');
-            groundStyle.resizeWorld();
+            var ground1 = ground.create(0, WORLD_HEIGHT, 'floor2');
+            ground1.anchor.setTo(0, 1);
+            ground1.body.immovable = true;
+            ground1.scale.set(0.5);
 
-            map.setCollisionBetween(0, 10000);
+            var ground2 = ground.create(400, WORLD_HEIGHT, 'floor1');
+            ground2.anchor.setTo(0, 1);
+            ground2.body.immovable = true;
+            ground2.scale.set(0.5);
+
+            var ground3 = ground.create(850, WORLD_HEIGHT, 'floor3');
+            ground3.anchor.setTo(0, 1);
+            ground3.body.immovable = true;
+            ground3.scale.set(0.5);
+
+            var ground4 = ground.create(1470, WORLD_HEIGHT, 'floor4');
+            ground4.anchor.setTo(0, 1);
+            ground4.body.immovable = true;
+            ground4.scale.set(0.5);
+
+            var ground5 = ground.create(1800, WORLD_HEIGHT, 'floor4');
+            ground5.anchor.setTo(0, 1);
+            ground5.body.immovable = true;
+            ground5.scale.set(0.6);
+
+            var ground6 = ground.create(game.world.width, WORLD_HEIGHT, 'floor5');
+            ground6.anchor.setTo(1, 1);
+            ground6.body.immovable = true;
+            ground6.scale.set(0.5);
+
+            // 地图碰撞区域
+            groundCollide = game.add.group();
+            groundCollide.enableBody = true;
+
+            var collide1 = groundCollide.create(0, WORLD_HEIGHT, 'black');
+            collide1.anchor.setTo(0, 1);
+            collide1.body.immovable = true;
+            collide1.scale.set(230, 80);
+
+            var collide2 = groundCollide.create(410, WORLD_HEIGHT, 'black');
+            collide2.anchor.setTo(0, 1);
+            collide2.body.immovable = true;
+            collide2.scale.set(120, 120);
+
+            var collide3 = groundCollide.create(530, WORLD_HEIGHT, 'black');
+            collide3.anchor.setTo(0, 1);
+            collide3.body.immovable = true;
+            collide3.scale.set(90, 70);
+
+            var collide4 = groundCollide.create(860, WORLD_HEIGHT, 'black');
+            collide4.anchor.setTo(0, 1);
+            collide4.body.immovable = true;
+            collide4.scale.set(250, 70);
+
+            var collide5 = groundCollide.create(1110, WORLD_HEIGHT, 'black');
+            collide5.anchor.setTo(0, 1);
+            collide5.body.immovable = true;
+            collide5.scale.set(60, 170);
+
+            var collide6 = groundCollide.create(1170, WORLD_HEIGHT, 'black');
+            collide6.anchor.setTo(0, 1);
+            collide6.body.immovable = true;
+            collide6.scale.set(90, 70);
+
+            var collide7 = groundCollide.create(1480, WORLD_HEIGHT, 'black');
+            collide7.anchor.setTo(0, 1);
+            collide7.body.immovable = true;
+            collide7.scale.set(130, 70);
+
+            var collide8 = groundCollide.create(1810, WORLD_HEIGHT, 'black');
+            collide8.anchor.setTo(0, 1);
+            collide8.body.immovable = true;
+            collide8.scale.set(140, 85);
+
+            var collide9 = groundCollide.create(game.world.width, WORLD_HEIGHT, 'black');
+            collide9.anchor.setTo(1, 1);
+            collide9.body.immovable = true;
+            collide9.scale.set(30, 50);
 
             // 玩家
-            player = game.add.sprite(32, 50, 'player');
+            player = game.add.sprite(32, WORLD_HEIGHT - 200, 'player');
 
             //  启动玩家物理
             game.physics.arcade.enable(player);
@@ -63,7 +143,7 @@ var playState = (function() {
 
             // 镜头跟随
             // game.camera.follow(player, Phaser.Camera.STYLE_LOCKON, 1, 1);
-            game.camera.y = HEIGHT - 80
+            game.camera.y = WORLD_HEIGHT - 80;
 
             // 对话框
             talk = game.add.image(32 + 40, 50 - 60, 'talk');
@@ -76,8 +156,8 @@ var playState = (function() {
             // 怪物
             enemyGroup = game.add.group();
             enemyGroup.enableBody = true;
-            var enemy1 = enemyGroup.create(500, 100, 'enemy');
-            var enemy2 = enemyGroup.create(1550, 100, 'enemy');
+            var enemy1 = enemyGroup.create(940, WORLD_HEIGHT - 200, 'enemy');
+            // var enemy2 = enemyGroup.create(1550, WORLD_HEIGHT - 200, 'enemy');
             enemyGroup.forEach(function(enemy) {
                 enemy.anchor.setTo(.5,.5);
                 enemy.body.gravity.y = 300;
@@ -116,7 +196,7 @@ var playState = (function() {
             }
         },
         update: function() {
-            if (player.position.y === 50) { // 判断渲染出画面的标志
+            if (player.position.y === WORLD_HEIGHT - 200) { // 判断渲染出画面的标志
                 timeSinceLastGame = game.time.now;
                 loadingText.kill();
             }
@@ -129,7 +209,7 @@ var playState = (function() {
             game.camera.x = player.position.x - 50;
 
             // 下落死亡逻辑
-            if (player.position.y >= game.world.height - 105) {
+            if (player.position.y >= WORLD_HEIGHT - 105) {
                 this.gameOver();
             }
 
@@ -165,8 +245,9 @@ var playState = (function() {
                 tip2.visible = false;
             }
 
+            console.log(player.position.x)
             // 怪物左右移动逻辑
-            var int = parseInt(time / 4);
+            var int = parseInt(time / 2);
             if (int % 2 === 0) {
                 enemyGroup.forEach(function(enemy) {
                     enemy.body.velocity.x = 80;
@@ -186,11 +267,11 @@ var playState = (function() {
             }
 
             //  碰撞检测
-            game.physics.arcade.collide(player, ground, function() {
+            game.physics.arcade.collide(player, groundCollide, function() {
                 collideWithFloor = true;
             });
-            game.physics.arcade.collide(enemyGroup, ground);
-            game.physics.arcade.collide(xiaoqian, ground);
+            game.physics.arcade.collide(enemyGroup, groundCollide);
+            game.physics.arcade.collide(xiaoqian, groundCollide);
 
             // 玩家和怪物重叠
             game.physics.arcade.overlap(player, enemyGroup, this.killed, null, this);
@@ -220,11 +301,12 @@ var playState = (function() {
 
             // 玩家跳跃
             if (support) {
-                if (volume > JUMP_SPEED && (player.body.touching.down || collideWithFloor) && player.position.y < 440) {
+                if (volume > JUMP_SPEED && (player.body.touching.down || collideWithFloor) && player.position.y < WORLD_HEIGHT - 105) {
                     player.body.velocity.y = -550;
                 }
             } else {
-                if (jumpBtn.frame == 1 && (player.body.touching.down || collideWithFloor) && player.position.y < 440) {
+                // if (jumpBtn.frame == 1) {
+                if (jumpBtn.frame == 1 && (player.body.touching.down || collideWithFloor) && player.position.y < WORLD_HEIGHT - 105) {
                     player.body.velocity.y = -550;
                 }
             }

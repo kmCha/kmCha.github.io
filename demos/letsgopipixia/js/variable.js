@@ -2,6 +2,8 @@ var audioContext = null;
 var meter = null;
 var WIDTH = 800;
 var HEIGHT = 640;
+var WORLD_WIDTH = 2222;
+var WORLD_HEIGHT = 500;
 var support = false;
 
 var game;
