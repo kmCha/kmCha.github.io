@@ -1,8 +1,8 @@
 
 window.onload = function() {
 
-    WIDTH = window.innerWidth > 1334 ? 1334 : window.innerWidth;
-    HEIGHT = window.innerHeight > 750 ? 750 : window.innerHeight;
+    WIDTH = window.innerWidth > 667 ? 667 : window.innerWidth;
+    HEIGHT = window.innerHeight > 375 ? 375 : window.innerHeight;
 
     // monkeypatch Web Audio
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -35,10 +35,16 @@ window.onload = function() {
         alert('你使用的浏览器不支持麦克风，请用下方按键操作，左下角移动，右下角跳跃');
     }
     initPhaser();
+
+    setInterval(function() {
+        // 将页面滑动到最底，防止safari的地址栏占位
+        document.body.scrollTop = HEIGHT
+    }, 200);
 }
 
 function didntGetStream(e) {
-    alert(e.name);
+    alert('你使用的浏览器不支持麦克风，请用下方按键操作，左下角移动，右下角跳跃');
+    // alert(e.name);
 }
 
 
@@ -63,5 +69,5 @@ function initPhaser() {
     game.state.add('gameOver', gameOverState);
     game.state.add('gameComplete', gameCompleteState);
 
-    game.state.start('video');
+    game.state.start('menu');
 }

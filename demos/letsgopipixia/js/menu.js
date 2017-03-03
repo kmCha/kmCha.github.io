@@ -1,5 +1,10 @@
 var menuState = (function() {
-    var menu, mask, start, heart, wholeMask;
+    var menu,
+        mask,
+        start,
+        heart,
+        wholeMask,
+        loadingText;
 
     function showStart() {
         mask.kill();
@@ -29,6 +34,8 @@ var menuState = (function() {
     }
     return {
         preload: function() {
+            loadingText = game.add.text(WIDTH / 2, HEIGHT / 2, "加载中...", { font: "35px Arial", fill: "#000000" });
+            loadingText.anchor.set(0.5, 0.5);
             game.load.image('menu-bg', 'assets/menu-bg.png');
             game.load.image('menu-mask', 'assets/menu-mask.png');
             game.load.image('mask', 'assets/mask.png');
@@ -49,7 +56,7 @@ var menuState = (function() {
             game.add.tween(mask).to({alpha: 0}, 500, null, true, 0, -1, true);
         },
         update: function() {
-
+            loadingText.kill();
         }
     }
 }());
