@@ -222,7 +222,7 @@ var playState = (function() {
             // 更新时间
             time = (game.time.now - timeSinceLastGame) / 1000;
             timeText.text = '时间: ' + time + 's';
-            
+
             // 对话框跟随player和销毁逻辑
             if (time < 5) {
                 // console.log
@@ -249,7 +249,7 @@ var playState = (function() {
             var int = parseInt(time / 2);
             if (int % 2 === 0) {
                 enemyGroup.forEach(function(enemy) {
-                    enemy.body.velocity.x = 80;
+                    enemy.body.velocity.x = 50;
                     enemy.animations.play('right');
                     if (enemy.scale.x > 0) {
                         enemy.scale.x *= -1;
@@ -257,7 +257,7 @@ var playState = (function() {
                 }, this);
             } else {
                 enemyGroup.forEach(function(enemy) {
-                    enemy.body.velocity.x = -80;
+                    enemy.body.velocity.x = -50;
                     enemy.animations.play('right');
                     if (enemy.scale.x < 0) {
                         enemy.scale.x *= -1;
