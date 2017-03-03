@@ -17,11 +17,11 @@ var gameOverState = (function() {
             mask.anchor.setTo(0.5, 0.5);
             mask.scale.set(WIDTH / mask.width, HEIGHT / mask.height);
 
-            restartBtn = game.add.button(WIDTH/2 - 85, HEIGHT/2 - 60, 'restartBtn', this.restartGame, this);
+            restartBtn = game.add.button(WIDTH/2 - 85, 120, 'restartBtn', this.restartGame, this);
             restartBtn.anchor.setTo(0, 0.5);
             restartBtn.scale.set(scaleX, scaleY);
 
-            repickBtn = game.add.button(WIDTH/2 - 85, HEIGHT/2 + 70, 'repickBtn', this.repickCp, this);
+            repickBtn = game.add.button(WIDTH/2 - 85, HEIGHT - 80, 'repickBtn', this.repickCp, this);
             repickBtn.anchor.setTo(0, 0.5);
             repickBtn.scale.set(scaleX, scaleY);
         },

@@ -1,8 +1,8 @@
 
 window.onload = function() {
 
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight;
+    WIDTH = window.innerWidth > 1334 ? 1334 : window.innerWidth;
+    HEIGHT = window.innerHeight > 750 ? 750 : window.innerHeight;
 
     // monkeypatch Web Audio
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -32,7 +32,7 @@ window.onload = function() {
             },
         }, gotStream, didntGetStream);
     } catch (e) {
-        alert('你使用的浏览器不支持麦克风，请用按钮操作');
+        alert('你使用的浏览器不支持麦克风，请用下方按键操作，左下角移动，右下角跳跃');
     }
     initPhaser();
 }

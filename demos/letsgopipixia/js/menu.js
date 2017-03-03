@@ -9,7 +9,7 @@ var menuState = (function() {
         wholeMask.scale.set(WIDTH / wholeMask.height, HEIGHT / wholeMask.height);
         wholeMask.inputEnabled = true;
         wholeMask.events.onInputDown.add(startGame, game);
-        
+
         start = game.add.image(WIDTH / 2, HEIGHT / 2, 'menu-start');
         start.anchor.setTo(0.5, 0.5);
         start.scale.set(HEIGHT / start.height, HEIGHT / start.height);
@@ -29,7 +29,7 @@ var menuState = (function() {
     }
     return {
         preload: function() {
-            game.load.image('menu-bg', 'assets/menu-bg.jpg');
+            game.load.image('menu-bg', 'assets/menu-bg.png');
             game.load.image('menu-mask', 'assets/menu-mask.png');
             game.load.image('mask', 'assets/mask.png');
             game.load.image('menu-start', 'assets/menu-start.png');

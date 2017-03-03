@@ -11,10 +11,13 @@ var playState = (function() {
         tip1,
         tip2,
         runBtn,
-        jumpBtn;
+        jumpBtn,
+        loadingText;
 
     return {
         preload: function() {
+            loadingText = game.add.text(WIDTH / 2, HEIGHT / 2, "加载中...", { font: "35px Arial", fill: "#000000" });
+            loadingText.anchor.set(0.5, 0.5);
             game.load.spritesheet('player', 'assets/player.png', 108, 100);
             game.load.tilemap('floor', 'assets/map1.json', null, Phaser.Tilemap.TILED_JSON);
             game.load.image('tiles-floor', 'assets/floor.png');
@@ -87,13 +90,13 @@ var playState = (function() {
             xiaoqian.body.gravity.y = 1000;
 
             // 地图上方小倩对话框
-            tip1 = game.add.image(WIDTH / 2, 120, 'tip1');
+            tip1 = game.add.image(WIDTH / 2, 100, 'tip1');
             tip1.anchor.setTo(0.5, 0.5);
             tip1.scale.set(0.4);
             tip1.fixedToCamera = true;
             tip1.visible = false;
 
-            tip2 = game.add.image(WIDTH / 2, 120, 'tip2');
+            tip2 = game.add.image(WIDTH / 2, 100, 'tip2');
             tip2.anchor.setTo(0.5, 0.5);
             tip2.scale.set(0.4);
             tip2.fixedToCamera = true;
@@ -113,6 +116,10 @@ var playState = (function() {
             }
         },
         update: function() {
+            if (player.position.y === 50) { // 判断渲染出画面的标志
+                timeSinceLastGame = game.time.now;
+                loadingText.kill();
+            }
             var volume = meter ? meter.volume * 1000 : 0,
             collideWithFloor = false;
 
